@@ -1,0 +1,21 @@
+.d-flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.abs-center {
+  position: absolute;
+  inset: 50%;
+  transform: translateY(-50%);
+}

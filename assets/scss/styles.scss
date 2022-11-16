@@ -1,0 +1,21 @@
+@import "design-system/design-system";
+@import "utils";
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  font-family: "Be VietName";
+  font-weight: 400;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+}

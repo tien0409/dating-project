@@ -1,0 +1,46 @@
+$fontSizes: (
+  xxs: calc(1 * var(--font-size)),
+  xs: calc(1.25 * var(--font-size)),
+  sm: calc(1.5 * var(--font-size)),
+  md: calc(2 * var(--font-size)),
+  lg: calc(2.3 * var(--font-size)),
+  xl: calc(2.6 * var(--font-size)),
+  2xl: calc(3 * var(--font-size)),
+);
+
+$fontWeights: (
+  "light": 300,
+  "normal": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700,
+  "extra-bold": 800,
+);
+
+:root {
+  --font-primary: "";
+  --font-size: 10px;
+  --text-color: #333;
+
+  @each $sizeName, $unit in $fontSizes {
+    $keyname: "--font-size" + $sizeName;
+    #{$keyname}: #{$unit};
+  }
+}
+
+@each $sizeName, $unit in $fontSizes {
+  $keyname: "--font-size" + $sizeName;
+  .text--#{$sizeName} {
+    font-size: var(#{$keyname});
+  }
+}
+
+@each $weight, $unit in $fontWeights {
+  .font--#{$weight} {
+    font-weight: $unit;
+  }
+}
+
+.text-center {
+  text-align: center;
+}

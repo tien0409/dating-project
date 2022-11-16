@@ -1,0 +1,17 @@
+::root {
+  --white-color:  #fff;
+  --black-color:  #000;
+  --text-color:   #333;
+}
+
+.text-white {
+  color: var(--white-color);
+}
+
+.text-black {
+  color: var(--black-color);
+}
+
+.text-color {
+  color: var(--text-color);
+}

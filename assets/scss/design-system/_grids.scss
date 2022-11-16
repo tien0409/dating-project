@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  max-width: calc(576px - 8px);
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint-up("2xl") {
+    max-width: 1300px;
+  }
+
+  @include breakpoint-down("xl") {
+    max-width: 1140px;
+  }
+
+  @include breakpoint-down("lg") {
+    max-width: 960px;
+  }
+
+  @include breakpoint-down("md") {
+    max-width: 720px;
+  }
+
+  @include breakpoint-down("sm") {
+    max-width: 540px;
+  }
+}
+
+.grid {
+  display: grid;
+}
+
+@for $num from 1 through 12 {
+  .grid-cols-#{$num} {
+    grid-template-columns: repeat($num, minmax(0, 1fr));
+  }
+
+  .grid-rows-#{$num} {
+    grid-template-rows: repeat($num, minmax(0, 1fr));
+  }
+
+  .gap-#{$num} {
+    gap: 4 * $num;
+  }
+
+  .gap-x-#{$num} {
+    column-gap: 4 * $num;
+  }
+
+  .gap-y-#{$num} {
+    row-gap: 4 * $num;
+  }
+
+  .col-span-#{$num} {
+    grid-column: span $num / span $num;
+  }
+}
