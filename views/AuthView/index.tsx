@@ -8,6 +8,7 @@ import styles from "./AuthView.module.scss";
 import AuthImage from "@/assets/images/auth-bg.svg";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 
 const cln = classNames.bind(styles);
 
@@ -61,7 +62,6 @@ const AuthView = () => {
           <Image src={AuthImage} alt="auth image" />
         </div>
       </div>
-      prettierd
       <Modal open={isModalOpen} footer={false} onCancel={handleCloseForm}>
         <If condition={formType === "LoginForm"}>
           <Then>
@@ -75,6 +75,11 @@ const AuthView = () => {
           </Then>
         </If>
 
+        <If condition={formType === "ForgotPasswordForm"}>
+          <Then>
+            <ForgotPasswordForm setFormType={setFormType} />
+          </Then>
+        </If>
       </Modal>
     </div>
   );

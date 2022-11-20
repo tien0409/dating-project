@@ -13,8 +13,8 @@ import { FormType } from "..";
 const cln = className.bind(styles);
 
 type Props = {
-  setFormType: Dispatch<SetStateAction<FormType>>
-}
+  setFormType: Dispatch<SetStateAction<FormType>>;
+};
 
 const LoginForm = (props: Props) => {
   const { setFormType } = props;
@@ -36,14 +36,14 @@ const LoginForm = (props: Props) => {
     [],
   );
 
-  const handleSignUp = () => {
-    setFormType("RegistrationForm");
-  }
+  const handleRedirect = (type: FormType) => () => {
+    setFormType(type);
+  };
 
-  const handleSubmit = (values: {email: string, password: string}) => {
-    const {email, password} = values;
+  const handleSubmit = (values: { email: string; password: string }) => {
+    const { email, password } = values;
     // send login
-  }
+  };
 
   return (
     <div>
@@ -67,11 +67,13 @@ const LoginForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item>
-          <Link href={FORGOT_PASSWORD_ROUTE}>Forgot password</Link>
+          <span className={cln("forgot-password")} onClick={handleRedirect("ForgotPasswordForm")}>
+            Forgot password
+          </span>
         </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" size="large" block>
+          <Button type="primary" htmlType="submit" size="large" block>
             Login
           </Button>
         </Form.Item>
@@ -95,7 +97,10 @@ const LoginForm = (props: Props) => {
       </div>
 
       <div className="mt-12 subtext-color text-center">
-        Don't have an account? <span className={cln("sign-up")} onClick={handleSignUp}>Sign up</span>
+        Don't have an account?{" "}
+        <span className={cln("sign-up")} onClick={handleRedirect("RegistrationForm")}>
+          Sign up
+        </span>
       </div>
     </div>
   );

@@ -88,7 +88,7 @@ const RegisterForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" size="large" block disabled={!agreeTermPrivacy}>
+          <Button type="primary" htmlType="submit" size="large" block disabled={!agreeTermPrivacy}>
             Sign up
           </Button>
         </Form.Item>
