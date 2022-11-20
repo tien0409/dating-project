@@ -1,5 +1,7 @@
 import { ConfigProvider } from "antd";
 import type { AppProps } from "next/app";
+import { Toaster } from "react-hot-toast";
+
 import "../assets/scss/styles.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -11,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       }}>
       <Component {...pageProps} />
+      <Toaster containerClassName="toast" />
     </ConfigProvider>
   );
 }

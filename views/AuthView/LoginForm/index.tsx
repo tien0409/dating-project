@@ -1,14 +1,17 @@
 import { Button, Form, Input } from "antd";
+import toast from "react-hot-toast";
 import className from "classnames/bind";
-import Link from "next/link";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
 import styles from "./LoginForm.module.scss";
-import { FORGOT_PASSWORD_ROUTE } from "@/configs/routes";
 import { FormType } from "..";
+import authRepository from "@/repositories/authRepository";
+import useCancelPromise from "@/hooks/useCancelPromise";
+import { LoginType } from "@/types/auth/LoginType";
+import { AuthType } from "@/types/auth/AuthType";
 
 const cln = className.bind(styles);
 
@@ -19,7 +22,10 @@ type Props = {
 const LoginForm = (props: Props) => {
   const { setFormType } = props;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [form] = Form.useForm();
+  const { cancelablePromise } = useCancelPromise();
 
   const emailRules = useMemo(() => [{ required: true, message: "Please input your email" }], []);
 
@@ -40,9 +46,15 @@ const LoginForm = (props: Props) => {
     setFormType(type);
   };
 
-  const handleSubmit = (values: { email: string; password: string }) => {
-    const { email, password } = values;
-    // send login
+  const handleSubmit = async (payload: LoginType) => {
+    try {
+      setIsLoading(true);
+      const data = await cancelablePromise(authRepository.login(payload));
+      toast.success(data.message);
+    } catch (_) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -73,7 +85,7 @@ const LoginForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large" block>
+          <Button type="primary" htmlType="submit" size="large" block loading={isLoading}>
             Login
           </Button>
         </Form.Item>

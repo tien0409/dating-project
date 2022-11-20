@@ -1,14 +1,16 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import className from "classnames/bind";
-import Link from "next/link";
+import toast from "react-hot-toast";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
 import styles from "./RegisterForm.module.scss";
-import { FORGOT_PASSWORD_ROUTE } from "@/configs/routes";
 import { FormType } from "..";
+import { SignUpType } from "@/types/auth/SignUpType";
+import useCancelPromise from "@/hooks/useCancelPromise";
+import authRepository from "@/repositories/authRepository";
 
 const cln = className.bind(styles);
 
@@ -20,13 +22,30 @@ const RegisterForm = (props: Props) => {
   const { setFormType } = props;
 
   const [agreeTermPrivacy, setAgreeTermPrivacy] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
+  const { cancelablePromise } = useCancelPromise();
 
   const emailRules = useMemo(() => [{ required: true, message: "Please input your email" }], []);
 
   const passwordRules = useMemo(
     () => [{ required: true, message: "Please input your password" }],
+    [],
+  );
+
+  const confirmPasswordRules = useMemo(
+    () => [
+      { required: true, message: "Please input again your password" },
+      ({ getFieldValue }: { getFieldValue: any }) => ({
+        validator(_: any, value: string) {
+          if (!value || getFieldValue("password") === value) {
+            return Promise.resolve();
+          }
+          return Promise.reject(new Error("The two passwords that you entered do not match!"));
+        },
+      }),
+    ],
     [],
   );
 
@@ -46,9 +65,16 @@ const RegisterForm = (props: Props) => {
     setAgreeTermPrivacy(e.target.checked);
   };
 
-  const handleSubmit = (values: { email: string; password: string }) => {
-    const { email, password } = values;
-    // send login
+  const handleSubmit = async (payload: SignUpType) => {
+    try {
+      setIsLoading(true);
+      const data = await cancelablePromise(authRepository.signup(payload));
+      toast.success(data.message);
+      handleSignIn();
+    } catch (_) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,13 +95,13 @@ const RegisterForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item name="password" label="Password" rules={passwordRules} hasFeedback>
-          <Input.Password size="large" />
+          <Input.Password size="large" autoComplete="new-password"  />
         </Form.Item>
 
         <Form.Item
           name="confirmPasssword"
           label="Confirm password"
-          rules={passwordRules}
+          rules={confirmPasswordRules}
           hasFeedback
         >
           <Input.Password size="large" />
@@ -88,7 +114,14 @@ const RegisterForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large" block disabled={!agreeTermPrivacy}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            disabled={!agreeTermPrivacy}
+            loading={isLoading}
+          >
             Sign up
           </Button>
         </Form.Item>

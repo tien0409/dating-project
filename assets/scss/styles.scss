@@ -22,3 +22,8 @@ body {
   box-sizing: border-box;
   color: var(--text-color);
 }
+
+.toast, .toast * {
+  font-size: 1.4rem;
+  font-family: "Be Vietnam", sans-serif !important;
+}
