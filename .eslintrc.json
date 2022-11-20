@@ -3,7 +3,6 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier",
     "prettier"
   ],
   "rules": {
@@ -12,17 +11,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "max-len": [
-      "error",
-      100,
-      {
-        "ignoreUrls": true,
-        "ignoreComments": false,
-        "ignoreRegExpLiterals": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true
-      }
-    ],
+    "max-len": ["error",100],
     "no-dupe-keys": "error",
     "no-console": "warn",
     "no-unused-vars": "error",
@@ -32,7 +21,7 @@
     "array-bracket-spacing": ["error", "never"],
 
     "react/react-in-jsx-scope": "off",
-    "react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "multiline" }],
+    "react/jsx-max-props-per-line": [1, { "maximum": 1, "mininumLength": 100 }],
     "react/jsx-first-prop-new-line": [1, "multiline"]
   }
 }

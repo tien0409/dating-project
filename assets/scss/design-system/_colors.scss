@@ -1,7 +1,13 @@
-::root {
+:root {
   --white-color:  #fff;
   --black-color:  #000;
   --text-color:   #333;
+  --subtext-color: #6ca3af;
+
+  --primary-color: #F82E4B;
+  --primary-fade-color: #DF4259;
+  --secondary-color: #e4832d;
+  --secondary-fade-color: #efddd1;
 }
 
 .text-white {
@@ -14,4 +20,25 @@
 
 .text-color {
   color: var(--text-color);
+}
+
+.subtext-color {
+  color: var(--subtext-color);
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+
+.primary-fade-color {
+  color: var(--primary-fade-color);
+}
+
+
+.secondary-color {
+  color: var(--secondary-color);
+}
+
+.secondary-fade-color {
+  color: var(--secondary-fade-colorc);
 }

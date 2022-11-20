@@ -1,0 +1,85 @@
+$spacings: (
+  1: calc(0.25 * var(--space-unit)),
+  // default with 4px;
+  2: calc(0.5 * var(--space-unit)),
+  // default with 8px;
+  3: calc(0.75 * var(--space-unit)),
+  // default with 12px;
+  4: calc(1 * var(--space-unit)),
+  // default with 16px;
+  5: calc(1.25 * var(--space-unit)),
+  // default with 20px;
+  6: calc(1.5 * var(--space-unit)),
+  // default with 24px;
+  7: calc(1.75 * var(--space-unit)),
+  // default with 28px;
+  8: calc(2 * var(--space-unit)),
+  // default with 32px;
+  9: calc(2.25 * var(--space-unit)),
+  // default with 36px;
+  10: calc(2.5 * var(--space-unit)),
+  // default with 40px;
+  11: calc(2.75 * var(--space-unit)),
+  // default with 44px;
+  12: calc(3 * var(--space-unit)),
+);
+
+:root {
+  /* spacing values */
+  --space-unit: 1rem;
+
+  @each $spacingname, $unit in $spacings {
+    $keyname: "--space-" + $spacingname;
+    #{$keyname}: #{$unit};
+  }
+}
+
+@each $spacingname, $unit in $spacings {
+  $keyname: "--space-" + $spacingname;
+  .pt-#{$spacingname} {
+    padding-top: var(#{$keyname});
+  }
+  .pb-#{$spacingname} {
+    padding-bottom: var(#{$keyname});
+  }
+  .pr-#{$spacingname} {
+    padding-right: var(#{$keyname});
+  }
+  .pl-#{$spacingname} {
+    padding-left: var(#{$keyname});
+  }
+  .px-#{$spacingname} {
+    padding-right: var(#{$keyname});
+    padding-left: var(#{$keyname});
+  }
+  .py-#{$spacingname} {
+    padding-top: var(#{$keyname});
+    padding-bottom: var(#{$keyname});
+  }
+  .p-#{$spacingname} {
+    padding: var(#{$keyname});
+  }
+  .mt-#{$spacingname} {
+    margin-top: var(#{$keyname});
+  }
+  .mb-#{$spacingname} {
+    margin-bottom: var(#{$keyname});
+  }
+  .mr-#{$spacingname} {
+    margin-right: var(#{$keyname});
+  }
+  .ml-#{$spacingname} {
+    margin-left: var(#{$keyname});
+  }
+  .mx-#{$spacingname} {
+    margin-right: var(#{$keyname});
+    margin-left: var(#{$keyname});
+  }
+  .my-#{$spacingname} {
+    margin-top: var(#{$keyname});
+    margin-bottom: var(#{$keyname});
+  }
+  .m-#{$spacingname} {
+    margin: var(#{$keyname});
+  }
+}

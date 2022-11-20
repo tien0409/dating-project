@@ -50,7 +50,7 @@
     row-gap: 4 * $num;
   }
 
-  .col-span-#{$num} {
+  .cols-span-#{$num} {
     grid-column: span $num / span $num;
   }
 }

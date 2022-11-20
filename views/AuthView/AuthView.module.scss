@@ -1,0 +1,48 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #ebe8f0 0%, #8dd5e0 100%);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    font-family: "Poppins";
+    font-size: 6.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-family: "Poppins";
+    font-size: 1.3rem;
+    color: var(--text-color);
+  }
+}
+
+.auth__actions {
+  display: flex;
+  width: 100%;
+  gap: 14px;
+
+  .login__action {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+
+    &-text {
+      padding: 0 8px;
+    }
+  }
+
+  .registration__action {
+    box-shadow: 0 0 5px 1px rgba(var(--primary-color), 1.0);
+
+    &-text {
+      color: var(--white-color);
+      padding: 0 8px;
+    }
+  }
+}
