@@ -12,6 +12,8 @@ import authRepository from "@/repositories/authRepository";
 import useCancelPromise from "@/hooks/useCancelPromise";
 import { LoginType } from "@/types/auth/LoginType";
 import { AuthType } from "@/types/auth/AuthType";
+import { emailRegex } from "@/utils/regexes";
+import { emailValidator, passwordValidator } from "@/utils/validators";
 
 const cln = className.bind(styles);
 
@@ -27,10 +29,16 @@ const LoginForm = (props: Props) => {
   const [form] = Form.useForm();
   const { cancelablePromise } = useCancelPromise();
 
-  const emailRules = useMemo(() => [{ required: true, message: "Please input your email" }], []);
+  const emailRules = useMemo(
+    () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
+    [],
+  );
 
   const passwordRules = useMemo(
-    () => [{ required: true, message: "Please input your password" }],
+    () => [
+      { required: true, message: "Please input your password" },
+      { validator: passwordValidator },
+    ],
     [],
   );
 

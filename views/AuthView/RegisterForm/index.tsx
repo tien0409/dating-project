@@ -11,6 +11,7 @@ import { FormType } from "..";
 import { SignUpType } from "@/types/auth/SignUpType";
 import useCancelPromise from "@/hooks/useCancelPromise";
 import authRepository from "@/repositories/authRepository";
+import { confirmPasswordValidator, emailValidator, passwordValidator } from "@/utils/validators";
 
 const cln = className.bind(styles);
 
@@ -27,24 +28,23 @@ const RegisterForm = (props: Props) => {
   const [form] = Form.useForm();
   const { cancelablePromise } = useCancelPromise();
 
-  const emailRules = useMemo(() => [{ required: true, message: "Please input your email" }], []);
+  const emailRules = useMemo(
+    () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
+    [],
+  );
 
   const passwordRules = useMemo(
-    () => [{ required: true, message: "Please input your password" }],
+    () => [
+      { required: true, message: "Please input your password" },
+      { validator: passwordValidator },
+    ],
     [],
   );
 
   const confirmPasswordRules = useMemo(
     () => [
       { required: true, message: "Please input again your password" },
-      ({ getFieldValue }: { getFieldValue: any }) => ({
-        validator(_: any, value: string) {
-          if (!value || getFieldValue("password") === value) {
-            return Promise.resolve();
-          }
-          return Promise.reject(new Error("The two passwords that you entered do not match!"));
-        },
-      }),
+      confirmPasswordValidator,
     ],
     [],
   );
@@ -95,7 +95,7 @@ const RegisterForm = (props: Props) => {
         </Form.Item>
 
         <Form.Item name="password" label="Password" rules={passwordRules} hasFeedback>
-          <Input.Password size="large" autoComplete="new-password"  />
+          <Input.Password size="large" autoComplete="new-password" />
         </Form.Item>
 
         <Form.Item

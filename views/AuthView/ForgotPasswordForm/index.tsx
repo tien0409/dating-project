@@ -5,6 +5,7 @@ import { GiHeartKey } from "react-icons/gi";
 
 import styles from "./ForgotPasswordForm.module.scss";
 import { FormType } from "..";
+import { emailValidator } from "@/utils/validators";
 
 const cln = className.bind(styles);
 
@@ -17,7 +18,10 @@ const ForgotPasswordForm = (props: Props) => {
 
   const [form] = Form.useForm();
 
-  const emailRules = useMemo(() => [{ required: true, message: "Please input your email" }], []);
+  const emailRules = useMemo(
+    () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
+    [],
+  );
 
   const formLayout = useMemo(
     () => ({
@@ -45,7 +49,8 @@ const ForgotPasswordForm = (props: Props) => {
         <h2 className={cln("heading-text")}>Forgot password</h2>
       </div>
       <p className={cln("heading-description")}>
-        Enter your email that you used to register <br /> your account, so we can send you a link to <br /> reset your password
+        Enter your email that you used to register <br /> your account, so we can send you a link to{" "}
+        <br /> reset your password
       </p>
 
       <Form {...formLayout} name="forgot-password-form" className="mt-6" onFinish={handleSubmit}>
