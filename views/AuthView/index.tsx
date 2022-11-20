@@ -28,7 +28,7 @@ const AuthView = () => {
   };
 
   return (
-    <div className={cln("wrapper")}>
+    <main className={cln("wrapper")}>
       <div className={cln("container", "h-full", "grid", "grid-cols-12")}>
         <div className={cln("cols-span-5", "flex-center", "flex-col")}>
           <div className={cln("intro")}>
@@ -81,7 +81,7 @@ const AuthView = () => {
           </Then>
         </If>
       </Modal>
-    </div>
+    </main>
   );
 };
 
