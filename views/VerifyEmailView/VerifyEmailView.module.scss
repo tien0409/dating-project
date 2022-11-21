@@ -1,0 +1,15 @@
+.title {
+  font-size: 3.5rem;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.back {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  color: var(--subtext-color);
+  font-weight: 500;
+  font-size: 1.7rem;
+  cursor: pointer;
+}

@@ -7,8 +7,8 @@ const nextConfig = {
   swcMinify: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "assets/scss/design-system/_breakpoints")],
-    prependData: "@import \"./assets/scss/design-system/_breakpoints.scss\";"
-  }
+    prependData: '@import "./assets/scss/design-system/_breakpoints.scss";',
+  },
 };
 
 module.exports = nextConfig;

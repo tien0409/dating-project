@@ -89,7 +89,13 @@ const RegisterForm = (props: Props) => {
         Create your account - enjoy our services <br /> with most updated features.
       </p>
 
-      <Form {...formLayout} name="register-form" className="mt-6" onFinish={handleSubmit}>
+      <Form
+        {...formLayout}
+        name="register-form"
+        className="mt-6"
+        onFinish={handleSubmit}
+        form={form}
+      >
         <Form.Item name="email" label="Email" rules={emailRules} hasFeedback>
           <Input size="large" />
         </Form.Item>

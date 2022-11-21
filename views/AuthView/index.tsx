@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import Image from "next/image";
 import { Button, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { If, Then } from "react-if";
 
 import styles from "./AuthView.module.scss";
@@ -15,7 +15,13 @@ const cln = classNames.bind(styles);
 export type FormType = "LoginForm" | "RegistrationForm" | "ForgotPasswordForm";
 
 const AuthView = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(() => {
+    // check when verifiy email
+    /* if (localStorage?.getItem("redirect")) { */
+    /*   return true; */
+    /* } */
+    return false;
+  });
   const [formType, setFormType] = useState<FormType>("LoginForm");
 
   const handleOpenForm = (formType: FormType) => () => {
@@ -26,6 +32,12 @@ const AuthView = () => {
   const handleCloseForm = () => {
     setIsModalOpen(false);
   };
+
+  /* useEffect(() => { */
+  /*   if (localStorage.getItem("redirect")) { */
+  /*     localStorage.removeItem("redirect"); */
+  /*   } */
+  /* }, []); */
 
   return (
     <main className={cln("wrapper")}>

@@ -11,8 +11,6 @@ import { FormType } from "..";
 import authRepository from "@/repositories/authRepository";
 import useCancelPromise from "@/hooks/useCancelPromise";
 import { LoginType } from "@/types/auth/LoginType";
-import { AuthType } from "@/types/auth/AuthType";
-import { emailRegex } from "@/utils/regexes";
 import { emailValidator, passwordValidator } from "@/utils/validators";
 
 const cln = className.bind(styles);
@@ -77,7 +75,7 @@ const LoginForm = (props: Props) => {
         Login to your account - enjoy exclusive <br /> features and find your love
       </p>
 
-      <Form {...formLayout} name="login-form" className="mt-6" onFinish={handleSubmit}>
+      <Form {...formLayout} name="login-form" className="mt-6" onFinish={handleSubmit} form={form}>
         <Form.Item name="email" label="Email" rules={emailRules} hasFeedback>
           <Input size="large" />
         </Form.Item>

@@ -10,7 +10,7 @@ const AuthPage: NextPage = () => {
         <meta name="description" content="Dating app create by student" />
       </Head>
 
-      <AuthView />;
+      <AuthView />
     </div>
   );
 };
