@@ -1,7 +1,6 @@
 import { ConfigProvider } from "antd";
 import type { AppProps } from "next/app";
-import { Suspense } from "react";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 
 import "../assets/scss/styles.scss";
 
@@ -15,9 +14,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <Component {...pageProps} />
-      <Suspense>
-        <Toaster containerClassName="toast" />
-      </Suspense>
+
+      <ToastContainer bodyClassName="toast" />
     </ConfigProvider>
   );
 }

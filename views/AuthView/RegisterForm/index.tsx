@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
 import className from "classnames/bind";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";

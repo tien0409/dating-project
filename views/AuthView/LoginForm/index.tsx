@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import className from "classnames/bind";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
