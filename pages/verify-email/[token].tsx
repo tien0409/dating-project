@@ -3,22 +3,32 @@ import Head from "next/head";
 
 import mailRepository from "@/repositories/mailRepository";
 import { VerifyEmailView } from "@/views";
-import axiosInstance from "@/configs/axios";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  let isVerified = false;
   try {
-    /* await mailRepository.sendVerifyEmail(); */
-    await axiosInstance.post("http://localhost:3001/api/mail/verify-mail");
+    const configs = {
+      headers: {
+        Cookie: req.headers.cookie,
+      },
+      withCredentials: true,
+    };
+    await mailRepository.sendVerifyEmail(configs);
+    isVerified = true;
   } catch (err) {
     console.log("err", err);
   }
 
   return {
-    props: {},
+    props: { isVerified },
   };
 };
 
-const VerifyEmail: NextPage = (props: any) => {
+export type VerifyEmailPageProps = {
+  isVerified: boolean;
+};
+
+const VerifyEmail: NextPage<VerifyEmailPageProps> = (props) => {
   return (
     <div>
       <Head>
@@ -26,7 +36,7 @@ const VerifyEmail: NextPage = (props: any) => {
         <meta name="description" content="Dating app create by student" />
       </Head>
 
-      <VerifyEmailView />
+      <VerifyEmailView {...props} />
     </div>
   );
 };

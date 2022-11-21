@@ -6,10 +6,14 @@ import { useRouter } from "next/router";
 import styles from "./VerifyEmailView.module.scss";
 import EmailVerified from "assets/images/email_verified.svg";
 import { AUTH_ROUTE } from "@/configs/routes";
+import { VerifyEmailPageProps } from "@/pages/verify-email/[token]";
+import { Else, If, Then } from "react-if";
 
 const cln = classNames.bind(styles);
 
-const VerifyEmailView = () => {
+const VerifyEmailView = (props: VerifyEmailPageProps) => {
+  const { isVerified } = props;
+
   const router = useRouter();
 
   const handleRedirectLogin = () => {
@@ -23,7 +27,12 @@ const VerifyEmailView = () => {
         <Image src={EmailVerified} alt="Verify email" objectFit="contain" />
       </div>
 
-      <h1 className={cln("mt-12", "title")}>Verified email successfully!</h1>
+      <h1 className={cln("mt-12", "title")}>
+        <If condition={isVerified}>
+          <Then>Verified email successfully!</Then>
+          <Else>Verify email failure. Token expired or wrong.</Else>
+        </If>
+      </h1>
       <div className={cln("back")} onClick={handleRedirectLogin}>
         <IoMdArrowBack />
         <span>Back to Login</span>
