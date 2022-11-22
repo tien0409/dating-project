@@ -2,12 +2,16 @@
   --white-color:  #fff;
   --black-color:  #000;
   --text-color:   #333;
-  --subtext-color: #6ca3af;
+  --text-heading-color:   #505279;
+  --subtext-color: #AAAAB7;
+  --bg-home: #F6F7FF;
 
   --primary-color: #F82E4B;
   --primary-fade-color: #DF4259;
   --secondary-color: #e4832d;
   --secondary-fade-color: #efddd1;
+  --info-color: #5D5FEE;
+  --info-fade-color: #9E9CFE;
 }
 
 .text-white {
@@ -34,11 +38,18 @@
   color: var(--primary-fade-color);
 }
 
-
 .secondary-color {
   color: var(--secondary-color);
 }
 
 .secondary-fade-color {
-  color: var(--secondary-fade-colorc);
+  color: var(--secondary-fade-color);
+}
+
+.info-color {
+  color: var(--info-color);
+}
+
+.info-fade-color {
+  color: var(--info-fade-color);
 }

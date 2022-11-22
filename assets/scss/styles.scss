@@ -1,9 +1,14 @@
 @import "normalize.css";
-@import 'antd/dist/reset.css';
-@import 'react-toastify/dist/ReactToastify.css';
+@import "antd/dist/reset.css";
+@import "react-toastify/dist/ReactToastify.css";
 
 @import "design-system/design-system";
 @import "utils";
+
+:root {
+  --pt-home-page: 20px;
+  --border-radius: 18px;
+}
 
 *,
 *::after,
@@ -24,7 +29,19 @@ body {
   color: var(--text-color);
 }
 
-.toast, .toast * {
+.toast,
+.toast * {
   font-size: 1.4rem;
   font-family: "Be Vietnam", sans-serif !important;
+}
+
+.ant-menu {
+  .ant-menu-item.ant-menu-item-only-child {
+    padding-inline: 0 ;
+  }
+
+  .ant-menu-item-selected,
+  .ant-menu-item-selected * {
+    color: var(--text-heading-color);
+  }
 }

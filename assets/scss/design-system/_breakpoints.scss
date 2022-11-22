@@ -1,5 +1,5 @@
 
-/* 576px 768px 992px 1200px 1400px */
+/* 576px 768px 992px 1200px 1400px 1660px */
 $breakpoints-up: (
   "sm": "36em",
   "md": "48em",
@@ -8,13 +8,14 @@ $breakpoints-up: (
   '2xl': '87.5em',
 );
 
-/* 575px 767px 991px 1199x 1399px */
+/* 575px 767px 991px 1199x 1399px 1659px */
 $breakpoints-down: (
   'xs': '35.9375em',
   'sm': '47.8375em',
   'md': '61.9375em',
   'lg': '71.9375em',
   'xl': '87.44375em',
+  '2xl': '103.6875em'
 );
 
 @mixin breakpoint-up($size) {

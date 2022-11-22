@@ -3,7 +3,7 @@
   max-width: calc(576px - 8px);
   margin-left: auto;
   margin-right: auto;
-
+  
   @include breakpoint-up("2xl") {
     max-width: 1300px;
   }
@@ -39,15 +39,15 @@
   }
 
   .gap-#{$num} {
-    gap: 4 * $num;
+    gap: (4 * $num) + px;
   }
 
   .gap-x-#{$num} {
-    column-gap: 4 * $num;
+    column-gap: (4 * $num) + px;
   }
 
   .gap-y-#{$num} {
-    row-gap: 4 * $num;
+    row-gap: (4 * $num) + px;
   }
 
   .cols-span-#{$num} {

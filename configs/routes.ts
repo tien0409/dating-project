@@ -1,5 +1,6 @@
-import { join } from "path";
-
 export const AUTH_ROUTE = "/auth";
-export const LOGIN_ROUTE = join(AUTH_ROUTE, "/login");
-export const FORGOT_PASSWORD_ROUTE = join(AUTH_ROUTE, "/forgot-password");
+export const DATING_ROUTE = "/dating";
+export const MESSAGES_ROUTE = "/messages";
+export const NOTIFICATIONS_ROUTE = "/notifications";
+export const PROFILE_ROUTE = "/profile";
+export const SETTINGS_ROUTE = "/settings";
