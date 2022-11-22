@@ -33,6 +33,7 @@ axiosInstance.interceptors.response.use(
     if (err?.response?.data?.message) {
       toast.error(err?.response?.data?.message);
     }
+    return Promise.reject(err);
   },
 );
 

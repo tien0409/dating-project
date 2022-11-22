@@ -4,12 +4,15 @@ import axiosInstance from "@/configs/axios";
 import { AxiosResponseType } from "@/types/AxiosReponse";
 
 type MailRepositoryType = {
-  sendVerifyEmail: (headers: any) => Promise<AxiosResponseType<void>>;
+  sendVerifyMail: () => Promise<AxiosResponseType<void>>;
+  verifyMail: (configs: AxiosRequestConfig, token: string) => Promise<AxiosResponseType<any>>;
 };
 
 function MailRepository(axios: AxiosInstance): MailRepositoryType {
   return {
-    sendVerifyEmail: async (configs: AxiosRequestConfig) => await axios.post("/mail/send-verify-mail", {}, configs),
+    sendVerifyMail: async () => await axios.post("/mail/send-verify-mail"),
+    verifyMail: async (configs: AxiosRequestConfig, token: string) =>
+      (await axios.post("/mail/verify-mail/" + token, configs)).data,
   };
 }
 
