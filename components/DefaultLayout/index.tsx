@@ -10,16 +10,16 @@ type Props = {
   children: ReactNode;
 };
 
-const DefaultLayout = () => {
+const DefaultLayout = (props: Props) => {
+  const { children } = props;
+
   return (
     <main className={cln("wrapper")}>
       <div className="container w-full h-full grid grid-cols-12 gap-x-8">
         <div className="cols-span-3 relative">
           <Sidebar />
         </div>
-        <div className="cols-span-5">content</div>
-
-        <div className="cols-span-4">contetn2</div>
+        <div className="cols-span-9">{children}</div>
       </div>
     </main>
   );

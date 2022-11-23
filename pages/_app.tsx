@@ -3,9 +3,9 @@ import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 
 import "../assets/scss/styles.scss";
-import { DefaultLayout } from "@/components";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  console.log("pageProps", pageProps)
   return (
     <ConfigProvider
       theme={{
@@ -14,7 +14,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <DefaultLayout></DefaultLayout>
       <Component {...pageProps} />
 
       <ToastContainer bodyClassName="toast" />
