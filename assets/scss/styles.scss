@@ -1,12 +1,13 @@
 @import "normalize.css";
 @import "antd/dist/reset.css";
 @import "react-toastify/dist/ReactToastify.css";
+@import "swiper/css";
 
 @import "design-system/design-system";
 @import "utils";
 
 :root {
-  --pt-home-page: 20px;
+  --pt-home-page: 50px;
   --border-radius: 18px;
 }
 
@@ -37,7 +38,7 @@ body {
 
 .ant-menu {
   .ant-menu-item.ant-menu-item-only-child {
-    padding-inline: 0 ;
+    padding-inline: 0;
   }
 
   .ant-menu-item-selected,
@@ -45,3 +46,16 @@ body {
     color: var(--text-heading-color);
   }
 }
+
+.swiper-pagination-bullets {
+  display: flex;
+  padding: 0 10px;
+}
+
+.swiper-pagination-bullet {
+  background-color: var(--white-color);
+  height: 4px;
+  flex: 1;
+}
+
+

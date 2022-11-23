@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import { Swiper } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 
@@ -9,10 +10,10 @@ type Props = {
 
 SwiperCore.use([Navigation, Pagination]);
 
-const SwipperCustom = (props: Props) => {
+const SwiperCustom = (props: Props) => {
   const { children, configs } = props;
 
   return <Swiper {...configs}>{children}</Swiper>;
 };
 
-export default SwipperCustom;
+export default SwiperCustom;

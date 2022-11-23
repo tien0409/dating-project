@@ -19,7 +19,7 @@ const DefaultLayout = (props: Props) => {
         <div className="cols-span-3 relative">
           <Sidebar />
         </div>
-        <div className="cols-span-9">{children}</div>
+        <div className={cln("cols-span-9", "main-content")}>{children}</div>
       </div>
     </main>
   );
