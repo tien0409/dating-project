@@ -1,44 +1,20 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import className from "classnames/bind";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { GiHeartKey } from "react-icons/gi";
 
 import styles from "./ForgotPasswordForm.module.scss";
 import { FormType } from "..";
-import { emailValidator } from "@/utils/validators";
+import useForgotPasswordHook from "./ForgotPasswordFormHook";
 
 const cln = className.bind(styles);
 
-type Props = {
+export type ForgotPasswordFormProps = {
   setFormType: Dispatch<SetStateAction<FormType>>;
 };
 
-const ForgotPasswordForm = (props: Props) => {
-  const { setFormType } = props;
-
-  const [form] = Form.useForm();
-
-  const emailRules = useMemo(
-    () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
-    [],
-  );
-
-  const formLayout = useMemo(
-    () => ({
-      labelCol: { span: 24 },
-      wrapperCol: { span: 24 },
-    }),
-    [],
-  );
-
-  const handleSignIn = () => {
-    setFormType("LoginForm");
-  };
-
-  const handleSubmit = (values: { email: string }) => {
-    const { email } = values;
-    // send login
-  };
+const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
+  const { form, emailRules, formLayout, handleSignIn, handleSubmit } = useForgotPasswordHook(props);
 
   return (
     <div>
@@ -53,7 +29,13 @@ const ForgotPasswordForm = (props: Props) => {
         <br /> reset your password
       </p>
 
-      <Form {...formLayout} name="forgot-password-form" className="mt-6" onFinish={handleSubmit}>
+      <Form
+        {...formLayout}
+        name="forgot-password-form"
+        className="mt-6"
+        form={form}
+        onFinish={handleSubmit}
+      >
         <Form.Item name="email" label="Email" rules={emailRules} hasFeedback>
           <Input size="large" />
         </Form.Item>

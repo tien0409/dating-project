@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "../assets/scss/styles.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  console.log("pageProps", pageProps)
   return (
     <ConfigProvider
       theme={{

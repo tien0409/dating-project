@@ -1,12 +1,12 @@
 import { memo } from "react";
 import classNames from "classnames/bind"
 
-import styles from "./HomeView.module.scss"
+import styles from "./DatingView.module.scss"
 
 const cln = classNames.bind(styles);
 
-const HomeView = () => {
+const DatingView = () => {
   return <main>abc</main>;
 };
 
-export default memo(HomeView);
+export default memo(DatingView);

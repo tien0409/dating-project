@@ -1,5 +1,4 @@
 import { Button, Form, Input } from "antd";
-import { toast } from "react-toastify";
 import className from "classnames/bind";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
@@ -8,60 +7,17 @@ import { FaFacebook } from "react-icons/fa";
 
 import styles from "./LoginForm.module.scss";
 import { FormType } from "..";
-import authRepository from "@/repositories/authRepository";
-import useCancelPromise from "@/hooks/useCancelPromise";
-import { LoginType } from "@/types/auth/LoginType";
-import { emailValidator, passwordValidator } from "@/utils/validators";
+import useLoginForm from "./LoginFormHook";
 
 const cln = className.bind(styles);
 
-type Props = {
+export type LoginFormProps = {
   setFormType: Dispatch<SetStateAction<FormType>>;
 };
 
-const LoginForm = (props: Props) => {
-  const { setFormType } = props;
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [form] = Form.useForm();
-  const { cancelablePromise } = useCancelPromise();
-
-  const emailRules = useMemo(
-    () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
-    [],
-  );
-
-  const passwordRules = useMemo(
-    () => [
-      { required: true, message: "Please input your password" },
-      { validator: passwordValidator },
-    ],
-    [],
-  );
-
-  const formLayout = useMemo(
-    () => ({
-      labelCol: { span: 24 },
-      wrapperCol: { span: 24 },
-    }),
-    [],
-  );
-
-  const handleRedirect = (type: FormType) => () => {
-    setFormType(type);
-  };
-
-  const handleSubmit = async (payload: LoginType) => {
-    try {
-      setIsLoading(true);
-      const data = await cancelablePromise(authRepository.login(payload));
-      toast.success(data.message);
-    } catch (_) {
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const LoginForm = (props: LoginFormProps) => {
+  const { isLoading, form, emailRules, passwordRules, formLayout, handleRedirect, handleSubmit } =
+    useLoginForm(props);
 
   return (
     <div>
