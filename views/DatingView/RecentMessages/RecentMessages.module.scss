@@ -1,0 +1,28 @@
+.wrapper {
+  background-color: var(--white-color);
+  border-radius: 5%;
+  padding: 20px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--text-heading-color);
+  }
+
+  .view-more {
+    text-decoration: none;
+  }
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}

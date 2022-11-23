@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 13px;
+
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .content {
+      .fullName {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      .main-content {
+        margin-bottom: 0;
+        color: var(--subtext-color);
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .more-info {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 3px;
+
+    .time {
+      font-size: 1.1rem;
+      color: var(--subtext-color);
+    }
+
+    .not-seen {
+      height: 6px;
+      width: 6px;
+      border-radius: 50%;
+      background-color: var(--info-color);
+    }
+  }
+}

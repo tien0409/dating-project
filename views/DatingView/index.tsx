@@ -6,9 +6,9 @@ import { DefaultLayout, SwiperCustom } from "@/components";
 
 const cln = classNames.bind(styles);
 import EncounterCard from "./EncounterCard";
+import RecentMessages from "./RecentMessages";
 
 const DatingView = () => {
-
   return (
     <DefaultLayout>
       <div className="grid grid-cols-12 gap-7">
@@ -16,7 +16,9 @@ const DatingView = () => {
           <EncounterCard />
         </section>
 
-        <section className="cols-span-4">message</section>
+        <section className="cols-span-4">
+          <RecentMessages />
+        </section>
       </div>
     </DefaultLayout>
   );
