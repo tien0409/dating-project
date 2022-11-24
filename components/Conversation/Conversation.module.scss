@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 13px;
+  cursor: pointer;
 
   .info {
     display: flex;
@@ -11,8 +12,8 @@
     flex: 1;
 
     .avatar {
-      width: 42px;
-      height: 42px;
+      //width: 42px;
+      //height: 42px;
       border-radius: 12px;
       overflow: hidden;
     }

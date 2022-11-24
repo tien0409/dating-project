@@ -64,7 +64,7 @@ const Sidebar = () => {
       </div>
 
       <div className={cln("menu__wrapper")}>
-        <Menu mode="vertical" selectedKeys={[router.pathname]} className={cln("menu")}>
+        <Menu mode="vertical" selectedKeys={[router.pathname]}>
           {menuItems.map((item) => (
             <Menu.Item key={item.route} className={cln("menu-item__wrapper")}>
               <Link href={item.route}>

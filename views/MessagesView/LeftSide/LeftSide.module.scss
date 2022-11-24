@@ -1,0 +1,22 @@
+$padding-x: 10px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+
+.search__btn {
+  padding: 0 $padding-x;
+}
+
+.users__active {
+  padding: 0 $padding-x;
+}
+
+.conversation__list {
+  flex: 1;
+  margin-top: 20px;
+  overflow: auto;
+}
