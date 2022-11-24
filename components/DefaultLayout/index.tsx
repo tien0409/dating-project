@@ -15,12 +15,10 @@ const DefaultLayout = (props: Props) => {
 
   return (
     <main className={cln("wrapper")}>
-      <div className="container w-full h-full grid grid-cols-12 gap-x-8">
-        <div className="cols-span-3 relative">
-          <Sidebar />
-        </div>
-        <div className={cln("cols-span-9", "main-content")}>{children}</div>
-      </div>
+      <Sidebar />
+      <main className={cln("main-content")}>
+        <div className="container h-full w-full">{children}</div>
+      </main>
     </main>
   );
 };

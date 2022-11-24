@@ -12,11 +12,11 @@ const DatingView = () => {
   return (
     <DefaultLayout>
       <div className="grid grid-cols-12 gap-7">
-        <section className={cln("cols-span-8")}>
+        <section className={cln("cols-span-7")}>
           <EncounterCard />
         </section>
 
-        <section className="cols-span-4">
+        <section className="cols-span-5">
           <RecentMessages />
         </section>
       </div>

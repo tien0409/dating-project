@@ -4,8 +4,10 @@ $px: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
   padding: var(--pt-home-page) 0;
   background-color: var(--white-color);
 }
