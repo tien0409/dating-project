@@ -1,0 +1,36 @@
+.wrapper, .form, .form__item-wrapper, .input__wrapper, .input {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.input__wrapper {
+  position: relative;
+}
+
+.input, .input::placeholder {
+  font-size: 1.5rem;
+}
+
+.icon__suffix {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  translate: 0 -50%;
+
+  .emoji {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: calc(100% + 15px);
+    right: 0;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

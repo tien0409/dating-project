@@ -8,11 +8,10 @@
 
 .left-side, .right-side {
   padding-top: 20px;
-  padding-bottom: 20px;
 }
 
 .left-side {
-  width: 300px;
+  width: 330px;
 }
 
 .divider {
@@ -23,5 +22,5 @@
 }
 
 .right-side {
-  grid-column: span 8 / span 8;
+  flex: 1;
 }

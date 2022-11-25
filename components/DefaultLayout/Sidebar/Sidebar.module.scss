@@ -64,19 +64,20 @@ $px: 40px;
   margin-top: 20px;
   padding: 0 ($px - 25px);
 
-  & > * {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border-inline-end: none !important;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-inline-end: none !important;
+
+  & > *:last-of-type {
+    margin-top: auto;
   }
 }
 
 .menu-item__wrapper {
-  &:last-of-type {
-    margin-top: auto;
-  }
-
   .menu-item {
     padding: 0 15px;
 

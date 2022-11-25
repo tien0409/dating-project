@@ -8,6 +8,7 @@ import { MdLogout } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { ItemType } from "antd/es/menu/hooks/useItems";
 
 import styles from "./Sidebar.module.scss";
 import Avatar from "assets/images/avatar.jpg";
@@ -25,14 +26,86 @@ const cln = classNames.bind(styles);
 const Sidebar = () => {
   const router = useRouter();
 
-  const menuItems = useMemo(
+  const menuItems = useMemo<ItemType[]>(
     () => [
-      { label: "Dating", icon: AiFillHeart, route: DATING_ROUTE },
-      { label: "Messages", icon: AiFillMessage, route: MESSAGES_ROUTE },
-      { label: "Notifications", icon: IoMdNotifications, route: NOTIFICATIONS_ROUTE },
-      { label: "Profile", icon: FaUserAlt, route: PROFILE_ROUTE },
-      { label: "Settings", icon: AiFillSetting, route: SETTINGS_ROUTE },
-      { label: "Logout", icon: MdLogout, route: AUTH_ROUTE },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={DATING_ROUTE}>
+              <div className={cln("menu-item")}>
+                <AiFillHeart size={17} />
+                <span>Dating</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: DATING_ROUTE,
+      },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={MESSAGES_ROUTE}>
+              <div className={cln("menu-item")}>
+                <AiFillMessage size={17} />
+                <span>Messages</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: MESSAGES_ROUTE,
+      },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={NOTIFICATIONS_ROUTE}>
+              <div className={cln("menu-item")}>
+                <IoMdNotifications size={17} />
+                <span>Notifications</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: NOTIFICATIONS_ROUTE,
+      },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={PROFILE_ROUTE}>
+              <div className={cln("menu-item")}>
+                <FaUserAlt size={17} />
+                <span>Profile</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: PROFILE_ROUTE,
+      },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={SETTINGS_ROUTE}>
+              <div className={cln("menu-item")}>
+                <AiFillSetting size={17} />
+                <span>Settings</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: SETTINGS_ROUTE,
+      },
+      {
+        label: (
+          <div className={cln("menu-item__wrapper")}>
+            <Link href={AUTH_ROUTE}>
+              <div className={cln("menu-item")}>
+                <MdLogout size={17} />
+                <span>Logout</span>
+              </div>
+            </Link>
+          </div>
+        ),
+        key: AUTH_ROUTE,
+      },
     ],
     [],
   );
@@ -64,18 +137,12 @@ const Sidebar = () => {
       </div>
 
       <div className={cln("menu__wrapper")}>
-        <Menu mode="vertical" selectedKeys={[router.pathname]}>
-          {menuItems.map((item) => (
-            <Menu.Item key={item.route} className={cln("menu-item__wrapper")}>
-              <Link href={item.route}>
-                <div className={cln("menu-item")}>
-                  <item.icon size={17} />
-                  <span>{item.label}</span>
-                </div>
-              </Link>
-            </Menu.Item>
-          ))}
-        </Menu>
+        <Menu
+          className={cln("menu")}
+          mode="vertical"
+          items={menuItems}
+          selectedKeys={[router.asPath]}
+        />
       </div>
     </aside>
   );
