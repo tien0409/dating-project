@@ -3,6 +3,7 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
     "prettier"
   ],
   "rules": {
@@ -18,10 +19,6 @@
     "@typescript-eslint/no-unused-vars": "off",
     "arrow-parens": ["error", "always"],
     "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "never"],
-
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-max-props-per-line": [1, { "maximum": 1, "mininumLength": 100 }],
-    "react/jsx-first-prop-new-line": [1, "multiline"]
+    "array-bracket-spacing": ["error", "never"]
   }
 }
