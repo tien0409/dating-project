@@ -52,7 +52,8 @@ const useLoginForm = (props: LoginFormProps) => {
       const data = await cancelablePromise(authRepository.login(payload));
       router.push(DATING_ROUTE);
       toast.success(data.message);
-    } catch (_) {
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }

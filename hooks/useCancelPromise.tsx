@@ -5,7 +5,7 @@ const makeCancelable = <T,>(promise: Promise<T>) => {
 
   const wrappedPromise = new Promise<T>((resolve, reject) => {
     return promise.then(
-      (val) => (isCanceled ? reject({ isCanceled, val }) : resolve(val)),
+      (val) => (isCanceled ? resolve({ isCanceled, val } as T) : resolve(val)),
       (error) => (isCanceled ? reject({ isCanceled, error }) : reject(error)),
     );
   });

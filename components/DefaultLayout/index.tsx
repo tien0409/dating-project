@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 import styles from "./DefaultLayout.module.scss";
 import Sidebar from "./Sidebar";
+import useDefaultLayout from "@/components/DefaultLayout/DefaultLayoutHook";
 
 const cln = classNames.bind(styles);
 
@@ -12,6 +13,8 @@ type Props = {
 
 const DefaultLayout = (props: Props) => {
   const { children } = props;
+
+  useDefaultLayout();
 
   return (
     <main className={cln("wrapper")}>

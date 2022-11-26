@@ -60,7 +60,8 @@ const useRegisterFormHook = (props: RegisterFormProps) => {
       const data = await cancelablePromise(authRepository.signup(payload));
       toast.success(data.message);
       handleSignIn();
-    } catch (_) {
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
