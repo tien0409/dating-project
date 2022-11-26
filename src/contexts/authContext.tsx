@@ -7,13 +7,15 @@ type AuthContextType = Partial<{
   isLoading: boolean;
   isAuthenticated: boolean;
   profile: UserAuthType;
-  updateProfile: (profile: UserAuthType) => void;
+  updateProfile: (_profile: UserAuthType) => void;
 }>;
 
-export const AuthContext = createContext<AuthContextType>({
+export const initAuthContext: AuthContextType = {
   isAuthenticated: false,
   profile: {},
-});
+};
+
+export const AuthContext = createContext<AuthContextType>(initAuthContext);
 
 type AuthProviderProps = {
   children: ReactNode;

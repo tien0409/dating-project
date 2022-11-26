@@ -1,8 +1,10 @@
-import { NextPage } from "next";
 import Head from "next/head";
-import { AuthView } from "../views";
 
-const AuthPage: NextPage = () => {
+import { AuthView } from "../views";
+import { PageType } from "@/src/types/PageType";
+import { BlankLayout } from "@/src/layouts";
+
+const AuthPage: PageType = () => {
   return (
     <div>
       <Head>
@@ -14,5 +16,7 @@ const AuthPage: NextPage = () => {
     </div>
   );
 };
+
+AuthPage.getLayout = (page) => <BlankLayout>{page}</BlankLayout>;
 
 export default AuthPage;
