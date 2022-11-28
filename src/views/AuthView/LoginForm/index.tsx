@@ -13,6 +13,7 @@ const cln = className.bind(styles);
 
 export type LoginFormProps = {
   setFormType: Dispatch<SetStateAction<FormType>>;
+  setCreateInfo: Dispatch<SetStateAction<boolean>>;
 };
 
 const LoginForm = (props: LoginFormProps) => {

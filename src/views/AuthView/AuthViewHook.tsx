@@ -13,6 +13,7 @@ const useAuthViewHook = () => {
     return false;
   });
   const [formType, setFormType] = useState<FormType>("LoginForm");
+  const [createInfo, setCreateInfo] = useState(true);
 
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -36,6 +37,8 @@ const useAuthViewHook = () => {
     isModalOpen,
     formType,
     setFormType,
+    createInfo,
+    setCreateInfo,
     handleOpenForm,
     handleCloseForm,
   };

@@ -1,17 +1,16 @@
-import { useContext } from "react";
+import { ReactNode, useContext } from "react";
 import { Else, If, Then } from "react-if";
 
-import { AUTH_ROUTE } from "@/src/configs/routes";
 import { AuthContext } from "@/src/contexts/authContext";
 
 type Props = {
-  children: any;
+  children: ReactNode;
 };
 
 const ProtectedRoute = (props: Props) => {
   const { children } = props;
 
-  const { profile, isAuthenticated, isLoading } = useContext(AuthContext);
+  const { isLoading } = useContext(AuthContext);
 
   return (
     <If condition={isLoading}>

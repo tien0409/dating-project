@@ -1,7 +1,5 @@
 import axios from "axios";
-import { getCookie, getCookies, setCookie } from "cookies-next";
-import { toast } from "react-toastify";
-import authRepository from "@/src/repositories/authRepository";
+import { getCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
 
 const axiosInstance = axios.create({
@@ -26,16 +24,26 @@ const axiosRefreshInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(async (config) => {
-  const exp: any = getCookie("Authentication")
-    ? (jwtDecode(getCookie("Authentication") as string) as any)?.exp
-    : 0;
-  if (exp < new Date().getTime() / 1000) {
-    await axiosRefreshInstance.get("/auth/refresh");
-  }
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const exp: number = getCookie("Authentication")
+      ? (jwtDecode(getCookie("Authentication") as string) as any)?.exp
+      : 0;
+    if (exp < new Date().getTime() / 1000 && getCookie("Refresh")) {
+      try {
+        await axiosRefreshInstance.get("/auth/refresh");
+      } catch (err: any) {
+        console.log("err");
+      }
+    }
 
-  return config;
-});
+    return config;
+  },
+  (err: any) => {
+    const { statusCode, message } = err.response.data;
+    Promise.reject({ statusCode, message });
+  },
+);
 
 axiosInstance.interceptors.response.use((config) => {
   return config;

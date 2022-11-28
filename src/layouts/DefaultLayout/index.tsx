@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import styles from "./DefaultLayout.module.scss";
 import Sidebar from "./Sidebar";
 import { AuthProvider } from "@/src/contexts/authContext";
+import { ProtectedRoute } from "@/src/components";
 
 const cln = classNames.bind(styles);
 
@@ -16,12 +17,14 @@ const DefaultLayout = (props: Props) => {
 
   return (
     <AuthProvider>
-      <main className={cln("wrapper")}>
-        <Sidebar />
-        <main className={cln("main-content")}>
-          <div className="container h-full w-full">{children}</div>
+      <ProtectedRoute>
+        <main className={cln("wrapper")}>
+          <Sidebar />
+          <main className={cln("main-content")}>
+            <div className="container h-full w-full">{children}</div>
+          </main>
         </main>
-      </main>
+      </ProtectedRoute>
     </AuthProvider>
   );
 };

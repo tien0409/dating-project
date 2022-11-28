@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { DATING_ROUTE } from "@/src/configs/routes";
 
 const useLoginForm = (props: LoginFormProps) => {
-  const { setFormType } = props;
+  const { setFormType, setCreateInfo } = props;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,11 +46,13 @@ const useLoginForm = (props: LoginFormProps) => {
   const handleSubmit = async (payload: LoginType) => {
     try {
       setIsLoading(true);
-      const data = await authRepository.login(payload);
-      router.push(DATING_ROUTE);
-      toast.success(data.message);
+      const res = await authRepository.login(payload);
+      const resInfo = await authRepository.getUserAuth();
+      if (resInfo.data?.fullName) router.push(DATING_ROUTE);
+      toast.success(res.message);
+      setCreateInfo(true);
     } catch (err: any) {
-      toast.error(err?.response?.data?.message);
+      toast.error(err?.message);
     } finally {
       setIsLoading(false);
     }
