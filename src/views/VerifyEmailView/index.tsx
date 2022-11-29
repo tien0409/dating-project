@@ -1,24 +1,15 @@
 import classNames from "classnames/bind";
 import Image from "next/image";
 import { IoMdArrowBack } from "react-icons/io";
-import { useRouter } from "next/router";
 
 import styles from "./VerifyEmailView.module.scss";
-import EmailVerified from "@/src/assets/images/email_verified.svg";
-import { AUTH_ROUTE } from "@/src/configs/routes";
-import { VerifyEmailPageProps } from "@/src/pages/verify-mail/[token]";
+import EmailVerified from "@/assets/images/email_verified.svg";
+import useVerifyEmailView from "./VerifyEmailViewHook";
 
 const cln = classNames.bind(styles);
 
-const VerifyEmailView = (props: VerifyEmailPageProps) => {
-  const { message } = props;
-
-  const router = useRouter();
-
-  const handleRedirectLogin = () => {
-    localStorage.setItem("redirect", "login");
-    router.push(AUTH_ROUTE);
-  };
+const VerifyEmailView = () => {
+  const { message, handleRedirectLogin } = useVerifyEmailView();
 
   return (
     <main className="w-screen h-screen flex-center flex-col">

@@ -4,13 +4,13 @@ import classNames from "classnames/bind";
 import { RcFile } from "antd/es/upload";
 
 import styles from "./CreateAccountForm.module.scss";
-import { GenderSelect } from "@/src/components";
+import { GenderSelect } from "@/components";
 import {
   birthdayValidator,
   firstNameValidator,
   genderValidator,
   lastNameValidator,
-} from "@/src/utils/validators";
+} from "@/utils/validators";
 import { PlusOutlined } from "@ant-design/icons";
 
 const cln = classNames.bind(styles);

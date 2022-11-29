@@ -1,19 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 
 import { FormType } from "./index";
-import { AuthContext } from "@/src/contexts/authContext";
-import { DATING_ROUTE } from "@/src/configs/routes";
+import { AuthContext } from "@/contexts/authContext";
+import { DATING_ROUTE } from "@/configs/routes";
 
 const useAuthViewHook = () => {
   const [isModalOpen, setIsModalOpen] = useState(() => {
-    // check when verifiy email
-    if (typeof window !== "undefined" && localStorage?.getItem("redirect")) {
-      return true;
-    }
-    return false;
+    // check when verify email
+    return !!(typeof window !== "undefined" && localStorage?.getItem("redirect"));
   });
   const [formType, setFormType] = useState<FormType>("LoginForm");
-  const [createInfo, setCreateInfo] = useState(true);
+  const [createInfo, setCreateInfo] = useState(false);
 
   const { isAuthenticated } = useContext(AuthContext);
 

@@ -1,11 +1,14 @@
 import type { AppProps } from "next/app";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { ConfigProvider } from "antd";
 import { ToastContainer } from "react-toastify";
+import { QueryClient } from "@tanstack/query-core";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
-import { DefaultLayout } from "@/src/layouts";
-import { PageType } from "@/src/types/PageType";
+import { PageType } from "@/types";
+import { DefaultLayout } from "@/layouts";
 
 type MyAppProps = AppProps & {
   Component: PageType;
@@ -14,18 +17,22 @@ type MyAppProps = AppProps & {
 function MyApp({ Component, pageProps }: MyAppProps) {
   const getLayout =
     Component.getLayout ?? ((page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>);
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#DF4259",
-        },
-      }}
-    >
-      {getLayout(<Component {...pageProps} />)}
-      <ToastContainer bodyClassName="toast" />
-    </ConfigProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#DF4259",
+          },
+        }}
+      >
+        {getLayout(<Component {...pageProps} />)}
+        <ToastContainer bodyClassName="toast" />
+      </ConfigProvider>
+    </QueryClientProvider>
   );
 }
 

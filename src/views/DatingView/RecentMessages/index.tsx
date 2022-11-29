@@ -2,8 +2,8 @@ import classNames from "classnames/bind";
 import Link from "next/link";
 
 import styles from "./RecentMessages.module.scss";
-import { MESSAGES_ROUTE } from "@/src/configs/routes";
-import { Conversation } from "@/src/components";
+import { MESSAGES_ROUTE } from "@/configs/routes";
+import { Conversation } from "@/components";
 
 const cln = classNames.bind(styles);
 

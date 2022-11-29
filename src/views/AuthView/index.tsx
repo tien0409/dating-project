@@ -4,7 +4,7 @@ import { Button, Modal } from "antd";
 import { Else, If, Then } from "react-if";
 
 import styles from "./AuthView.module.scss";
-import AuthImage from "@/src/assets/images/auth-bg.svg";
+import AuthImage from "@/assets/images/auth-bg.svg";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import ForgotPasswordForm from "./ForgotPasswordForm";

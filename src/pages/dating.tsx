@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-import { DatingView } from "@/src/views";
-import { PageType } from "@/src/types/PageType";
+import { DatingView } from "@/views";
+import { PageType } from "@/types";
 
 const DatingPage: PageType = () => {
   return (

@@ -2,22 +2,31 @@ import { toast } from "react-toastify";
 import { Form } from "antd";
 import { useState, useMemo } from "react";
 
-import { SignUpType } from "@/src/types/auth/SignUpType";
-import authRepository from "@/src/repositories/authRepository";
-import {
-  confirmPasswordValidator,
-  emailValidator,
-  passwordValidator,
-} from "@/src/utils/validators";
-import { RegisterFormProps } from "./index";
+import { RegisterFormProps } from ".";
+import { AxiosResponseType, SignUpType } from "@/types";
+import { useRegisterData } from "@/hooks/useAuthData";
+import { confirmPasswordValidator, emailValidator, passwordValidator } from "@/utils/validators";
 
 const useRegisterFormHook = (props: RegisterFormProps) => {
   const { setFormType } = props;
 
   const [agreeTermPrivacy, setAgreeTermPrivacy] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
+
+  const handleSuccesss = (res: AxiosResponseType) => {
+    toast.success(res.message);
+    handleSignIn();
+  };
+
+  const handleError = (error: any) => {
+    toast.error(error?.message);
+  };
+
+  const { mutate, isLoading } = useRegisterData({
+    onSuccess: handleSuccesss,
+    onError: handleError,
+  });
 
   const emailRules = useMemo(
     () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
@@ -57,16 +66,7 @@ const useRegisterFormHook = (props: RegisterFormProps) => {
   };
 
   const handleSubmit = async (payload: SignUpType) => {
-    try {
-      setIsLoading(true);
-      const data = await authRepository.signup(payload);
-      toast.success(data.message);
-      handleSignIn();
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message);
-    } finally {
-      setIsLoading(false);
-    }
+    mutate(payload);
   };
 
   return {

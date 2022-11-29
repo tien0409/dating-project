@@ -7,11 +7,11 @@ import { IoMdNotifications } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
 import styles from "./Sidebar.module.scss";
-import Avatar from "@/src/assets/images/avatar.jpg";
+import Avatar from "@/assets/images/avatar.jpg";
 import {
   AUTH_ROUTE,
   MESSAGES_ROUTE,
@@ -19,12 +19,19 @@ import {
   NOTIFICATIONS_ROUTE,
   PROFILE_ROUTE,
   SETTINGS_ROUTE,
-} from "@/src/configs/routes";
+} from "@/configs/routes";
+import { deleteCookie } from "cookies-next";
 
 const cln = classNames.bind(styles);
 
 const Sidebar = () => {
   const router = useRouter();
+
+  const handleLogout = useCallback(() => {
+    deleteCookie("Authentication");
+    deleteCookie("Refresh");
+    document.location.href = AUTH_ROUTE;
+  }, []);
 
   const menuItems = useMemo<ItemType[]>(
     () => [
@@ -96,18 +103,16 @@ const Sidebar = () => {
       {
         label: (
           <div className={cln("menu-item__wrapper")}>
-            <Link href={AUTH_ROUTE}>
-              <div className={cln("menu-item")}>
-                <MdLogout size={17} />
-                <span>Logout</span>
-              </div>
-            </Link>
+            <div className={cln("menu-item")} onClick={handleLogout}>
+              <MdLogout size={17} />
+              <span>Logout</span>
+            </div>
           </div>
         ),
         key: AUTH_ROUTE,
       },
     ],
-    [],
+    [handleLogout],
   );
 
   return (

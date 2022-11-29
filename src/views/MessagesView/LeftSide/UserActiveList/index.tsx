@@ -3,8 +3,8 @@ import Image from "next/image";
 import classNames from "classnames/bind";
 
 import styles from "./UserActiveList.module.scss";
-import { SwiperCustom } from "@/src/components";
-import Avatar from "@/src/assets/images/avatar.jpg";
+import { SwiperCustom } from "@/components";
+import Avatar from "@/assets/images/avatar.jpg";
 import useUserActiveList from "./UserActiveListHook";
 
 const cln = classNames.bind(styles);

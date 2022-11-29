@@ -1,22 +1,31 @@
 import { toast } from "react-toastify";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Form } from "antd";
-
-import authRepository from "@/src/repositories/authRepository";
-import { LoginType } from "@/src/types/auth/LoginType";
-import { emailValidator, passwordValidator } from "@/src/utils/validators";
-import { LoginFormProps } from "./index";
-import { FormType } from "../index";
 import { useRouter } from "next/router";
-import { DATING_ROUTE } from "@/src/configs/routes";
+
+import { LoginFormProps } from ".";
+import { useLoginData } from "@/hooks/useAuthData";
+import { DATING_ROUTE } from "@/configs/routes";
+import { AuthType, AxiosResponseType, SignInType } from "@/types";
+import { emailValidator, passwordValidator } from "@/utils/validators";
+import { FormType } from "..";
 
 const useLoginForm = (props: LoginFormProps) => {
-  const { setFormType, setCreateInfo } = props;
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { setFormType } = props;
 
   const [form] = Form.useForm();
   const router = useRouter();
+
+  const handleSuccess = async (res: AxiosResponseType<AuthType>) => {
+    toast.success(res.message);
+    await router.push(DATING_ROUTE);
+  };
+
+  const handleError = (error: any) => {
+    toast.error(error?.message);
+  };
+
+  const { mutate, isLoading } = useLoginData({ onSuccess: handleSuccess, onError: handleError });
 
   const emailRules = useMemo(
     () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],
@@ -43,21 +52,9 @@ const useLoginForm = (props: LoginFormProps) => {
     setFormType(type);
   };
 
-  const handleSubmit = async (payload: LoginType) => {
-    try {
-      setIsLoading(true);
-      const res = await authRepository.login(payload);
-      const resInfo = await authRepository.getUserAuth();
-      if (resInfo.data?.fullName) router.push(DATING_ROUTE);
-      toast.success(res.message);
-      setCreateInfo(true);
-    } catch (err: any) {
-      toast.error(err?.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmit = async (payload: SignInType) => {
+    mutate(payload);
   };
-
   return {
     isLoading,
     form,

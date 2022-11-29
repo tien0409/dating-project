@@ -1,6 +1,6 @@
 import { Button, Form, Input } from "antd";
 import className from "classnames/bind";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { RiUserHeartFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -72,7 +72,7 @@ const LoginForm = (props: LoginFormProps) => {
       </div>
 
       <div className="mt-12 subtext-color text-center">
-        Don't have an account?{" "}
+        Don&apos;t have an account?&nbsp;
         <span className={cln("sign-up")} onClick={handleRedirect("RegistrationForm")}>
           Sign up
         </span>

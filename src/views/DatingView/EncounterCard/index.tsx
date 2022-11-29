@@ -5,8 +5,8 @@ import { ImCross } from "react-icons/im";
 import { FaHeart } from "react-icons/fa";
 
 import styles from "./EncounterCard.module.scss";
-import { SwiperCustom } from "@/src/components";
-import Avatar from "@/src/assets/images/avatar.jpg";
+import { SwiperCustom } from "@/components";
+import Avatar from "@/assets/images/avatar.jpg";
 import useEncounterCard from "./EncounterCardHook";
 
 const cln = classNames.bind(styles);

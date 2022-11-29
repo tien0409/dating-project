@@ -1,52 +1,33 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
-import jwtDecode from "jwt-decode";
+
+import { AUTH_ROUTE } from "./routes";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authentication: getCookie("Authentication"),
-    Refresh: getCookie("Refresh"),
-  },
 });
 
-const axiosRefreshInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  withCredentials: true,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authentication: getCookie("Authentication"),
-    Refresh: getCookie("Refresh"),
-  },
-});
-
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    const exp: number = getCookie("Authentication")
-      ? (jwtDecode(getCookie("Authentication") as string) as any)?.exp
-      : 0;
-    if (exp < new Date().getTime() / 1000 && getCookie("Refresh")) {
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.message.includes("Please try again") &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
       try {
-        await axiosRefreshInstance.get("/auth/refresh");
-      } catch (err: any) {
-        console.log("err");
+        await axiosInstance.get("/auth/refresh");
+        return axiosInstance(originalRequest);
+      } catch (err) {
+        if (document.location.pathname !== AUTH_ROUTE) document.location.href = AUTH_ROUTE;
+        return Promise.reject(error?.response?.data);
       }
     }
 
-    return config;
-  },
-  (err: any) => {
-    const { statusCode, message } = err.response.data;
-    Promise.reject({ statusCode, message });
+    return Promise.reject(error?.response?.data);
   },
 );
-
-axiosInstance.interceptors.response.use((config) => {
-  return config;
-});
 
 export default axiosInstance;

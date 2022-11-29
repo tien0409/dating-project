@@ -1,8 +1,8 @@
 import { Form } from "antd";
 import { useMemo } from "react";
 
-import { emailValidator } from "@/src/utils/validators";
-import { ForgotPasswordFormProps } from "./index";
+import { emailValidator } from "@/utils/validators";
+import { ForgotPasswordFormProps } from ".";
 
 const useForgotPasswordHook = (props: ForgotPasswordFormProps) => {
   const { setFormType } = props;

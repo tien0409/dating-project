@@ -1,3 +1,5 @@
-export type AuthType = {
+type AuthType = {
   accessToken?: string;
 }
+
+export default AuthType;

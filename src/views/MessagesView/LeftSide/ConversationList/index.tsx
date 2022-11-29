@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 
 import styles from "./ConvesationList.module.scss";
-import { Conversation } from "@/src/components";
+import { Conversation } from "@/components";
 
 const cln = classNames.bind(styles);
 

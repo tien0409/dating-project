@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from "react";
 import { Else, If, Then } from "react-if";
 
-import { AuthContext } from "@/src/contexts/authContext";
+import { AuthContext } from "@/contexts/authContext";
 
 type Props = {
   children: ReactNode;

@@ -1,8 +1,7 @@
-import { NextPage } from "next";
 import Head from "next/head";
 
-import { MessagesView } from "@/src/views";
-import { PageType } from "@/src/types/PageType";
+import { MessagesView } from "@/views";
+import { PageType } from "@/types";
 
 const MessagesPage: PageType = () => {
   return (

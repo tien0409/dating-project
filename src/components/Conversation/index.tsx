@@ -4,8 +4,8 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { Dropdown } from "antd";
 
 import styles from "./Conversation.module.scss";
-import Avatar from "@/src/assets/images/avatar.jpg";
-import useConversation from "@/src/components/Conversation/ConversationHook";
+import Avatar from "@/assets/images/avatar.jpg";
+import useConversation from "@/components/Conversation/ConversationHook";
 
 const cln = classNames.bind(styles);
 
