@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 
 import useStore from "@/store";
 import { useFetchUserAuthData } from "@/hooks/useAuthData";
-import { UserAuthType } from "@/types";
+import { AxiosResponseType, UserAuthType } from "@/types";
 import { AUTH_ROUTE } from "@/configs/routes";
 
 const useProtectedRoute = () => {
   const router = useRouter();
   const store = useStore();
 
-  const handleSuccess = (profile: UserAuthType) => {
-    store.setProfile(profile);
+  const handleSuccess = (res: AxiosResponseType<UserAuthType>) => {
+    if (res.data) store.setProfile(res.data);
   };
 
   const handleError = async (error: any) => {

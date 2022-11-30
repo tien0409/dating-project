@@ -16,7 +16,7 @@ type MyAppProps = AppProps & {
 
 function MyApp({ Component, pageProps }: MyAppProps) {
   const getLayout =
-    Component.getLayout ?? ((page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>);
+    Component.layout ?? ((page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>);
   const [queryClient] = useState(() => new QueryClient());
 
   return (

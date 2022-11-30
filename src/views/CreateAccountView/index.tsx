@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import classNames from "classnames/bind";
 import { RcFile } from "antd/es/upload";
 
-import styles from "./CreateAccountForm.module.scss";
+import styles from "./CreateAccountView.module.scss";
 import { GenderSelect } from "@/components";
 import {
   birthdayValidator,
@@ -15,12 +15,13 @@ import { PlusOutlined } from "@ant-design/icons";
 
 const cln = classNames.bind(styles);
 
-const CreateAccountForm = () => {
+const CreateAccountView = () => {
   const [genderSelected, setGenderSelected] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [fileList] = useState<UploadFile[]>([]);
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
+  const [, setPreviewOpen] = useState(false);
+  const [, setPreviewImage] = useState("");
+  const [, setPreviewTitle] = useState("");
 
   const [form] = Form.useForm();
 
@@ -51,15 +52,15 @@ const CreateAccountForm = () => {
       reader.onerror = (error) => reject(error);
     });
 
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1));
-  };
+  // const handlePreview = async (file: UploadFile) => {
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj as RcFile);
+  //   }
+  //
+  //   setPreviewImage(file.url || (file.preview as string));
+  //   setPreviewOpen(true);
+  //   setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1));
+  // };
 
   useEffect(() => {
     form.setFieldValue("gender", genderSelected);
@@ -149,4 +150,4 @@ const CreateAccountForm = () => {
   );
 };
 
-export default CreateAccountForm;
+export default CreateAccountView;

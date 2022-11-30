@@ -1,5 +1,5 @@
 type AuthType = {
-  accessToken?: string;
-}
+  accountCreated: boolean;
+};
 
 export default AuthType;

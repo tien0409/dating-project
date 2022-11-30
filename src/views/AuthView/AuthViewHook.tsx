@@ -10,7 +10,6 @@ const useAuthViewHook = () => {
     return !!(typeof window !== "undefined" && localStorage?.getItem("redirect"));
   });
   const [formType, setFormType] = useState<FormType>("LoginForm");
-  const [createInfo, setCreateInfo] = useState(false);
 
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -34,8 +33,6 @@ const useAuthViewHook = () => {
     isModalOpen,
     formType,
     setFormType,
-    createInfo,
-    setCreateInfo,
     handleOpenForm,
     handleCloseForm,
   };

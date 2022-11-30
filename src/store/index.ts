@@ -3,7 +3,7 @@ import UserAuthType from "@/types/auth/UserAuthType";
 
 type Store = {
   profile: UserAuthType | null;
-  setProfile: (profile: UserAuthType) => void;
+  setProfile: (profile: UserAuthType | null) => void;
 };
 
 const useStore = create<Store>((set) => ({

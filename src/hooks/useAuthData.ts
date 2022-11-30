@@ -25,6 +25,6 @@ export const useRegisterData = ({ onSuccess, onError }: RQConfigsType) => {
   return useMutation(_signUp, { onSuccess, onError });
 };
 
-export const useFetchUserAuthData = ({ onSuccess, onError }: RQConfigsType) => {
-  return useQuery(["user-auth"], _fetchUserAuth, { onSuccess, onError });
+export const useFetchUserAuthData = ({ onSuccess, onError, enabled }: RQConfigsType) => {
+  return useQuery(["user-auth"], _fetchUserAuth, { onSuccess, onError, enabled });
 };
