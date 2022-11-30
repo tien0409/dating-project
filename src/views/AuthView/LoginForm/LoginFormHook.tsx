@@ -9,12 +9,14 @@ import { DATING_ROUTE } from "@/configs/routes";
 import { AuthType, AxiosResponseType, SignInType } from "@/types";
 import { emailValidator, passwordValidator } from "@/utils/validators";
 import { FormType } from "..";
+import useStore from "@/store";
 
 const useLoginForm = (props: LoginFormProps) => {
   const { setFormType } = props;
 
   const [form] = Form.useForm();
   const router = useRouter();
+  const store = useStore();
 
   const handleSuccess = async (res: AxiosResponseType<AuthType>) => {
     toast.success(res.message);
@@ -25,7 +27,10 @@ const useLoginForm = (props: LoginFormProps) => {
     toast.error(error?.message);
   };
 
-  const { mutate, isLoading } = useLoginData({ onSuccess: handleSuccess, onError: handleError });
+  const { mutate, isLoading } = useLoginData({
+    onSuccess: handleSuccess,
+    onError: handleError,
+  });
 
   const emailRules = useMemo(
     () => [{ required: true, message: "Please input your email" }, { validator: emailValidator }],

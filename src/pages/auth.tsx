@@ -8,7 +8,7 @@ const AuthPage: PageType = () => {
   return (
     <div>
       <Head>
-        <title>Dating, metting up today with new friends</title>
+        <title>Dating, meting up today with new friends</title>
         <meta name="description" content="Dating app create by student" />
       </Head>
 
