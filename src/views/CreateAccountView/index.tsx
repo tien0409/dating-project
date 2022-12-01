@@ -1,7 +1,6 @@
-import { Button, Col, DatePicker, Form, Input, Row, Upload, UploadFile } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { Button, Col, DatePicker, Form, Input, Modal, Row, Upload } from "antd";
 import classNames from "classnames/bind";
-import { RcFile } from "antd/es/upload";
+import { PlusOutlined } from "@ant-design/icons";
 
 import styles from "./CreateAccountView.module.scss";
 import { GenderSelect } from "@/components";
@@ -11,60 +10,25 @@ import {
   genderValidator,
   lastNameValidator,
 } from "@/utils/validators";
-import { PlusOutlined } from "@ant-design/icons";
+import useCreateAccountView from "./CreateAccountViewHook";
+import Image from "next/image";
 
 const cln = classNames.bind(styles);
 
 const CreateAccountView = () => {
-  const [genderSelected, setGenderSelected] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [fileList] = useState<UploadFile[]>([]);
-  const [, setPreviewOpen] = useState(false);
-  const [, setPreviewImage] = useState("");
-  const [, setPreviewTitle] = useState("");
-
-  const [form] = Form.useForm();
-
-  const formItemLayout = useMemo(
-    () => ({
-      labelCol: {
-        span: 24,
-      },
-      wrapperCol: { span: 24 },
-    }),
-    [],
-  );
-
-  const handleSubmit = (values: any) => {
-    console.log(values);
-  };
-
-  // const handleAction = (file: File) => {
-  //   console.log(file);
-  // };
-  //
-
-  const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-
-  // const handlePreview = async (file: UploadFile) => {
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj as RcFile);
-  //   }
-  //
-  //   setPreviewImage(file.url || (file.preview as string));
-  //   setPreviewOpen(true);
-  //   setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1));
-  // };
-
-  useEffect(() => {
-    form.setFieldValue("gender", genderSelected);
-  }, [form, genderSelected]);
+  const {
+    formItemLayout,
+    form,
+    genderSelected,
+    setGenderSelected,
+    previewOpen,
+    previewTitle,
+    previewImage,
+    handleCancelPreview,
+    handlePreview,
+    handleSubmit,
+    handleChangeUpload,
+  } = useCreateAccountView();
 
   return (
     <div className={cln("container", "wrapper")}>
@@ -98,11 +62,12 @@ const CreateAccountView = () => {
           <Col span={12}>
             <Form.Item
               label="Birthday"
-              name="brithday"
+              name="birthday"
               required
               rules={[{ validator: birthdayValidator }]}
             >
               <DatePicker
+                format={"DD/MM/YYYY"}
                 size="large"
                 style={{ width: "100%" }}
                 placeholder="Enter your birthday"
@@ -122,13 +87,35 @@ const CreateAccountView = () => {
         </Row>
 
         <Form.Item label="Profile images" valuePropName="files">
-          <Upload action="/upload.do" listType="picture-card" multiple maxCount={6}>
+          <Upload
+            listType="picture-card"
+            multiple
+            maxCount={6}
+            onChange={handleChangeUpload}
+            onPreview={handlePreview}
+          >
             <div>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Upload</div>
             </div>
           </Upload>
         </Form.Item>
+        <Modal
+          open={previewOpen}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancelPreview}
+          width={700}
+        >
+          <Image
+            src={previewImage}
+            alt={previewTitle}
+            objectFit="cover"
+            layout="responsive"
+            width={700}
+            height={700}
+          />
+        </Modal>
 
         <Form.Item label="Bio" name="bio">
           <Input.TextArea
