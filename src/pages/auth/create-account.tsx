@@ -4,7 +4,7 @@ import CreateAccountView from "@/views/CreateAccountView";
 import { PageType } from "@/types";
 import { BlankLayout } from "@/layouts";
 
-const CreateAccount: PageType = () => {
+export const CreateAccount: PageType = () => {
   return (
     <div>
       <Head>

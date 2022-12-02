@@ -4,13 +4,14 @@ import { RcFile } from "antd/es/upload";
 import { useRouter } from "next/router";
 
 import { useUploadMultiImageData } from "@/hooks/useUploadData";
-import { AxiosResponseType, CreateAccountType, ImageUploadType } from "@/types";
+import { AxiosResponseType, CreateAccountType, GenderType, ImageUploadType } from "@/types";
 import { convertToFormData } from "@/utils/upload";
 import { useCreateProfileData } from "@/hooks/useUsersData";
 import { DATING_ROUTE } from "@/configs/routes";
+import { useGendersData } from "@/hooks/useGendersData";
 
 const useCreateAccountView = () => {
-  const [genderSelected, setGenderSelected] = useState("");
+  const [genderSelected, setGenderSelected] = useState<GenderType>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -30,26 +31,23 @@ const useCreateAccountView = () => {
     createMutate(payload);
   };
 
-  const handleUploadError = () => {
-    console.log("error");
-  };
-
   const handleCreateSuccess = async () => {
     await router.push(DATING_ROUTE);
   };
 
-  const handleCreateError = () => {
-    console.log("error");
-  };
-
+  const { data: res } = useGendersData();
   const { mutate, isLoading: uploadLoading } = useUploadMultiImageData({
     onSuccess: handleUploadSuccess,
-    onError: handleUploadError,
   });
-  const { mutate: createMutate } = useCreateProfileData({
+  const { mutate: createMutate, isLoading: createLoading } = useCreateProfileData({
     onSuccess: handleCreateSuccess,
-    onError: handleCreateError,
   });
+
+  const isLoading = uploadLoading && createLoading;
+
+  const genders = useMemo(() => {
+    return res?.data || [];
+  }, [res?.data]);
 
   const formItemLayout = useMemo(
     () => ({
@@ -80,14 +78,14 @@ const useCreateAccountView = () => {
   };
 
   const handleChangeUpload = ({ fileList: newFileList }: any) => {
-    setFileList(newFileList.map((file) => file.originFileObj));
+    setFileList(newFileList.map((file: any) => file.originFileObj));
   };
 
   const handleCancelPreview = () => {
     setPreviewOpen(false);
   };
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = () => {
     mutate(convertToFormData({ files: fileList }));
   };
 
@@ -98,6 +96,8 @@ const useCreateAccountView = () => {
   return {
     formItemLayout,
     form,
+    isLoading,
+    genders,
     genderSelected,
     setGenderSelected,
     previewOpen,

@@ -21,10 +21,18 @@ $px: 40px;
 .profile {
   padding: 0 $px;
 
-  .fullname {
-    font-weight: 600;
-    font-size: 2rem;
-    color: var(--text-heading-color);
+  .basic__info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .fullName {
+      margin-right: 10px;
+      margin-bottom: 0;
+      font-weight: 600;
+      font-size: 2rem;
+      color: var(--text-heading-color);
+    }
   }
 
   .address {

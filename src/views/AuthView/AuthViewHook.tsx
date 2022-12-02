@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FormType } from "./index";
-import { AuthContext } from "@/contexts/authContext";
-import { DATING_ROUTE } from "@/configs/routes";
 
 const useAuthViewHook = () => {
   const [isModalOpen, setIsModalOpen] = useState(() => {
@@ -11,7 +9,7 @@ const useAuthViewHook = () => {
   });
   const [formType, setFormType] = useState<FormType>("LoginForm");
 
-  const { isAuthenticated } = useContext(AuthContext);
+  // const store = useStore();
 
   const handleOpenForm = (formType: FormType) => () => {
     setIsModalOpen(true);
@@ -23,11 +21,11 @@ const useAuthViewHook = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) window.location.pathname = DATING_ROUTE;
+    // if (store.profile) window.location.pathname = DATING_ROUTE;
     if (typeof window !== "undefined" && localStorage.getItem("redirect")) {
       localStorage.removeItem("redirect");
     }
-  }, [isAuthenticated]);
+  }, []);
 
   return {
     isModalOpen,

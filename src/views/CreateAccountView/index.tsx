@@ -19,6 +19,8 @@ const CreateAccountView = () => {
   const {
     formItemLayout,
     form,
+    isLoading,
+    genders,
     genderSelected,
     setGenderSelected,
     previewOpen,
@@ -36,7 +38,7 @@ const CreateAccountView = () => {
 
       <Form name="createAccount" {...formItemLayout} form={form} onFinish={handleSubmit}>
         <Row gutter={24}>
-          <Col>
+          <Col span={12}>
             <Form.Item
               label="First Name"
               name="firstName"
@@ -46,7 +48,7 @@ const CreateAccountView = () => {
               <Input size="large" placeholder="Enter your first name" showCount maxLength={20} />
             </Form.Item>
           </Col>
-          <Col>
+          <Col span={12}>
             <Form.Item
               label="Last Name"
               name="lastName"
@@ -74,14 +76,18 @@ const CreateAccountView = () => {
               />
             </Form.Item>
           </Col>
-          <Col>
+          <Col span={12}>
             <Form.Item
               label="Gender"
               name="gender"
               required
               rules={[{ validator: genderValidator }]}
             >
-              <GenderSelect genderSelected={genderSelected} setGenderSelected={setGenderSelected} />
+              <GenderSelect
+                genders={genders}
+                genderSelected={genderSelected}
+                setGenderSelected={setGenderSelected}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -128,7 +134,7 @@ const CreateAccountView = () => {
         </Form.Item>
 
         <Form.Item style={{ textAlign: "center" }}>
-          <Button type="primary" size="large" htmlType="submit" shape="round">
+          <Button type="primary" size="large" htmlType="submit" shape="round" loading={isLoading}>
             <span className={cln("sign__up-text")}>Sign up</span>
           </Button>
         </Form.Item>

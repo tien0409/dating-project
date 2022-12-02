@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import { LoginFormProps } from ".";
 import { useLoginData } from "@/hooks/useAuthData";
-import { CREATE_ACCOUNT, DATING_ROUTE } from "@/configs/routes";
+import { CREATE_ACCOUNT_ROUTE, DATING_ROUTE } from "@/configs/routes";
 import { AuthType, AxiosResponseType, SignInType } from "@/types";
 import { emailValidator, passwordValidator } from "@/utils/validators";
 import { FormType } from "..";
@@ -18,7 +18,7 @@ const useLoginForm = (props: LoginFormProps) => {
 
   const handleSuccess = async (res: AxiosResponseType<AuthType>) => {
     toast.success(res.message);
-    const nextRoute = res?.data?.accountCreated ? DATING_ROUTE : CREATE_ACCOUNT;
+    const nextRoute = res?.data?.accountCreated ? DATING_ROUTE : CREATE_ACCOUNT_ROUTE;
     await router.push(nextRoute);
   };
 

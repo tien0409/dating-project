@@ -3,16 +3,17 @@ import { memo, ReactNode } from "react";
 import { If, Then } from "react-if";
 
 import styles from "./SingleSelect.module.scss";
+import { GenderType } from "@/types";
 
 const cln = classNames.bind(styles);
 
 type Props = {
   iconSuffix?: boolean;
   icon?: ReactNode;
-  genderSelected: string;
+  genderSelected?: GenderType;
   text: string;
-  value: string;
-  onClick?: (_value: string) => void;
+  value?: GenderType;
+  onClick?: (_value?: GenderType) => void;
 };
 
 const SingleSelect = (props: Props) => {
@@ -25,7 +26,7 @@ const SingleSelect = (props: Props) => {
   return (
     <div
       className={cln("wrapper", {
-        isActive: genderSelected === value,
+        isActive: genderSelected?.id === value?.id,
       })}
       onClick={handleClick}
     >

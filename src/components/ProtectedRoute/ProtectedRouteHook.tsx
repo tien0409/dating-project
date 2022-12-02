@@ -10,8 +10,10 @@ const useProtectedRoute = () => {
   const router = useRouter();
   const store = useStore();
 
-  const handleSuccess = (res: AxiosResponseType<UserAuthType>) => {
-    if (res.data) store.setProfile(res.data);
+  const handleSuccess = async (res: AxiosResponseType<UserAuthType>) => {
+    if (res.data) {
+      store.setProfile(res.data);
+    }
   };
 
   const handleError = async (error: any) => {
