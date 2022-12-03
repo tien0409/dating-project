@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import classNames from "classnames/bind";
 import dynamic from "next/dynamic";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -49,6 +49,7 @@ const MessageForm = () => {
             >
               <EmojiPicker onEmojiClick={handleEmojiClick} />
             </div>
+            <Button hidden htmlType="submit"></Button>
           </div>
         </div>
       </Form>

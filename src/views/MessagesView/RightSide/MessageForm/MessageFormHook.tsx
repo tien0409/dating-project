@@ -1,6 +1,7 @@
 import { Form, InputRef } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { socketStore } from "@/store";
 
 const useMessageForm = () => {
   const inputRef = useRef<InputRef>(null);
@@ -8,6 +9,7 @@ const useMessageForm = () => {
   const [visibleEmoji, setVisibleEmoji] = useState(false);
 
   const [form] = Form.useForm();
+  const actions = socketStore((store) => store.actions);
 
   const handleToggleVisibleEmoji = () => {
     setVisibleEmoji(!visibleEmoji);
@@ -28,6 +30,7 @@ const useMessageForm = () => {
     const { content } = values;
     if (!content?.trim()) return;
 
+    actions.requestSendMessage();
     form.resetFields();
   };
 

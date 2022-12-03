@@ -12,3 +12,5 @@ export type { default as UserAuthType } from "./auth/UserAuthType";
 export type { default as CreateAccountType } from "./user/CreateAccountType";
 
 export type { default as GenderType } from "./gender/GenderType";
+
+export type { default as SendMessageType } from "./socket/SendMessageType";

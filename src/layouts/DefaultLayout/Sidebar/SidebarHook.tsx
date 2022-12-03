@@ -2,10 +2,10 @@ import { useCallback } from "react";
 import { deleteCookie } from "cookies-next";
 
 import { AUTH_ROUTE } from "@/configs/routes";
-import useStore from "@/store";
+import userStore from "@/store/userStore";
 
 const useSidebar = () => {
-  const store = useStore();
+  const store = userStore();
 
   const handleLogout = useCallback(() => {
     deleteCookie("Authentication");

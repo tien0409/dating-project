@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-import useStore from "@/store";
+import userStore from "@/store/userStore";
 import { useFetchUserAuthData } from "@/hooks/useAuthData";
 import { AxiosResponseType, UserAuthType } from "@/types";
 import { AUTH_ROUTE } from "@/configs/routes";
 
 const useProtectedRoute = () => {
   const router = useRouter();
-  const store = useStore();
+  const store = userStore();
 
   const handleSuccess = async (res: AxiosResponseType<UserAuthType>) => {
     if (res.data) {
