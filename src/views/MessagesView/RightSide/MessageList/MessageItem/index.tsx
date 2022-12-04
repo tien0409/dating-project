@@ -43,11 +43,15 @@ const MessageItem = (props: MessageItemProps) => {
           <Tooltip title={createdAtStr}>
             <div className={cln("content")}>{message?.content}</div>
           </Tooltip>
-          <div className={cln("message__actions")}>
-            <AiFillEdit size={17} cursor="pointer" />
-            <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
-            <GoReply size={17} cursor="pointer" />
-          </div>
+          <If condition={message?.participant?.id === senderParticipant?.id}>
+            <Then>
+              <div className={cln("message__actions")}>
+                <AiFillEdit size={17} cursor="pointer" />
+                <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
+                <GoReply size={17} cursor="pointer" />
+              </div>
+            </Then>
+          </If>
         </Else>
       </If>
     </div>

@@ -31,12 +31,13 @@ const useMessageItem = (props: MessageItemProps) => {
       content: "Are you sure you want to delete this message?",
       okText: "Delete",
       onOk: () => {
-        if (receiverParticipant?.user?.id && message) {
+        if (receiverParticipant?.user?.id && message && senderParticipant) {
           const indexMessageDeleted = messages.findIndex((item) => item.id === message.id);
           const payload: ReqDeleteMessageType = {
             indexMessageDeleted,
             message,
             receiverId: receiverParticipant?.user?.id,
+            senderParticipantId: senderParticipant?.id,
           };
           socket.emit(REQUEST_DELETE_MESSAGE, payload);
 
