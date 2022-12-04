@@ -2,7 +2,7 @@ import { MessageType, ParticipantType } from "@/types";
 
 type ConversationType = {
   id: string;
-  lastMessage: MessageType;
+  lastMessage?: MessageType;
   participant: ParticipantType;
 };
 

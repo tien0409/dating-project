@@ -16,10 +16,6 @@ const useMessageForm = () => {
   const [form] = Form.useForm();
 
   const socket = useSocketStore((store) => store.socket);
-  const messages = useChatStore((state) => state.messages);
-  const setMessages = useChatStore((state) => state.setMessages);
-  const conversations = useChatStore((state) => state.conversations);
-  const setConversations = useChatStore((state) => state.setConversations);
   const receiverParticipant = useChatStore((state) => state.receiverParticipant);
   const senderParticipant = useChatStore((state) => state.senderParticipant);
 
@@ -80,27 +76,6 @@ const useMessageForm = () => {
       setVisibleEmoji(false);
     }
   }, []);
-
-  useEffect(() => {
-    socket.on(SEND_MESSAGE, (data: ResSendMessageType) => {
-      if (data.message) {
-        setMessages([...messages, data.message]);
-
-        // update last message conversation
-        const newConversations = conversations.map((conversation) => {
-          if (conversation.id === data.conversationIdUpdated) {
-            conversation.lastMessage = data.message;
-          }
-          return conversation;
-        });
-        setConversations(newConversations);
-      }
-    });
-
-    return () => {
-      socket.off(SEND_MESSAGE);
-    };
-  }, [conversations, messages, setConversations, setMessages, socket]);
 
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick, false);
