@@ -13,14 +13,14 @@
   &.is-sender {
     flex-direction: row-reverse;
 
-    .avatar {
-      display: none;
-    }
-
     .content {
       background-color: var(--text-color);
       color: var(--white-color);
     }
+  }
+
+  .avatar {
+    flex-basis: 37px;
   }
 
   .content {
@@ -35,7 +35,7 @@
     display: flex;
     gap: 15px;
     align-items: center;
-    width: 80px;
+    flex-basis: 80px;
     opacity: 0;
     transition: 0.2s;
     color: var(--text-color);

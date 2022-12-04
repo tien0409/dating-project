@@ -3,6 +3,10 @@ import create from "zustand";
 import { MessageType, ConversationType, ParticipantType } from "@/types";
 
 type ChatStoreType = {
+  loadingGetMessages: boolean;
+  setLoadingGetMessages: (_loading: boolean) => void;
+  loadingGetConversations: boolean;
+  setLoadingGetConversations: (_loading: boolean) => void;
   senderParticipant: ParticipantType | null;
   setSenderParticipant: (_senderParticipant: ParticipantType) => void;
   receiverParticipant: ParticipantType | null;
@@ -14,6 +18,10 @@ type ChatStoreType = {
 };
 
 const useChatStore = create<ChatStoreType>((set) => ({
+  loadingGetMessages: false,
+  setLoadingGetMessages: (loading) => set({ loadingGetMessages: loading }),
+  loadingGetConversations: false,
+  setLoadingGetConversations: (loading) => set({ loadingGetConversations: loading }),
   senderParticipant: null,
   setSenderParticipant: (senderParticipant) => set((state) => ({ ...state, senderParticipant })),
   receiverParticipant: null,

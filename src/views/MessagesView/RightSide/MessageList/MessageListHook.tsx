@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { useChatStore, useSocketStore } from "@/store";
 import { SEND_ALL_MESSAGES } from "@/configs/socket-events";
@@ -12,6 +12,13 @@ const useMessageList = () => {
   const setMessages = useChatStore((state) => state.setMessages);
   const setReceiverParticipant = useChatStore((state) => state.setReceiverParticipant);
   const setSenderParticipant = useChatStore((state) => state.setSenderParticipant);
+  const loadingGetMessages = useChatStore((state) => state.loadingGetMessages);
+  const setLoadingGetMessages = useChatStore((state) => state.setLoadingGetMessages);
+
+  const _messagesInternal = useMemo(
+    () => (loadingGetMessages ? Array(15).fill(0) : messages),
+    [loadingGetMessages, messages],
+  );
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,16 +29,18 @@ const useMessageList = () => {
       setMessages(payload.messages);
       setReceiverParticipant(payload.receiverParticipant);
       setSenderParticipant(payload.senderParticipant);
+      setLoadingGetMessages(false);
     });
 
     return () => {
       socket.off(SEND_ALL_MESSAGES);
     };
-  }, [setMessages, setReceiverParticipant, socket]);
+  }, [setLoadingGetMessages, setMessages, setReceiverParticipant, setSenderParticipant, socket]);
 
   return {
+    loadingGetMessages,
     lastMessageRef,
-    messages,
+    _messagesInternal,
   };
 };
 

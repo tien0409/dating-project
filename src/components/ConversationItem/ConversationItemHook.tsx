@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-import { ConversationProps } from ".";
+import { ConversationItemProps } from ".";
 
-const useConversation = (props: ConversationProps) => {
+const useConversationItem = (props: ConversationItemProps) => {
   const { conversation } = props;
 
   const controlOptions = useMemo(
@@ -19,4 +19,4 @@ const useConversation = (props: ConversationProps) => {
   };
 };
 
-export default useConversation;
+export default useConversationItem;

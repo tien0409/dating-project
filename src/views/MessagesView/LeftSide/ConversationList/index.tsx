@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 
 import styles from "./ConversationList.module.scss";
-import { Conversation } from "@/components";
+import { ConversationItem } from "@/components";
 import useConversationList from "./ConversationListHook";
 
 const cln = classNames.bind(styles);
@@ -10,18 +10,24 @@ const cln = classNames.bind(styles);
 const ConversationList = () => {
   const router = useRouter();
 
-  const { conversations } = useConversationList();
+  const { _conversationsInternal, loadingGetConversations } = useConversationList();
 
   return (
     <div className={cln("custom__scroll", "custom__scroll--tiny")}>
-      {conversations.map((conversation) => (
+      {_conversationsInternal.map((conversation, index) => (
         <div
           className={cln("conversation__item", {
-            isActive: router.query?.conversationId?.[0] === conversation.id,
+            isActive:
+              !loadingGetConversations && router.query?.conversationId?.[0] === conversation.id,
           })}
-          key={conversation.id}
+          key={conversation?.id || index}
         >
-          <Conversation conversation={conversation} hasControl imageSize={50} />
+          <ConversationItem
+            loading={loadingGetConversations}
+            conversation={conversation}
+            hasControl
+            imageSize={50}
+          />
         </div>
       ))}
     </div>

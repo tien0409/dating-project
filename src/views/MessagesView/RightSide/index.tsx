@@ -24,7 +24,7 @@ const RightSide = () => {
           <div className={cln("header")}>
             <div className={cln("info")}>
               <Avatar size={50} src={receiverParticipant?.user?.avatar} />
-              <h3 className={cln("full-name")}>{receiverParticipant?.user?.fullName}</h3>
+              <h3 className={cln("text-truncate", "full-name")}>{receiverParticipant?.user?.fullName}</h3>
             </div>
 
             <div className={cln("actions")}>

@@ -7,12 +7,16 @@ import useMessageList from "./MessageListHook";
 const cln = classNames.bind(styles);
 
 const MessageList = () => {
-  const { lastMessageRef, messages } = useMessageList();
+  const { loadingGetMessages, lastMessageRef, _messagesInternal } = useMessageList();
 
   return (
     <div className={cln("wrapper")}>
-      {messages.map((message) => (
-        <MessageItem message={message} key={message.id} />
+      {_messagesInternal.map((message) => (
+        <MessageItem
+          loading={loadingGetMessages}
+          message={loadingGetMessages ? undefined : message}
+          key={message.id}
+        />
       ))}
       <div ref={lastMessageRef}></div>
     </div>

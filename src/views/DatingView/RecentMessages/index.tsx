@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import styles from "./RecentMessages.module.scss";
 import { MESSAGES_ROUTE } from "@/configs/routes";
-import { Conversation } from "@/components";
+import { ConversationItem } from "@/components";
 
 const cln = classNames.bind(styles);
 
@@ -19,7 +19,7 @@ const RecentMessages = () => {
 
       <div className={cln("message-list")}>
         {[1, 2, 3, 4].map((item, index) => (
-          <Conversation key={index} />
+          <ConversationItem key={index} />
         ))}
       </div>
     </div>
