@@ -49,7 +49,11 @@ const useMessageItem = (props: MessageItemProps) => {
     });
   };
 
-  return { senderParticipant, createdAtStr, handleDeleteMessage };
+  const handleReply = () => {
+    console.log("reply");
+  };
+
+  return { senderParticipant, createdAtStr, handleDeleteMessage, handleReply };
 };
 
 export default useMessageItem;

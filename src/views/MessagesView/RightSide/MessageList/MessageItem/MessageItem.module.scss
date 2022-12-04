@@ -29,15 +29,48 @@
     font-size: 1.2rem;
     border-radius: 7px;
     background-color: var(--bg-message);
-  }
 
-  .message__actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-basis: 80px;
-    opacity: 0;
-    transition: 0.2s;
-    color: var(--text-color);
+    .message__reply {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+
+      &-mark {
+        width: 2px;
+        background-color: var(--subtext-color);
+      }
+
+      &-main {
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s background-color;
+
+        &:hover {
+          background-color: var(--text-color-hover);
+        }
+
+        &-fullName {
+          font-size: 1.4rem;
+          font-weight: 500;
+          margin-bottom: 5px;
+        }
+
+        &-content {
+          font-size: 1.2rem;
+          margin-bottom: 0;
+        }
+      }
+    }
   }
+}
+
+.message__actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-basis: 80px;
+  opacity: 0;
+  transition: 0.2s;
+  color: var(--text-color);
 }

@@ -19,7 +19,8 @@ export type MessageItemProps = {
 const MessageItem = (props: MessageItemProps) => {
   const { loading, message } = props;
 
-  const { senderParticipant, createdAtStr, handleDeleteMessage } = useMessageItem(props);
+  const { senderParticipant, createdAtStr, handleDeleteMessage, handleReply } =
+    useMessageItem(props);
 
   return (
     <div
@@ -40,15 +41,31 @@ const MessageItem = (props: MessageItemProps) => {
           <div>
             <Avatar className={cln("avatar")} src={message?.participant?.user?.avatar} />
           </div>
-          <Tooltip title={createdAtStr}>
-            <div className={cln("content")}>{message?.content}</div>
-          </Tooltip>
+          <div className={cln("content")}>
+            <If condition={false}>
+              <Then>
+                <div className={cln("message__reply")}>
+                  <div className={cln("message__reply-mark")}>&nbsp;</div>
+
+                  <div className={cln("message__reply-main")}>
+                    <h5 className={cln("message__reply-main-fullName")}>Le Anh Tien</h5>
+                    <p className={cln("message__reply-main-content")}>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, libero!
+                    </p>
+                  </div>
+                </div>
+              </Then>
+            </If>
+            <Tooltip title={createdAtStr}>
+              <div>{message?.content}</div>
+            </Tooltip>
+          </div>
           <If condition={message?.participant?.id === senderParticipant?.id}>
             <Then>
               <div className={cln("message__actions")}>
                 <AiFillEdit size={17} cursor="pointer" />
                 <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
-                <GoReply size={17} cursor="pointer" />
+                <GoReply size={17} cursor="pointer" onClick={handleReply} />
               </div>
             </Then>
           </If>

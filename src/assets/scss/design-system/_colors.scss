@@ -2,6 +2,7 @@
   --white-color:  #fff;
   --black-color:  #000;
   --text-color:   #505279;
+  --text-color-hover:   #6d6f97;
   --text-heading-color:   #505279;
   --subtext-color: #AAAAB7;
   --bg-home: #F6F7FF;
@@ -29,6 +30,10 @@
 
 .text-color {
   color: var(--text-color);
+}
+
+.text-color-hover {
+  color: var(--text-color-hover);
 }
 
 .subtext-color {
