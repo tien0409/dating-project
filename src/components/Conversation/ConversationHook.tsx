@@ -1,6 +1,10 @@
 import { useMemo } from "react";
 
-const useConversation = () => {
+import { ConversationProps } from ".";
+
+const useConversation = (props: ConversationProps) => {
+  const { conversation } = props;
+
   const controlOptions = useMemo(
     () => [
       { key: "1", label: <div>Block</div> },

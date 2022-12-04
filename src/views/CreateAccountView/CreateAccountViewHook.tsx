@@ -6,9 +6,8 @@ import { useRouter } from "next/router";
 import { useUploadMultiImageData } from "@/hooks/useUploadData";
 import { AxiosResponseType, CreateAccountType, GenderType, ImageUploadType } from "@/types";
 import { convertToFormData } from "@/utils/upload";
-import { useCreateProfileData } from "@/hooks/useUsersData";
+import { useCreateProfileData, useGendersData } from "@/hooks/useUsersData";
 import { DATING_ROUTE } from "@/configs/routes";
-import { useGendersData } from "@/hooks/useGendersData";
 
 const useCreateAccountView = () => {
   const [genderSelected, setGenderSelected] = useState<GenderType>();

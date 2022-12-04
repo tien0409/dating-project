@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
         await axiosInstance.get("/auth/refresh");
         return axiosInstance(originalRequest);
       } catch (err) {
-        if (document.location.pathname !== AUTH_ROUTE) document.location.href = AUTH_ROUTE;
+        if (document?.location?.pathname !== AUTH_ROUTE) document.location.href = AUTH_ROUTE;
         return Promise.reject(error?.response?.data);
       }
     }

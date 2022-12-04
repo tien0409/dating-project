@@ -1,16 +1,16 @@
 import classNames from "classnames/bind";
 import Image from "next/image";
-import {Menu} from "antd";
-import {AiFillHeart, AiFillMessage, AiFillSetting} from "react-icons/ai";
-import {FaUserAlt} from "react-icons/fa";
-import {IoMdNotifications} from "react-icons/io";
-import {MdLogout} from "react-icons/md";
+import { Menu } from "antd";
+import { AiFillHeart, AiFillMessage, AiFillSetting } from "react-icons/ai";
+import { FaUserAlt } from "react-icons/fa";
+import { IoMdNotifications } from "react-icons/io";
+import { MdLogout } from "react-icons/md";
 import Link from "next/link";
-import {useMemo} from "react";
-import {ItemType} from "antd/es/menu/hooks/useItems";
-import {useRouter} from "next/router";
-import {Else, If, Then} from "react-if";
-import {BsGenderFemale, BsGenderMale} from "react-icons/bs";
+import { useMemo } from "react";
+import { ItemType } from "antd/es/menu/hooks/useItems";
+import { useRouter } from "next/router";
+import { Else, If, Then } from "react-if";
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 import styles from "./Sidebar.module.scss";
 import Avatar from "@/assets/images/avatar.jpg";
@@ -29,7 +29,7 @@ const cln = classNames.bind(styles);
 const Sidebar = () => {
   const router = useRouter();
 
-  const {store, handleLogout} = useSidebar();
+  const { store, handleLogout } = useSidebar();
 
   const menuItems = useMemo<ItemType[]>(
     () => [
@@ -38,7 +38,7 @@ const Sidebar = () => {
           <div className={cln("menu-item__wrapper")}>
             <Link href={DATING_ROUTE}>
               <div className={cln("menu-item")}>
-                <AiFillHeart size={17}/>
+                <AiFillHeart size={17} />
                 <span>Dating</span>
               </div>
             </Link>
@@ -51,7 +51,7 @@ const Sidebar = () => {
           <div className={cln("menu-item__wrapper")}>
             <Link href={MESSAGES_ROUTE}>
               <div className={cln("menu-item")}>
-                <AiFillMessage size={17}/>
+                <AiFillMessage size={17} />
                 <span>Messages</span>
               </div>
             </Link>
@@ -64,7 +64,7 @@ const Sidebar = () => {
           <div className={cln("menu-item__wrapper")}>
             <Link href={NOTIFICATIONS_ROUTE}>
               <div className={cln("menu-item")}>
-                <IoMdNotifications size={17}/>
+                <IoMdNotifications size={17} />
                 <span>Notifications</span>
               </div>
             </Link>
@@ -77,7 +77,7 @@ const Sidebar = () => {
           <div className={cln("menu-item__wrapper")}>
             <Link href={PROFILE_ROUTE}>
               <div className={cln("menu-item")}>
-                <FaUserAlt size={17}/>
+                <FaUserAlt size={17} />
                 <span>Profile</span>
               </div>
             </Link>
@@ -90,7 +90,7 @@ const Sidebar = () => {
           <div className={cln("menu-item__wrapper")}>
             <Link href={SETTINGS_ROUTE}>
               <div className={cln("menu-item")}>
-                <AiFillSetting size={17}/>
+                <AiFillSetting size={17} />
                 <span>Settings</span>
               </div>
             </Link>
@@ -102,7 +102,7 @@ const Sidebar = () => {
         label: (
           <div className={cln("menu-item__wrapper")}>
             <div className={cln("menu-item")} onClick={handleLogout}>
-              <MdLogout size={17}/>
+              <MdLogout size={17} />
               <span>Logout</span>
             </div>
           </div>
@@ -116,7 +116,7 @@ const Sidebar = () => {
   return (
     <aside className={cln("wrapper")}>
       <div className={cln("avatar__wrapper")}>
-        <Image src={Avatar} alt="avatar" objectFit="cover"/>
+        <Image src={Avatar} alt="avatar" objectFit="cover" />
       </div>
 
       <div className={cln("profile")}>
@@ -124,10 +124,10 @@ const Sidebar = () => {
           <h3 className={cln("fullName")}>{store?.profile?.fullName}</h3>
           <If condition={store?.profile?.gender?.name === "Male"}>
             <Then>
-              <BsGenderMale size={15}/>
+              <BsGenderMale size={15} />
             </Then>
             <Else>
-              <BsGenderFemale size={15}/>
+              <BsGenderFemale size={15} />
             </Else>
           </If>
         </div>

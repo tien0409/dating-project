@@ -9,6 +9,9 @@ const nextConfig = {
     includePaths: [path.join(__dirname, "src/assets/scss/design-system/_breakpoints")],
     prependData: '@import "./src/assets/scss/design-system/_breakpoints.scss";',
   },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
 };
 
 module.exports = nextConfig;

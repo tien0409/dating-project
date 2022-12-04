@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import dynamic from "next/dynamic";
 import { BsEmojiSmile } from "react-icons/bs";
 import { GrAttachment } from "react-icons/gr";
+import { memo } from "react";
 
 import styles from "./MessageForm.module.scss";
 import useMessageForm from "./MessageFormHook";
@@ -29,6 +30,7 @@ const MessageForm = () => {
               className={cln("input")}
               size="large"
               placeholder="Your message..."
+              autoFocus
               ref={inputRef}
             />
           </Form.Item>
@@ -57,4 +59,4 @@ const MessageForm = () => {
   );
 };
 
-export default MessageForm;
+export default memo(MessageForm);

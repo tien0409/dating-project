@@ -6,9 +6,9 @@ type UserStoreType = {
   setProfile: (_profile: UserAuthType | null) => void;
 };
 
-const userStore = create<UserStoreType>((set) => ({
+const useUserStore = create<UserStoreType>((set) => ({
   profile: null,
   setProfile: (profile) => set((state) => ({ ...state, profile })),
 }));
 
-export default userStore;
+export default useUserStore;

@@ -13,4 +13,9 @@ export type { default as CreateAccountType } from "./user/CreateAccountType";
 
 export type { default as GenderType } from "./gender/GenderType";
 
-export type { default as SendMessageType } from "./socket/SendMessageType";
+export type { default as SendMessageType } from "./chat/SendMessageType";
+export type { default as MessageType } from "./chat/MessageType";
+export type { default as ConversationType } from "./chat/ConversationType";
+export type { default as ParticipantType } from "./chat/ParticipantType";
+export type { default as ResponseSendAllMessages } from "./chat/ResponseSendAllMessages";
+export type { default as ResponseSendMessageType } from "./chat/ResponseSendMessageType";

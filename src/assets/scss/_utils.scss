@@ -8,6 +8,13 @@
 
 .relative { position: relative; }
 
+.text-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .d-flex {
   display: flex;
 }

@@ -1,20 +1,22 @@
 import { useEffect } from "react";
 
-import useConversationStore from "@/store/useConversationStore";
+import { useChatStore, useSocketStore } from "@/store";
+import { SEND_ALL_CONVERSATIONS } from "@/configs/socket-events";
 
 const useConversationList = () => {
-  const requestConversations = useConversationStore((state) => state.requestConversations);
-  const onResponseConversations = useConversationStore((state) => state.onResponseConversations);
-  const conversations = useConversationStore((state) => state.conversations);
-  console.log("conversations", conversations);
+  const socket = useSocketStore((state) => state.socket);
+  const conversations = useChatStore((state) => state.conversations);
+  const setConversations = useChatStore((state) => state.setConversations);
 
   useEffect(() => {
-    requestConversations();
-  }, [requestConversations]);
+    socket.on(SEND_ALL_CONVERSATIONS, (conversations) => {
+      setConversations(conversations);
+    });
 
-  useEffect(() => {
-    onResponseConversations();
-  }, [onResponseConversations]);
+    return () => {
+      socket.off(SEND_ALL_CONVERSATIONS);
+    };
+  }, [setConversations, socket]);
 
   return { conversations };
 };

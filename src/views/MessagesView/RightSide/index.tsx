@@ -9,11 +9,13 @@ import MessageList from "./MessageList";
 import MessageForm from "./MessageForm";
 import { useRouter } from "next/router";
 import { If, Then } from "react-if";
+import { useChatStore } from "@/store";
 
 const cln = classNames.bind(styles);
 
 const RightSide = () => {
   const router = useRouter();
+  const receiverParticipant = useChatStore((state) => state.receiverParticipant);
 
   return (
     <If condition={!_isEmpty(router.query)}>
@@ -21,11 +23,8 @@ const RightSide = () => {
         <div className={cln("wrapper")}>
           <div className={cln("header")}>
             <div className={cln("info")}>
-              <Avatar
-                size={50}
-                src="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/35855974_2046707952248442_6348017081451020288_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=e3f864&_nc_ohc=jBWT9YCfmRoAX-Sa9mk&_nc_ht=scontent.fhan14-1.fna&oh=00_AfCDThzM4h3LdZSrJpkRfqmn3kNAn1HoV7syg1s9f20IPQ&oe=63A711AA"
-              />
-              <h3 className={cln("full-name")}>Mr.Satan</h3>
+              <Avatar size={50} src={receiverParticipant?.user?.avatar} />
+              <h3 className={cln("full-name")}>{receiverParticipant?.user?.fullName}</h3>
             </div>
 
             <div className={cln("actions")}>

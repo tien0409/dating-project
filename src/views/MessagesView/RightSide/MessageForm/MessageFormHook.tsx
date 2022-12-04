@@ -1,38 +1,64 @@
 import { Form, InputRef } from "antd";
+import { useRouter } from "next/router";
 import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { socketStore } from "@/store";
+
+import { useChatStore, useSocketStore } from "@/store";
+import { ResponseSendMessageType, SendMessageType } from "@/types";
+import { REQUEST_SEND_MESSAGE, SEND_MESSAGE } from "@/configs/socket-events";
 
 const useMessageForm = () => {
   const inputRef = useRef<InputRef>(null);
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
 
+  const router = useRouter();
   const [form] = Form.useForm();
-  const actions = socketStore((store) => store.actions);
 
-  const handleToggleVisibleEmoji = () => {
+  const socket = useSocketStore((store) => store.socket);
+  const messages = useChatStore((state) => state.messages);
+  const setMessages = useChatStore((state) => state.setMessages);
+  const conversations = useChatStore((state) => state.conversations);
+  const setConversations = useChatStore((state) => state.setConversations);
+  const receiverParticipant = useChatStore((state) => state.receiverParticipant);
+  const senderParticipant = useChatStore((state) => state.senderParticipant);
+
+  const handleToggleVisibleEmoji = useCallback(() => {
     setVisibleEmoji(!visibleEmoji);
-  };
+  }, [visibleEmoji]);
 
-  const handleEmojiClick = (emojiData: EmojiClickData) => {
-    const inputCurrentValue = form.getFieldValue("content");
-    const cursorPositionIndex = inputRef.current?.input?.selectionStart;
-    const newValue = cursorPositionIndex
-      ? inputCurrentValue?.substring(0, cursorPositionIndex) +
-        emojiData?.emoji +
-        inputCurrentValue?.substring(cursorPositionIndex + 1)
-      : inputCurrentValue || "" + emojiData?.emoji;
-    form.setFieldValue("content", newValue);
-  };
+  const handleEmojiClick = useCallback(
+    (emojiData: EmojiClickData) => {
+      const inputCurrentValue = form.getFieldValue("content");
+      const cursorPositionIndex = inputRef.current?.input?.selectionStart;
+      const newValue = cursorPositionIndex
+        ? inputCurrentValue?.substring(0, cursorPositionIndex) +
+          emojiData?.emoji +
+          inputCurrentValue?.substring(cursorPositionIndex + 1)
+        : inputCurrentValue || "" + emojiData?.emoji;
+      form.setFieldValue("content", newValue);
+    },
+    [form],
+  );
 
-  const handleFinish = (values: any) => {
-    const { content } = values;
-    if (!content?.trim()) return;
+  const handleFinish = useCallback(
+    (values: any) => {
+      const { content } = values;
+      if (!content?.trim()) return;
 
-    actions.requestSendMessage();
-    form.resetFields();
-  };
+      if (receiverParticipant?.id && senderParticipant?.id && router.query.conversationId?.[0]) {
+        const payload: SendMessageType = {
+          content,
+          conversationId: router.query.conversationId?.[0],
+          receiverParticipantId: receiverParticipant.id,
+          senderParticipantId: senderParticipant.id,
+        };
+        socket.emit(REQUEST_SEND_MESSAGE, payload);
+        form.resetFields();
+      }
+    },
+    [form, receiverParticipant?.id, router.query.conversationId, senderParticipant?.id, socket],
+  );
 
   const handleDocumentClick = useCallback((e: any) => {
     let isEmojiFound = false;
@@ -56,12 +82,33 @@ const useMessageForm = () => {
   }, []);
 
   useEffect(() => {
+    socket.on(SEND_MESSAGE, (data: ResponseSendMessageType) => {
+      if (data.message) {
+        setMessages([...messages, data.message]);
+
+        // update last message conversation
+        const newConversations = conversations.map((conversation) => {
+          if (conversation.id === data.conversationIdUpdated) {
+            conversation.lastMessage = data.message;
+          }
+          return conversation;
+        });
+        setConversations(newConversations);
+      }
+    });
+
+    return () => {
+      socket.off(SEND_MESSAGE);
+    };
+  }, [conversations, messages, setConversations, setMessages, socket]);
+
+  useEffect(() => {
     document.addEventListener("click", handleDocumentClick, false);
 
     return () => {
       document.removeEventListener("click", handleDocumentClick, false);
     };
-  }, []);
+  }, [handleDocumentClick]);
 
   return { inputRef, visibleEmoji, form, handleToggleVisibleEmoji, handleEmojiClick, handleFinish };
 };
