@@ -4,7 +4,7 @@ import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useChatStore, useSocketStore } from "@/store";
-import { ResponseSendMessageType, SendMessageType } from "@/types";
+import { ResSendMessageType, SendMessageType } from "@/types";
 import { REQUEST_SEND_MESSAGE, SEND_MESSAGE } from "@/configs/socket-events";
 
 const useMessageForm = () => {
@@ -82,7 +82,7 @@ const useMessageForm = () => {
   }, []);
 
   useEffect(() => {
-    socket.on(SEND_MESSAGE, (data: ResponseSendMessageType) => {
+    socket.on(SEND_MESSAGE, (data: ResSendMessageType) => {
       if (data.message) {
         setMessages([...messages, data.message]);
 

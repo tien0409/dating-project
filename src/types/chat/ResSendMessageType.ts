@@ -1,8 +1,8 @@
 import { MessageType } from "@/types";
 
-type ResponseSendMessageType = {
+type ResSendMessageType = {
   conversationIdUpdated: string;
   message: MessageType;
 };
 
-export default ResponseSendMessageType;
+export default ResSendMessageType;

@@ -19,7 +19,7 @@ export type MessageItemProps = {
 const MessageItem = (props: MessageItemProps) => {
   const { loading, message } = props;
 
-  const { senderParticipant, createdAtStr } = useMessageItem(props);
+  const { senderParticipant, createdAtStr, handleDeleteMessage } = useMessageItem(props);
 
   return (
     <div
@@ -45,7 +45,7 @@ const MessageItem = (props: MessageItemProps) => {
           </Tooltip>
           <div className={cln("message__actions")}>
             <AiFillEdit size={17} cursor="pointer" />
-            <AiFillDelete size={17} cursor="pointer" />
+            <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
             <GoReply size={17} cursor="pointer" />
           </div>
         </Else>

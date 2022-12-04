@@ -7,6 +7,8 @@ type ChatStoreType = {
   setLoadingGetMessages: (_loading: boolean) => void;
   loadingGetConversations: boolean;
   setLoadingGetConversations: (_loading: boolean) => void;
+  conversationId: string;
+  setConversationId: (_conversationId: string) => void;
   senderParticipant: ParticipantType | null;
   setSenderParticipant: (_senderParticipant: ParticipantType) => void;
   receiverParticipant: ParticipantType | null;
@@ -22,6 +24,8 @@ const useChatStore = create<ChatStoreType>((set) => ({
   setLoadingGetMessages: (loading) => set({ loadingGetMessages: loading }),
   loadingGetConversations: false,
   setLoadingGetConversations: (loading) => set({ loadingGetConversations: loading }),
+  conversationId: "",
+  setConversationId: (conversationId) => set((state) => ({ ...state, conversationId })),
   senderParticipant: null,
   setSenderParticipant: (senderParticipant) => set((state) => ({ ...state, senderParticipant })),
   receiverParticipant: null,

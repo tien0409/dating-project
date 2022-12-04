@@ -17,5 +17,6 @@ export type { default as SendMessageType } from "./chat/SendMessageType";
 export type { default as MessageType } from "./chat/MessageType";
 export type { default as ConversationType } from "./chat/ConversationType";
 export type { default as ParticipantType } from "./chat/ParticipantType";
-export type { default as ResponseSendAllMessages } from "./chat/ResponseSendAllMessages";
-export type { default as ResponseSendMessageType } from "./chat/ResponseSendMessageType";
+export type { default as ResSendAllMessages } from "./chat/ResSendAllMessages";
+export type { default as ResSendMessageType } from "./chat/ResSendMessageType";
+export type { default as ReqDeleteMessageType } from "./chat/ReqDeleteMessageType";

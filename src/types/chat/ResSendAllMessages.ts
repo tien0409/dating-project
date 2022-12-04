@@ -1,9 +1,9 @@
 import { MessageType, ParticipantType } from "@/types";
 
-type ResponseSendAllMessages = {
+type ResSendAllMessages = {
   senderParticipant: ParticipantType;
   receiverParticipant: ParticipantType;
   messages: MessageType[];
 };
 
-export default ResponseSendAllMessages;
+export default ResSendAllMessages;
