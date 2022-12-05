@@ -5,5 +5,6 @@ export type ResDeleteMessageTypeFailure = ReqDeleteMessageType & {
 };
 
 export type ResDeleteMessageType = ReqDeleteMessageType & {
+  lastMessageConversation?: MessageType;
   messages: MessageType[];
 };

@@ -12,14 +12,12 @@ import {
   REQUEST_ALL_MESSAGES,
   SEND_ALL_MESSAGES,
   SEND_DELETE_MESSAGE,
-  SEND_DELETE_MESSAGE_FAILURE,
   SEND_MESSAGE,
 } from "@/configs/socket-events";
 import {
   MessageType,
   ReqAllMessageType,
   ResDeleteMessageType,
-  ResDeleteMessageTypeFailure,
   ResSendAllMessages,
   ResSendMessageType,
 } from "@/types";
@@ -31,12 +29,13 @@ const useMessageView = () => {
   const socket = useSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
   const conversations = useConversationStore((state) => state.conversations);
-  const conversationId = useConversationStore((state) => state.conversationId);
+  const conversation = useConversationStore((state) => state.conversation);
   const setLoadingGetMessages = useMessageStore((state) => state.setLoadingGetMessages);
   const setLoadingGetConversations = useConversationStore(
     (state) => state.setLoadingGetConversations,
   );
-  const setConversationId = useConversationStore((state) => state.setConversationId);
+  const setConversation = useConversationStore((state) => state.setConversation);
+  const setMessageDelete = useMessageStore((state) => state.setMessageDelete);
   const setMessages = useMessageStore((state) => state.setMessages);
   const setReceiverParticipant = useParticipantStore((state) => state.setReceiverParticipant);
   const setSenderParticipant = useParticipantStore((state) => state.setSenderParticipant);
@@ -62,9 +61,8 @@ const useMessageView = () => {
       };
       socket.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
-      setConversationId(router.query.conversationId?.[0]);
     }
-  }, [router.query.conversationId, setConversationId, setLoadingGetMessages, socket]);
+  }, [router.query.conversationId, setLoadingGetMessages, socket]);
 
   useEffect(() => {
     socket.emit(REQUEST_ALL_CONVERSATIONS);
@@ -73,10 +71,13 @@ const useMessageView = () => {
 
   useEffect(() => {
     socket.on(SEND_ALL_MESSAGES, (payload: ResSendAllMessages) => {
-      setMessages(payload.messages);
-      setReceiverParticipant(payload.receiverParticipant);
-      setSenderParticipant(payload.senderParticipant);
+      const { messages, senderParticipant, receiverParticipant, conversation } = payload;
+
       setLoadingGetMessages(false);
+      setConversation(conversation);
+      setMessages(messages);
+      setReceiverParticipant(receiverParticipant);
+      setSenderParticipant(senderParticipant);
     });
 
     socket.on(SEND_MESSAGE, (data: ResSendMessageType) => {
@@ -87,31 +88,29 @@ const useMessageView = () => {
     });
 
     socket.on(SEND_DELETE_MESSAGE, (payload: ResDeleteMessageType) => {
-      toast.success("Delete message successfully");
-      const lastMessage = messages[messages.length - 1];
-      updateLastMessageConversation(conversationId, lastMessage);
-      setMessages(payload.messages);
-    });
+      const { lastMessageConversation } = payload;
 
-    socket.on(SEND_DELETE_MESSAGE_FAILURE, (payload: ResDeleteMessageTypeFailure) => {
-      const newMessages = [...messages];
-      newMessages.splice(payload.indexMessageDeleted, 0, payload.message);
-      setMessages(newMessages);
-      toast.error(payload.errorMessage);
+      toast.success("Delete message successfully");
+      setMessageDelete();
+      setMessages(payload.messages);
+      if (lastMessageConversation) {
+        conversation && updateLastMessageConversation(conversation?.id, lastMessageConversation);
+      }
     });
 
     return () => {
       socket.off(SEND_ALL_MESSAGES);
       socket.off(SEND_MESSAGE);
       socket.off(SEND_DELETE_MESSAGE);
-      socket.off(SEND_DELETE_MESSAGE_FAILURE);
     };
   }, [
-    conversationId,
+    conversation,
     conversations,
     messages,
+    setConversation,
     setConversations,
     setLoadingGetMessages,
+    setMessageDelete,
     setMessages,
     setReceiverParticipant,
     setSenderParticipant,

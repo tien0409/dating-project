@@ -4,6 +4,7 @@ import { Avatar, Skeleton, Tooltip } from "antd";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { GoReply } from "react-icons/go";
 import classNames from "classnames/bind";
+import { VscLoading } from "react-icons/vsc";
 
 import styles from "./MessageItem.module.scss";
 import { MessageType } from "@/types";
@@ -20,6 +21,7 @@ const MessageItem = (props: MessageItemProps) => {
   const { loading, message } = props;
 
   const {
+    messageDelete,
     senderParticipant,
     createdAtStr,
     handleDeleteMessage,
@@ -80,15 +82,25 @@ const MessageItem = (props: MessageItemProps) => {
               <div>{message?.content}</div>
             </Tooltip>
           </div>
-          <div className={cln("message__actions")}>
-            <If condition={message?.participant?.id === senderParticipant?.id}>
-              <Then>
-                <AiFillEdit size={17} cursor="pointer" />
-                <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
-              </Then>
-            </If>
-            <GoReply size={17} cursor="pointer" onClick={handleReply} />
-          </div>
+
+          <If condition={messageDelete?.id === message?.id}>
+            <Then>
+              <div className={cln("message__deleting")}>
+                <VscLoading size={15} />
+              </div>
+            </Then>
+            <Else>
+              <div className={cln("message__actions")}>
+                <If condition={message?.participant?.id === senderParticipant?.id}>
+                  <Then>
+                    <AiFillEdit size={17} cursor="pointer" />
+                    <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
+                  </Then>
+                </If>
+                <GoReply size={17} cursor="pointer" onClick={handleReply} />
+              </div>
+            </Else>
+          </If>
         </Else>
       </If>
     </div>

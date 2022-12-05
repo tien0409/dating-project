@@ -9,6 +9,8 @@ type MessageStoreType = {
   setMessages: (_messages: MessageType[]) => void;
   messageReply?: MessageType;
   setMessageReply: (_messageReply?: MessageType) => void;
+  messageDelete?: MessageType;
+  setMessageDelete: (_messageDelete?: MessageType) => void;
 };
 
 const useMessageStore = create<MessageStoreType>((set) => ({
@@ -18,6 +20,8 @@ const useMessageStore = create<MessageStoreType>((set) => ({
   setMessages: (messages) => set((state) => ({ ...state, messages })),
   messageReply: undefined,
   setMessageReply: (messageReply) => set((state) => ({ ...state, messageReply })),
+  messageDelete: undefined,
+  setMessageDelete: (messageDelete) => set((state) => ({ ...state, messageDelete })),
 }));
 
 export default useMessageStore;

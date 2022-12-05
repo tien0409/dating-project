@@ -20,9 +20,11 @@ const useMessageItem = (props: MessageItemProps) => {
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const messages = useMessageStore((state) => state.messages);
-  const conversationId = useConversationStore((state) => state.conversationId);
+  const messageDelete = useMessageStore((state) => state.messageDelete);
+  const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
   const setMessages = useMessageStore((state) => state.setMessages);
+  const setMessageDelete = useMessageStore((state) => state.setMessageDelete);
 
   const createdAtStr = useMemo(() => {
     if (message && isThisWeek(new Date(message?.createdAt))) {
@@ -38,20 +40,15 @@ const useMessageItem = (props: MessageItemProps) => {
       content: "Are you sure you want to delete this message?",
       okText: "Delete",
       onOk: () => {
-        if (receiverParticipant?.user?.id && message && senderParticipant) {
-          const indexMessageDeleted = messages.findIndex((item) => item.id === message.id);
+        if (receiverParticipant?.user?.id && message && senderParticipant && conversation) {
           const payload: ReqDeleteMessageType = {
-            indexMessageDeleted,
-            message,
+            messageId: message.id,
             receiverId: receiverParticipant?.user?.id,
             senderParticipantId: senderParticipant?.id,
-            conversationId,
+            conversation,
           };
+          setMessageDelete(message);
           socket.emit(REQUEST_DELETE_MESSAGE, payload);
-
-          // remove local
-          const newMessages = messages.filter((message) => message.id !== payload.message.id);
-          setMessages(newMessages);
         }
       },
     });
@@ -63,15 +60,16 @@ const useMessageItem = (props: MessageItemProps) => {
 
   const handleScrollMessageReplied = () => {
     if (message?.replyTo && message?.replyTo?.active) {
-      const messageRepied = document.getElementById(message?.replyTo?.id);
+      const messageReplied = document.getElementById(message?.replyTo?.id);
 
-      messageRepied?.scrollIntoView({
+      messageReplied?.scrollIntoView({
         behavior: "smooth",
       });
     }
   };
 
   return {
+    messageDelete,
     senderParticipant,
     createdAtStr,
     handleDeleteMessage,

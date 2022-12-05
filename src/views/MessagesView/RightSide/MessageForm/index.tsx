@@ -12,8 +12,15 @@ const EmojiPicker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 const cln = classNames.bind(styles);
 
 const MessageForm = () => {
-  const { inputRef, visibleEmoji, form, handleEmojiClick, handleToggleVisibleEmoji, handleFinish } =
-    useMessageForm();
+  const {
+    inputRef,
+    visibleEmoji,
+    form,
+    handleEmojiClick,
+    handleToggleVisibleEmoji,
+    handleTyping,
+    handleFinish,
+  } = useMessageForm();
 
   return (
     <div className={cln("wrapper")}>
@@ -32,6 +39,7 @@ const MessageForm = () => {
               placeholder="Your message..."
               autoFocus
               ref={inputRef}
+              onMouseDown={handleTyping}
             />
           </Form.Item>
           <div className={cln("icon__suffix")}>

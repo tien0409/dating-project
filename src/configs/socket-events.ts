@@ -10,3 +10,4 @@ export const SEND_MESSAGE = "send_message";
 export const REQUEST_DELETE_MESSAGE = "request_delete_message";
 export const SEND_DELETE_MESSAGE = "send_delete_message";
 export const SEND_DELETE_MESSAGE_FAILURE = "send_delete_message_failure";
+export const REQUEST_TYPING_MESSAGE = "request_typing_message";

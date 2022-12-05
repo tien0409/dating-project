@@ -5,8 +5,8 @@ import { ConversationType } from "@/types";
 type ConversationStoreType = {
   loadingGetConversations: boolean;
   setLoadingGetConversations: (_loading: boolean) => void;
-  conversationId: string;
-  setConversationId: (_conversationId: string) => void;
+  conversation: ConversationType | undefined;
+  setConversation: (_conversation?: ConversationType) => void;
   conversations: ConversationType[];
   setConversations: (_conversations: ConversationType[]) => void;
 };
@@ -14,8 +14,8 @@ type ConversationStoreType = {
 const useConversationStore = create<ConversationStoreType>((set) => ({
   loadingGetConversations: false,
   setLoadingGetConversations: (loading) => set({ loadingGetConversations: loading }),
-  conversationId: "",
-  setConversationId: (conversationId) => set((state) => ({ ...state, conversationId })),
+  conversation: undefined,
+  setConversation: (conversation) => set((state) => ({ ...state, conversation })),
   conversations: [],
   setConversations: (conversations) => set((state) => ({ ...state, conversations })),
 }));

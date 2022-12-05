@@ -1,11 +1,10 @@
-import { MessageType } from "@/types";
+import { ConversationType, MessageType } from "@/types";
 
 type ReqDeleteMessageType = {
-  indexMessageDeleted: number;
-  message: MessageType;
+  messageId: string;
   receiverId: string;
   senderParticipantId: string;
-  conversationId: string;
+  conversation: ConversationType;
 };
 
 export default ReqDeleteMessageType;

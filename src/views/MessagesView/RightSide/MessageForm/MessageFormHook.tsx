@@ -22,7 +22,7 @@ const useMessageForm = () => {
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
-  const conversationId = useConversationStore((state) => state.conversationId);
+  const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
   const handleToggleVisibleEmoji = useCallback(() => {
@@ -48,10 +48,10 @@ const useMessageForm = () => {
       const { content } = values;
       if (!content?.trim()) return;
 
-      if (receiverParticipant?.user?.id && senderParticipant?.id && conversationId) {
+      if (receiverParticipant?.user?.id && senderParticipant?.id && conversation) {
         const payload: SendMessageType = {
           content,
-          conversationId,
+          conversationId: conversation.id,
           receiverId: receiverParticipant?.user?.id,
           senderParticipantId: senderParticipant?.id,
           replyTo: messageReply,
@@ -62,7 +62,7 @@ const useMessageForm = () => {
       }
     },
     [
-      conversationId,
+      conversation,
       form,
       messageReply,
       receiverParticipant?.user?.id,
@@ -93,6 +93,10 @@ const useMessageForm = () => {
     }
   }, []);
 
+  const handleTyping = () => {
+    // socket.emit(REQUEST_TYPING_MESSAGE, { conversation });
+  };
+
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick, false);
 
@@ -101,7 +105,15 @@ const useMessageForm = () => {
     };
   }, [handleDocumentClick]);
 
-  return { inputRef, visibleEmoji, form, handleToggleVisibleEmoji, handleEmojiClick, handleFinish };
+  return {
+    inputRef,
+    visibleEmoji,
+    form,
+    handleToggleVisibleEmoji,
+    handleEmojiClick,
+    handleTyping,
+    handleFinish,
+  };
 };
 
 export default useMessageForm;
