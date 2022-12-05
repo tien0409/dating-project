@@ -1,6 +1,6 @@
 import create from "zustand";
 
-import { MessageType, ConversationType, ParticipantType } from "@/types";
+import { ConversationType, MessageType, ParticipantType } from "@/types";
 
 type ChatStoreType = {
   loadingGetMessages: boolean;
@@ -17,6 +17,8 @@ type ChatStoreType = {
   setConversations: (_conversations: ConversationType[]) => void;
   messages: MessageType[];
   setMessages: (_messages: MessageType[]) => void;
+  messageReply?: MessageType;
+  setMessageReply: (_messageReply?: MessageType) => void;
 };
 
 const useChatStore = create<ChatStoreType>((set) => ({
@@ -31,10 +33,12 @@ const useChatStore = create<ChatStoreType>((set) => ({
   receiverParticipant: null,
   setReceiverParticipant: (receiverParticipant) =>
     set((state) => ({ ...state, receiverParticipant })),
-  messages: [],
-  setMessages: (messages) => set((state) => ({ ...state, messages })),
   conversations: [],
   setConversations: (conversations) => set((state) => ({ ...state, conversations })),
+  messages: [],
+  setMessages: (messages) => set((state) => ({ ...state, messages })),
+  messageReply: undefined,
+  setMessageReply: (messageReply) => set((state) => ({ ...state, messageReply })),
 }));
 
 export default useChatStore;

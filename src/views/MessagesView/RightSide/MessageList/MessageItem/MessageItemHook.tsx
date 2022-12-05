@@ -15,6 +15,7 @@ const useMessageItem = (props: MessageItemProps) => {
   const senderParticipant = useChatStore((state) => state.senderParticipant);
   const receiverParticipant = useChatStore((state) => state.receiverParticipant);
   const messages = useChatStore((state) => state.messages);
+  const setMessageReply = useChatStore((state) => state.setMessageReply);
   const setMessages = useChatStore((state) => state.setMessages);
 
   const createdAtStr = useMemo(() => {
@@ -50,10 +51,26 @@ const useMessageItem = (props: MessageItemProps) => {
   };
 
   const handleReply = () => {
-    console.log("reply");
+    message && setMessageReply(message);
   };
 
-  return { senderParticipant, createdAtStr, handleDeleteMessage, handleReply };
+  const handleScrollMessageReplied = () => {
+    if (message?.replyTo) {
+      const messageRepied = document.getElementById(message?.replyTo?.id);
+
+      messageRepied?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return {
+    senderParticipant,
+    createdAtStr,
+    handleDeleteMessage,
+    handleReply,
+    handleScrollMessageReplied,
+  };
 };
 
 export default useMessageItem;

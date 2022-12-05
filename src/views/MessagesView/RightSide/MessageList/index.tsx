@@ -11,11 +11,11 @@ const MessageList = () => {
 
   return (
     <div className={cln("wrapper")}>
-      {_messagesInternal.map((message) => (
+      {_messagesInternal.map((message, index) => (
         <MessageItem
           loading={loadingGetMessages}
           message={loadingGetMessages ? undefined : message}
-          key={message.id}
+          key={message?.id || index}
         />
       ))}
       <div ref={lastMessageRef}></div>

@@ -4,8 +4,8 @@ import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useChatStore, useSocketStore } from "@/store";
-import { ResSendMessageType, SendMessageType } from "@/types";
-import { REQUEST_SEND_MESSAGE, SEND_MESSAGE } from "@/configs/socket-events";
+import { SendMessageType } from "@/types";
+import { REQUEST_SEND_MESSAGE } from "@/configs/socket-events";
 
 const useMessageForm = () => {
   const inputRef = useRef<InputRef>(null);
@@ -18,6 +18,8 @@ const useMessageForm = () => {
   const socket = useSocketStore((store) => store.socket);
   const receiverParticipant = useChatStore((state) => state.receiverParticipant);
   const senderParticipant = useChatStore((state) => state.senderParticipant);
+  const messageReply = useChatStore((state) => state.messageReply);
+  const setMessageReply = useChatStore((state) => state.setMessageReply);
 
   const handleToggleVisibleEmoji = useCallback(() => {
     setVisibleEmoji(!visibleEmoji);
@@ -45,15 +47,25 @@ const useMessageForm = () => {
       if (receiverParticipant?.id && senderParticipant?.id && router.query.conversationId?.[0]) {
         const payload: SendMessageType = {
           content,
-          conversationId: router.query.conversationId?.[0],
-          receiverParticipantId: receiverParticipant.id,
-          senderParticipantId: senderParticipant.id,
+          conversationId: router.query?.conversationId?.[0],
+          receiverParticipantId: receiverParticipant?.id,
+          senderParticipantId: senderParticipant?.id,
+          replyTo: messageReply,
         };
         socket.emit(REQUEST_SEND_MESSAGE, payload);
+        setMessageReply(undefined);
         form.resetFields();
       }
     },
-    [form, receiverParticipant?.id, router.query.conversationId, senderParticipant?.id, socket],
+    [
+      form,
+      messageReply,
+      receiverParticipant?.id,
+      router.query?.conversationId,
+      senderParticipant?.id,
+      setMessageReply,
+      socket,
+    ],
   );
 
   const handleDocumentClick = useCallback((e: any) => {

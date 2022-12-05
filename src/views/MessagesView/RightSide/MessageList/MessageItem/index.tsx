@@ -19,11 +19,17 @@ export type MessageItemProps = {
 const MessageItem = (props: MessageItemProps) => {
   const { loading, message } = props;
 
-  const { senderParticipant, createdAtStr, handleDeleteMessage, handleReply } =
-    useMessageItem(props);
+  const {
+    senderParticipant,
+    createdAtStr,
+    handleDeleteMessage,
+    handleReply,
+    handleScrollMessageReplied,
+  } = useMessageItem(props);
 
   return (
     <div
+      id={message?.id}
       className={cln("wrapper", {
         "is-sender": loading
           ? Math.random() > 0.5
@@ -42,15 +48,17 @@ const MessageItem = (props: MessageItemProps) => {
             <Avatar className={cln("avatar")} src={message?.participant?.user?.avatar} />
           </div>
           <div className={cln("content")}>
-            <If condition={false}>
+            <If condition={!!message?.replyTo}>
               <Then>
-                <div className={cln("message__reply")}>
+                <div className={cln("message__reply")} onClick={handleScrollMessageReplied}>
                   <div className={cln("message__reply-mark")}>&nbsp;</div>
 
                   <div className={cln("message__reply-main")}>
-                    <h5 className={cln("message__reply-main-fullName")}>Le Anh Tien</h5>
+                    <h5 className={cln("message__reply-main-fullName")}>
+                      {message?.replyTo?.participant?.user?.fullName}
+                    </h5>
                     <p className={cln("message__reply-main-content")}>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, libero!
+                      {message?.replyTo?.content}
                     </p>
                   </div>
                 </div>

@@ -8,16 +8,14 @@ import { AiOutlineClose } from "react-icons/ai";
 import styles from "./RightSide.module.scss";
 import MessageList from "./MessageList";
 import MessageForm from "./MessageForm";
-import { useRouter } from "next/router";
 import { If, Then } from "react-if";
-import { useChatStore } from "@/store";
 import { GoReply } from "react-icons/go";
+import useRightSide from "@/views/MessagesView/RightSide/RightSideHook";
 
 const cln = classNames.bind(styles);
 
 const RightSide = () => {
-  const router = useRouter();
-  const receiverParticipant = useChatStore((state) => state.receiverParticipant);
+  const { router, messageReply, receiverParticipant, handleRemoveMessageReply, handleScrollToMessage } = useRightSide();
 
   return (
     <If condition={!_isEmpty(router.query)}>
@@ -46,24 +44,26 @@ const RightSide = () => {
 
           <div
             className={cln("form__input", {
-              replying: false,
+              replying: !!messageReply,
             })}
           >
-            <If condition={false}>
+            <If condition={!!messageReply}>
               <Then>
                 <div className={cln("reply__wrapper")}>
                   <div className={cln("reply__icon")}>
                     <GoReply size={24} />
                   </div>
 
-                  <div className={cln("message")}>
-                    <h5 className={cln("text-truncate", "message__fullName")}>Le Anh Tien</h5>
+                  <div className={cln("message")} onClick={handleScrollToMessage}>
+                    <h5 className={cln("text-truncate", "message__fullName")}>
+                      {messageReply?.participant?.user?.fullName}
+                    </h5>
                     <p className={cln("text-truncate", "message__content")}>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, pariatur.
+                      {messageReply?.content}
                     </p>
                   </div>
 
-                  <button className={cln("close")}>
+                  <button className={cln("close")} onClick={handleRemoveMessageReply}>
                     <AiOutlineClose size={20} />
                   </button>
                 </div>
