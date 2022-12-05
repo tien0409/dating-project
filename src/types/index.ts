@@ -20,3 +20,4 @@ export type { default as ParticipantType } from "./chat/ParticipantType";
 export type { default as ResSendAllMessages } from "./chat/ResSendAllMessages";
 export type { default as ResSendMessageType } from "./chat/ResSendMessageType";
 export type { default as ReqDeleteMessageType } from "./chat/ReqDeleteMessageType";
+export * from "./chat/ResDeleteMessageType";

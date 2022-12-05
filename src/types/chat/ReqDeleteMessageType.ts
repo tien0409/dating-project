@@ -5,6 +5,7 @@ type ReqDeleteMessageType = {
   message: MessageType;
   receiverId: string;
   senderParticipantId: string;
+  conversationId: string;
 };
 
 export default ReqDeleteMessageType;

@@ -5,9 +5,10 @@ type MessageType = {
   content: string;
   participant: ParticipantType;
   conversationUpdated: string;
+  active: boolean;
+  replyTo?: MessageType;
   createdAt: Date;
   updatedAt: Date;
-  replyTo?: MessageType;
 };
 
 export default MessageType;

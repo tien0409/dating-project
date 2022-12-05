@@ -15,6 +15,7 @@ const useMessageItem = (props: MessageItemProps) => {
   const senderParticipant = useChatStore((state) => state.senderParticipant);
   const receiverParticipant = useChatStore((state) => state.receiverParticipant);
   const messages = useChatStore((state) => state.messages);
+  const conversationId = useChatStore((state) => state.conversationId);
   const setMessageReply = useChatStore((state) => state.setMessageReply);
   const setMessages = useChatStore((state) => state.setMessages);
 
@@ -39,6 +40,7 @@ const useMessageItem = (props: MessageItemProps) => {
             message,
             receiverId: receiverParticipant?.user?.id,
             senderParticipantId: senderParticipant?.id,
+            conversationId,
           };
           socket.emit(REQUEST_DELETE_MESSAGE, payload);
 
@@ -55,7 +57,7 @@ const useMessageItem = (props: MessageItemProps) => {
   };
 
   const handleScrollMessageReplied = () => {
-    if (message?.replyTo) {
+    if (message?.replyTo && message?.replyTo?.active) {
       const messageRepied = document.getElementById(message?.replyTo?.id);
 
       messageRepied?.scrollIntoView({

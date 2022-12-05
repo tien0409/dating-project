@@ -50,6 +50,16 @@
           background-color: var(--text-color-hover);
         }
 
+
+        &.in-active {
+          cursor: context-menu;
+          user-select: none;
+
+          &:hover {
+            background-color: var(--text-color);
+          }
+        }
+
         &-fullName {
           font-size: 1.4rem;
           font-weight: 500;

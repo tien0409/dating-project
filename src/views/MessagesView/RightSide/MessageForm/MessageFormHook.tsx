@@ -1,5 +1,4 @@
 import { Form, InputRef } from "antd";
-import { useRouter } from "next/router";
 import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -12,13 +11,13 @@ const useMessageForm = () => {
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
 
-  const router = useRouter();
   const [form] = Form.useForm();
 
   const socket = useSocketStore((store) => store.socket);
   const receiverParticipant = useChatStore((state) => state.receiverParticipant);
   const senderParticipant = useChatStore((state) => state.senderParticipant);
   const messageReply = useChatStore((state) => state.messageReply);
+  const conversationId = useChatStore((state) => state.conversationId);
   const setMessageReply = useChatStore((state) => state.setMessageReply);
 
   const handleToggleVisibleEmoji = useCallback(() => {
@@ -44,10 +43,10 @@ const useMessageForm = () => {
       const { content } = values;
       if (!content?.trim()) return;
 
-      if (receiverParticipant?.id && senderParticipant?.id && router.query.conversationId?.[0]) {
+      if (receiverParticipant?.id && senderParticipant?.id && conversationId) {
         const payload: SendMessageType = {
           content,
-          conversationId: router.query?.conversationId?.[0],
+          conversationId,
           receiverParticipantId: receiverParticipant?.id,
           senderParticipantId: senderParticipant?.id,
           replyTo: messageReply,
@@ -58,10 +57,10 @@ const useMessageForm = () => {
       }
     },
     [
+      conversationId,
       form,
       messageReply,
       receiverParticipant?.id,
-      router.query?.conversationId,
       senderParticipant?.id,
       setMessageReply,
       socket,

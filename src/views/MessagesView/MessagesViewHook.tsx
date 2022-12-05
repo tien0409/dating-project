@@ -10,7 +10,13 @@ import {
   SEND_DELETE_MESSAGE_FAILURE,
   SEND_MESSAGE,
 } from "@/configs/socket-events";
-import { MessageType, ReqDeleteMessageType, ResSendAllMessages, ResSendMessageType } from "@/types";
+import {
+  MessageType,
+  ResDeleteMessageType,
+  ResDeleteMessageTypeFailure,
+  ResSendAllMessages,
+  ResSendMessageType
+} from "@/types";
 import { toast } from "react-toastify";
 
 const useMessageView = () => {
@@ -69,17 +75,18 @@ const useMessageView = () => {
       }
     });
 
-    socket.on(SEND_DELETE_MESSAGE, () => {
+    socket.on(SEND_DELETE_MESSAGE, (payload: ResDeleteMessageType) => {
       toast.success("Delete message successfully");
       const lastMessage = messages[messages.length - 1];
       updateLastMessageConversation(conversationId, lastMessage);
+      setMessages(payload.messages);
     });
 
-    socket.on(SEND_DELETE_MESSAGE_FAILURE, (payload: ReqDeleteMessageType) => {
+    socket.on(SEND_DELETE_MESSAGE_FAILURE, (payload: ResDeleteMessageTypeFailure) => {
       const newMessages = [...messages];
       newMessages.splice(payload.indexMessageDeleted, 0, payload.message);
       setMessages(newMessages);
-      toast.error("Delete message failure");
+      toast.error(payload.errorMessage);
     });
 
     return () => {

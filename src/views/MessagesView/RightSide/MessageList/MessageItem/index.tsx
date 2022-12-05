@@ -53,12 +53,23 @@ const MessageItem = (props: MessageItemProps) => {
                 <div className={cln("message__reply")} onClick={handleScrollMessageReplied}>
                   <div className={cln("message__reply-mark")}>&nbsp;</div>
 
-                  <div className={cln("message__reply-main")}>
-                    <h5 className={cln("message__reply-main-fullName")}>
-                      {message?.replyTo?.participant?.user?.fullName}
-                    </h5>
+                  <div
+                    className={cln("message__reply-main", {
+                      "in-active": !message?.replyTo?.active,
+                    })}
+                  >
+                    <If condition={message?.replyTo?.active}>
+                      <Then>
+                        <h5 className={cln("message__reply-main-fullName")}>
+                          {message?.replyTo?.participant?.user?.fullName}
+                        </h5>
+                      </Then>
+                    </If>
                     <p className={cln("message__reply-main-content")}>
-                      {message?.replyTo?.content}
+                      <If condition={message?.replyTo?.active}>
+                        <Then>{message?.replyTo?.content}</Then>
+                        <Else>Tin nhắn đã bị xoá</Else>
+                      </If>
                     </p>
                   </div>
                 </div>
