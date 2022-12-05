@@ -2,7 +2,12 @@ import { Form, InputRef } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useChatStore, useSocketStore } from "@/store";
+import {
+  useConversationStore,
+  useMessageStore,
+  useParticipantStore,
+  useSocketStore,
+} from "@/store";
 import { SendMessageType } from "@/types";
 import { REQUEST_SEND_MESSAGE } from "@/configs/socket-events";
 
@@ -14,11 +19,11 @@ const useMessageForm = () => {
   const [form] = Form.useForm();
 
   const socket = useSocketStore((store) => store.socket);
-  const receiverParticipant = useChatStore((state) => state.receiverParticipant);
-  const senderParticipant = useChatStore((state) => state.senderParticipant);
-  const messageReply = useChatStore((state) => state.messageReply);
-  const conversationId = useChatStore((state) => state.conversationId);
-  const setMessageReply = useChatStore((state) => state.setMessageReply);
+  const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
+  const senderParticipant = useParticipantStore((state) => state.senderParticipant);
+  const messageReply = useMessageStore((state) => state.messageReply);
+  const conversationId = useConversationStore((state) => state.conversationId);
+  const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
   const handleToggleVisibleEmoji = useCallback(() => {
     setVisibleEmoji(!visibleEmoji);
@@ -43,11 +48,11 @@ const useMessageForm = () => {
       const { content } = values;
       if (!content?.trim()) return;
 
-      if (receiverParticipant?.id && senderParticipant?.id && conversationId) {
+      if (receiverParticipant?.user?.id && senderParticipant?.id && conversationId) {
         const payload: SendMessageType = {
           content,
           conversationId,
-          receiverParticipantId: receiverParticipant?.id,
+          receiverId: receiverParticipant?.user?.id,
           senderParticipantId: senderParticipant?.id,
           replyTo: messageReply,
         };
@@ -60,7 +65,7 @@ const useMessageForm = () => {
       conversationId,
       form,
       messageReply,
-      receiverParticipant?.id,
+      receiverParticipant?.user?.id,
       senderParticipant?.id,
       setMessageReply,
       socket,

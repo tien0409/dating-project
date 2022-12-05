@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
 
-import { useChatStore } from "@/store";
+import { useMessageStore } from "@/store";
 
 const useMessageList = () => {
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  const messages = useChatStore((state) => state.messages);
-  const loadingGetMessages = useChatStore((state) => state.loadingGetMessages);
+  const messages = useMessageStore((state) => state.messages);
+  const loadingGetMessages = useMessageStore((state) => state.loadingGetMessages);
 
   const _messagesInternal = useMemo(
     () => (loadingGetMessages ? Array(15).fill(0) : messages),

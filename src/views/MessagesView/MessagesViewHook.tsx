@@ -1,7 +1,12 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 
-import { useChatStore, useSocketStore } from "@/store";
+import {
+  useConversationStore,
+  useMessageStore,
+  useParticipantStore,
+  useSocketStore,
+} from "@/store";
 import {
   REQUEST_ALL_CONVERSATIONS,
   REQUEST_ALL_MESSAGES,
@@ -12,10 +17,11 @@ import {
 } from "@/configs/socket-events";
 import {
   MessageType,
+  ReqAllMessageType,
   ResDeleteMessageType,
   ResDeleteMessageTypeFailure,
   ResSendAllMessages,
-  ResSendMessageType
+  ResSendMessageType,
 } from "@/types";
 import { toast } from "react-toastify";
 
@@ -23,16 +29,18 @@ const useMessageView = () => {
   const router = useRouter();
 
   const socket = useSocketStore((state) => state.socket);
-  const messages = useChatStore((state) => state.messages);
-  const conversations = useChatStore((state) => state.conversations);
-  const conversationId = useChatStore((state) => state.conversationId);
-  const setLoadingGetMessages = useChatStore((state) => state.setLoadingGetMessages);
-  const setLoadingGetConversations = useChatStore((state) => state.setLoadingGetConversations);
-  const setConversationId = useChatStore((state) => state.setConversationId);
-  const setMessages = useChatStore((state) => state.setMessages);
-  const setReceiverParticipant = useChatStore((state) => state.setReceiverParticipant);
-  const setSenderParticipant = useChatStore((state) => state.setSenderParticipant);
-  const setConversations = useChatStore((state) => state.setConversations);
+  const messages = useMessageStore((state) => state.messages);
+  const conversations = useConversationStore((state) => state.conversations);
+  const conversationId = useConversationStore((state) => state.conversationId);
+  const setLoadingGetMessages = useMessageStore((state) => state.setLoadingGetMessages);
+  const setLoadingGetConversations = useConversationStore(
+    (state) => state.setLoadingGetConversations,
+  );
+  const setConversationId = useConversationStore((state) => state.setConversationId);
+  const setMessages = useMessageStore((state) => state.setMessages);
+  const setReceiverParticipant = useParticipantStore((state) => state.setReceiverParticipant);
+  const setSenderParticipant = useParticipantStore((state) => state.setSenderParticipant);
+  const setConversations = useConversationStore((state) => state.setConversations);
 
   const updateLastMessageConversation = useCallback(
     (conversationId: string, message?: MessageType) => {
@@ -49,7 +57,10 @@ const useMessageView = () => {
 
   useEffect(() => {
     if (router.query.conversationId?.[0]) {
-      socket.emit(REQUEST_ALL_MESSAGES, { id: router.query.conversationId?.[0] });
+      const payload: ReqAllMessageType = {
+        conversationId: router.query.conversationId?.[0],
+      };
+      socket.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
       setConversationId(router.query.conversationId?.[0]);
     }

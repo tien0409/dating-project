@@ -47,17 +47,19 @@
         transition: 0.3s background-color;
 
         &:hover {
-          background-color: var(--text-color-hover);
+          background-color: var(--secondary-fade-color);
+
+          &.is-sender {
+            background-color: var(--text-color-hover);
+          }
         }
 
 
         &.in-active {
+          background: transparent !important;
           cursor: context-menu;
           user-select: none;
 
-          &:hover {
-            background-color: var(--text-color);
-          }
         }
 
         &-fullName {

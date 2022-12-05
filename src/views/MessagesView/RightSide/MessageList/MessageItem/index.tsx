@@ -56,6 +56,7 @@ const MessageItem = (props: MessageItemProps) => {
                   <div
                     className={cln("message__reply-main", {
                       "in-active": !message?.replyTo?.active,
+                      "is-sender": message?.participant?.id === senderParticipant?.id,
                     })}
                   >
                     <If condition={message?.replyTo?.active}>
@@ -79,15 +80,15 @@ const MessageItem = (props: MessageItemProps) => {
               <div>{message?.content}</div>
             </Tooltip>
           </div>
-          <If condition={message?.participant?.id === senderParticipant?.id}>
-            <Then>
-              <div className={cln("message__actions")}>
+          <div className={cln("message__actions")}>
+            <If condition={message?.participant?.id === senderParticipant?.id}>
+              <Then>
                 <AiFillEdit size={17} cursor="pointer" />
                 <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
-                <GoReply size={17} cursor="pointer" onClick={handleReply} />
-              </div>
-            </Then>
-          </If>
+              </Then>
+            </If>
+            <GoReply size={17} cursor="pointer" onClick={handleReply} />
+          </div>
         </Else>
       </If>
     </div>

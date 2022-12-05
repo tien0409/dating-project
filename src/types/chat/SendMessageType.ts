@@ -3,7 +3,7 @@ import { MessageType } from "@/types";
 type SendMessageType = {
   conversationId: string;
   senderParticipantId: string;
-  receiverParticipantId: string;
+  receiverId: string;
   content: string;
   replyTo?: MessageType;
 };

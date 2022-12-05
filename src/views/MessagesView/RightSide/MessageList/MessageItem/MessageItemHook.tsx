@@ -4,7 +4,12 @@ import { isThisWeek } from "date-fns";
 
 import { MessageItemProps } from ".";
 import { formatDate } from "@/utils/date";
-import { useChatStore, useSocketStore } from "@/store";
+import {
+  useConversationStore,
+  useMessageStore,
+  useParticipantStore,
+  useSocketStore,
+} from "@/store";
 import { REQUEST_DELETE_MESSAGE } from "@/configs/socket-events";
 import { ReqDeleteMessageType } from "@/types";
 
@@ -12,12 +17,12 @@ const useMessageItem = (props: MessageItemProps) => {
   const { message } = props;
 
   const socket = useSocketStore((state) => state.socket);
-  const senderParticipant = useChatStore((state) => state.senderParticipant);
-  const receiverParticipant = useChatStore((state) => state.receiverParticipant);
-  const messages = useChatStore((state) => state.messages);
-  const conversationId = useChatStore((state) => state.conversationId);
-  const setMessageReply = useChatStore((state) => state.setMessageReply);
-  const setMessages = useChatStore((state) => state.setMessages);
+  const senderParticipant = useParticipantStore((state) => state.senderParticipant);
+  const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
+  const messages = useMessageStore((state) => state.messages);
+  const conversationId = useConversationStore((state) => state.conversationId);
+  const setMessageReply = useMessageStore((state) => state.setMessageReply);
+  const setMessages = useMessageStore((state) => state.setMessages);
 
   const createdAtStr = useMemo(() => {
     if (message && isThisWeek(new Date(message?.createdAt))) {
