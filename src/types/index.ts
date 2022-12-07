@@ -21,4 +21,6 @@ export type { default as ResSendAllMessages } from "./chat/ResSendAllMessages";
 export type { default as ResSendMessageType } from "./chat/ResSendMessageType";
 export type { default as ReqDeleteMessageType } from "./chat/ReqDeleteMessageType";
 export type { default as ReqAllMessageType } from "./chat/ReqAllMessageType";
+export type { default as ReqTypingMessageType } from "./chat/ReqTypingMessageType";
+export type { default as ResTypingMessageType } from "./chat/ResTypingMessageType";
 export * from "./chat/ResDeleteMessageType";

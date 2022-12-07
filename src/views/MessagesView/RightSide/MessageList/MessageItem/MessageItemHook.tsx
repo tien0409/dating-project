@@ -14,17 +14,19 @@ import { REQUEST_DELETE_MESSAGE } from "@/configs/socket-events";
 import { ReqDeleteMessageType } from "@/types";
 
 const useMessageItem = (props: MessageItemProps) => {
-  const { message } = props;
+  const { message, _participantTyping } = props;
 
   const socket = useSocketStore((state) => state.socket);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
-  const messages = useMessageStore((state) => state.messages);
   const messageDelete = useMessageStore((state) => state.messageDelete);
   const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
-  const setMessages = useMessageStore((state) => state.setMessages);
   const setMessageDelete = useMessageStore((state) => state.setMessageDelete);
+
+  const avatar = _participantTyping
+    ? _participantTyping?.user?.avatar
+    : message?.participant?.user?.avatar;
 
   const createdAtStr = useMemo(() => {
     if (message && isThisWeek(new Date(message?.createdAt))) {
@@ -72,6 +74,7 @@ const useMessageItem = (props: MessageItemProps) => {
     messageDelete,
     senderParticipant,
     createdAtStr,
+    avatar,
     handleDeleteMessage,
     handleReply,
     handleScrollMessageReplied,

@@ -1,6 +1,7 @@
 import { Form, InputRef } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import _debounce from "lodash/debounce";
 
 import {
   useConversationStore,
@@ -8,11 +9,19 @@ import {
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { SendMessageType } from "@/types";
-import { REQUEST_SEND_MESSAGE } from "@/configs/socket-events";
+import { ReqTypingMessageType, SendMessageType } from "@/types";
+import {
+  REQUEST_SEND_MESSAGE,
+  REQUEST_STOP_TYPING_MESSAGE,
+  REQUEST_TYPING_MESSAGE,
+} from "@/configs/socket-events";
+import { typingRegex } from "@/utils/regexes";
 
 const useMessageForm = () => {
   const inputRef = useRef<InputRef>(null);
+
+  const typingDebounce = useRef<any>();
+  const stopTypingDebounce = useRef<any>();
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
 
@@ -21,6 +30,7 @@ const useMessageForm = () => {
   const socket = useSocketStore((store) => store.socket);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
+  const participantTyping = useParticipantStore((state) => state.participantTyping);
   const messageReply = useMessageStore((state) => state.messageReply);
   const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
@@ -93,8 +103,37 @@ const useMessageForm = () => {
     }
   }, []);
 
-  const handleTyping = () => {
-    // socket.emit(REQUEST_TYPING_MESSAGE, { conversation });
+  const handleTyping = (e: KeyboardEvent) => {
+    if (typingDebounce.current) {
+      typingDebounce.current.cancel();
+    }
+    typingDebounce.current = _debounce(() => {
+      const isTyping = typingRegex.test(e.key);
+      if (conversation && isTyping) {
+        const payload: ReqTypingMessageType = {
+          conversationId: conversation.id,
+        };
+        socket.emit(REQUEST_TYPING_MESSAGE, payload);
+      }
+    }, 1000);
+
+    typingDebounce.current();
+  };
+
+  const handleStopTyping = () => {
+    if (stopTypingDebounce.current) {
+      stopTypingDebounce.current.cancel();
+    }
+
+    stopTypingDebounce.current = _debounce(() => {
+      if (conversation && participantTyping) {
+        const payload: ReqTypingMessageType = {
+          conversationId: conversation.id,
+        };
+        socket.emit(REQUEST_STOP_TYPING_MESSAGE, payload);
+      }
+    }, 2000);
+    stopTypingDebounce.current();
   };
 
   useEffect(() => {
@@ -112,6 +151,7 @@ const useMessageForm = () => {
     handleToggleVisibleEmoji,
     handleEmojiClick,
     handleTyping,
+    handleStopTyping,
     handleFinish,
   };
 };

@@ -7,22 +7,24 @@ import classNames from "classnames/bind";
 import { VscLoading } from "react-icons/vsc";
 
 import styles from "./MessageItem.module.scss";
-import { MessageType } from "@/types";
+import { MessageType, ParticipantType } from "@/types";
 import useMessageItem from "./MessageItemHook";
 
 const cln = classNames.bind(styles);
 
 export type MessageItemProps = {
-  loading: boolean;
+  loading?: boolean;
   message?: MessageType;
+  _participantTyping?: ParticipantType| null;
 };
 
 const MessageItem = (props: MessageItemProps) => {
-  const { loading, message } = props;
+  const { loading, message, _participantTyping } = props;
 
   const {
     messageDelete,
     senderParticipant,
+    avatar,
     createdAtStr,
     handleDeleteMessage,
     handleReply,
@@ -45,9 +47,10 @@ const MessageItem = (props: MessageItemProps) => {
             <Skeleton.Input active block />
           </div>
         </Then>
+
         <Else>
           <div>
-            <Avatar className={cln("avatar")} src={message?.participant?.user?.avatar} />
+            <Avatar className={cln("avatar")} src={avatar} />
           </div>
           <div className={cln("content")}>
             <If condition={!!message?.replyTo}>
@@ -78,12 +81,25 @@ const MessageItem = (props: MessageItemProps) => {
                 </div>
               </Then>
             </If>
-            <Tooltip title={createdAtStr}>
-              <div>{message?.content}</div>
-            </Tooltip>
+
+            <If condition={!!_participantTyping}>
+              <Then>
+                <div className={cln("typing")}>
+                  <div className={cln("typing__dot")}></div>
+                  <div className={cln("typing__dot")}></div>
+                  <div className={cln("typing__dot")}></div>
+                </div>
+              </Then>
+
+              <Else>
+                <Tooltip title={createdAtStr}>
+                  <div>{message?.content}</div>
+                </Tooltip>
+              </Else>
+            </If>
           </div>
 
-          <If condition={messageDelete?.id === message?.id}>
+          <If condition={!_participantTyping && messageDelete?.id === message?.id}>
             <Then>
               <div className={cln("message__deleting")}>
                 <VscLoading size={15} />

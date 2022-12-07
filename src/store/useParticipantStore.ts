@@ -7,6 +7,8 @@ type ParticipantStoreType = {
   setSenderParticipant: (_senderParticipant: ParticipantType) => void;
   receiverParticipant: ParticipantType | null;
   setReceiverParticipant: (_receiverParticipant: ParticipantType) => void;
+  participantTyping: boolean;
+  setParticipantTyping: (_participantTyping: boolean) => void;
 };
 
 const useParticipantStore = create<ParticipantStoreType>((set) => ({
@@ -15,6 +17,8 @@ const useParticipantStore = create<ParticipantStoreType>((set) => ({
   receiverParticipant: null,
   setReceiverParticipant: (receiverParticipant) =>
     set((state) => ({ ...state, receiverParticipant })),
+  participantTyping: false,
+  setParticipantTyping: (participantTyping) => set((state) => ({ ...state, participantTyping })),
 }));
 
 export default useParticipantStore;

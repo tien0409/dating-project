@@ -13,6 +13,8 @@ import {
   SEND_ALL_MESSAGES,
   SEND_DELETE_MESSAGE,
   SEND_MESSAGE,
+  SEND_STOP_TYPING_MESSAGE,
+  SEND_TYPING_MESSAGE,
 } from "@/configs/socket-events";
 import {
   MessageType,
@@ -39,6 +41,7 @@ const useMessageView = () => {
   const setMessages = useMessageStore((state) => state.setMessages);
   const setReceiverParticipant = useParticipantStore((state) => state.setReceiverParticipant);
   const setSenderParticipant = useParticipantStore((state) => state.setSenderParticipant);
+  const setParticipantTyping = useParticipantStore((state) => state.setParticipantTyping);
   const setConversations = useConversationStore((state) => state.setConversations);
 
   const updateLastMessageConversation = useCallback(
@@ -80,6 +83,14 @@ const useMessageView = () => {
       setSenderParticipant(senderParticipant);
     });
 
+    socket.on(SEND_TYPING_MESSAGE, () => {
+      setParticipantTyping(true);
+    });
+
+    socket.on(SEND_STOP_TYPING_MESSAGE, () => {
+      setParticipantTyping(false);
+    });
+
     socket.on(SEND_MESSAGE, (data: ResSendMessageType) => {
       if (data.message) {
         setMessages([...messages, data.message]);
@@ -100,6 +111,8 @@ const useMessageView = () => {
 
     return () => {
       socket.off(SEND_ALL_MESSAGES);
+      socket.off(SEND_TYPING_MESSAGE);
+      socket.off(SEND_STOP_TYPING_MESSAGE);
       socket.off(SEND_MESSAGE);
       socket.off(SEND_DELETE_MESSAGE);
     };
@@ -112,6 +125,7 @@ const useMessageView = () => {
     setLoadingGetMessages,
     setMessageDelete,
     setMessages,
+    setParticipantTyping,
     setReceiverParticipant,
     setSenderParticipant,
     socket,

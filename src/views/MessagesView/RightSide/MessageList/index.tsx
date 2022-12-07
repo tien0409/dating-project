@@ -3,11 +3,18 @@ import classNames from "classnames/bind";
 import styles from "./MessageList.module.scss";
 import MessageItem from "./MessageItem";
 import useMessageList from "./MessageListHook";
+import { If, Then } from "react-if";
 
 const cln = classNames.bind(styles);
 
 const MessageList = () => {
-  const { loadingGetMessages, lastMessageRef, _messagesInternal } = useMessageList();
+  const {
+    participantTyping,
+    receiverParticipant,
+    loadingGetMessages,
+    lastMessageRef,
+    _messagesInternal,
+  } = useMessageList();
 
   return (
     <div className={cln("wrapper")}>
@@ -18,6 +25,11 @@ const MessageList = () => {
           key={message?.id || index}
         />
       ))}
+      <If condition={participantTyping && !!receiverParticipant}>
+        <Then>
+          <MessageItem _participantTyping={receiverParticipant} />
+        </Then>
+      </If>
       <div ref={lastMessageRef}></div>
     </div>
   );
