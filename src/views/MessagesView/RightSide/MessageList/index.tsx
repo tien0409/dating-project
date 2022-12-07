@@ -9,7 +9,7 @@ const cln = classNames.bind(styles);
 
 const MessageList = () => {
   const {
-    participantTyping,
+    isReceiverTyping,
     receiverParticipant,
     loadingGetMessages,
     lastMessageRef,
@@ -25,7 +25,7 @@ const MessageList = () => {
           key={message?.id || index}
         />
       ))}
-      <If condition={participantTyping && !!receiverParticipant}>
+      <If condition={isReceiverTyping}>
         <Then>
           <MessageItem _participantTyping={receiverParticipant} />
         </Then>

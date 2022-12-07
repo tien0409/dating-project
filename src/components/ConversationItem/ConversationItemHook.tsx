@@ -1,9 +1,13 @@
 import { useMemo } from "react";
 
 import { ConversationItemProps } from ".";
+import { useConversationStore } from "@/store";
 
 const useConversationItem = (props: ConversationItemProps) => {
-  const { conversation } = props;
+  const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
+  const conversation = useConversationStore((state) => state.conversation);
+
+  const isReceiverTyping = () => conversation && conversationIdsTyping.get(conversation?.id);
 
   const controlOptions = useMemo(
     () => [
@@ -15,6 +19,7 @@ const useConversationItem = (props: ConversationItemProps) => {
   );
 
   return {
+    isReceiverTyping,
     controlOptions,
   };
 };

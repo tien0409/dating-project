@@ -23,7 +23,7 @@ export type ConversationItemProps = {
 const ConversationItem = (props: ConversationItemProps) => {
   const { loading, conversation, hasControl = false, imageSize = 42 } = props;
 
-  const { controlOptions } = useConversationItem(props);
+  const { isReceiverTyping, controlOptions } = useConversationItem(props);
 
   return (
     <If condition={loading}>
@@ -47,10 +47,24 @@ const ConversationItem = (props: ConversationItemProps) => {
                 />
               </div>
               <div className={cln("content")}>
-                <h4 className={cln("text-truncate", "fullName")}>{conversation?.participant?.user?.fullName}</h4>
-                <p className={cln("text-truncate", "main-content")}>
-                  {conversation?.lastMessage?.content}
-                </p>
+                <h4 className={cln("text-truncate", "fullName")}>
+                  {conversation?.participant?.user?.fullName}
+                </h4>
+                <If condition={isReceiverTyping}>
+                  <Then>
+                    <div className={cln("typing")}>
+                      <div className={cln("typing__dot")}></div>
+                      <div className={cln("typing__dot")}></div>
+                      <div className={cln("typing__dot")}></div>
+                    </div>
+                  </Then>
+
+                  <Else>
+                    <p className={cln("text-truncate", "main-content")}>
+                      {conversation?.lastMessage?.content}
+                    </p>
+                  </Else>
+                </If>
               </div>
             </div>
 

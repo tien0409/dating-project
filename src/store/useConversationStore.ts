@@ -9,6 +9,8 @@ type ConversationStoreType = {
   setConversation: (_conversation?: ConversationType) => void;
   conversations: ConversationType[];
   setConversations: (_conversations: ConversationType[]) => void;
+  conversationIdsTyping: Map<string, boolean>;
+  setConversationIdsTyping: (_conversationIdsTyping: Map<string, boolean>) => void;
 };
 
 const useConversationStore = create<ConversationStoreType>((set) => ({
@@ -18,6 +20,9 @@ const useConversationStore = create<ConversationStoreType>((set) => ({
   setConversation: (conversation) => set((state) => ({ ...state, conversation })),
   conversations: [],
   setConversations: (conversations) => set((state) => ({ ...state, conversations })),
+  conversationIdsTyping: new Map(),
+  setConversationIdsTyping: (conversationIdsTyping) =>
+    set((state) => ({ ...state, conversationIdsTyping })),
 }));
 
 export default useConversationStore;

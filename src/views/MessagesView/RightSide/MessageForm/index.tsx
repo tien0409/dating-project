@@ -19,7 +19,6 @@ const MessageForm = () => {
     handleEmojiClick,
     handleToggleVisibleEmoji,
     handleTyping,
-    handleStopTyping,
     handleFinish,
   } = useMessageForm();
 
@@ -41,7 +40,6 @@ const MessageForm = () => {
               autoFocus
               ref={inputRef}
               onKeyDown={handleTyping}
-              onKeyUp={handleStopTyping}
             />
           </Form.Item>
           <div className={cln("icon__suffix")}>

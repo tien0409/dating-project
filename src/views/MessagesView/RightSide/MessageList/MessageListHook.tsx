@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef } from "react";
 
-import { useMessageStore, useParticipantStore } from "@/store";
+import { useConversationStore, useMessageStore, useParticipantStore } from "@/store";
 
 const useMessageList = () => {
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
   const messages = useMessageStore((state) => state.messages);
+  const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
+  const conversation = useConversationStore((state) => state.conversation);
   const loadingGetMessages = useMessageStore((state) => state.loadingGetMessages);
   const participantTyping = useParticipantStore((state) => state.participantTyping);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
@@ -15,13 +17,22 @@ const useMessageList = () => {
     [loadingGetMessages, messages],
   );
 
+  const isReceiverTyping = () => {
+    return (
+      participantTyping &&
+      !!receiverParticipant &&
+      conversation &&
+      conversationIdsTyping.get(conversation?.id)
+    );
+  };
+
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return {
+    isReceiverTyping,
     receiverParticipant,
-    participantTyping,
     loadingGetMessages,
     lastMessageRef,
     _messagesInternal,

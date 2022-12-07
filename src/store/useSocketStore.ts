@@ -2,24 +2,30 @@ import create from "zustand";
 import ioClient, { Socket } from "socket.io-client";
 
 type SocketStoreType = {
-  socket: Socket;
+  socket: Socket | null;
+  initSocket: () => void;
 };
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_BASE_URL;
 
-let socket: Socket;
-if (SOCKET_URL) {
-  socket = ioClient(SOCKET_URL, {
-    withCredentials: true,
-  });
-  socket.on("connect", () => {
-    console.log("connected chat");
-  });
-  socket.on("disconnect", () => {
-    console.log("disconnected chat");
-  });
-}
-const useSocketStore = create<SocketStoreType>(() => ({
-  socket,
+const useSocketStore = create<SocketStoreType>((setState, getState) => ({
+  socket: null,
+  initSocket: () => {
+    if (SOCKET_URL && !getState().socket) {
+      const _socket = ioClient(SOCKET_URL || "", {
+        withCredentials: true,
+      });
+
+      _socket.on("connect", () => {
+        console.log("connected chat");
+      });
+
+      _socket.on("disconnect", () => {
+        console.log("disconnected chat");
+      });
+
+      setState({ socket: _socket });
+    }
+  },
 }));
 
 export default useSocketStore;

@@ -50,7 +50,7 @@ const useMessageItem = (props: MessageItemProps) => {
             conversation,
           };
           setMessageDelete(message);
-          socket.emit(REQUEST_DELETE_MESSAGE, payload);
+          socket?.emit(REQUEST_DELETE_MESSAGE, payload);
         }
       },
     });

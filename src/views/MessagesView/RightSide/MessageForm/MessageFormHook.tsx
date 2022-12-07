@@ -1,6 +1,6 @@
 import { Form, InputRef } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import _debounce from "lodash/debounce";
 
 import {
@@ -19,9 +19,9 @@ import { typingRegex } from "@/utils/regexes";
 
 const useMessageForm = () => {
   const inputRef = useRef<InputRef>(null);
-
   const typingDebounce = useRef<any>();
-  const stopTypingDebounce = useRef<any>();
+
+  const [_isTyping, _setIsTyping] = useState(false);
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
 
@@ -30,7 +30,6 @@ const useMessageForm = () => {
   const socket = useSocketStore((store) => store.socket);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
-  const participantTyping = useParticipantStore((state) => state.participantTyping);
   const messageReply = useMessageStore((state) => state.messageReply);
   const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
@@ -66,7 +65,7 @@ const useMessageForm = () => {
           senderParticipantId: senderParticipant?.id,
           replyTo: messageReply,
         };
-        socket.emit(REQUEST_SEND_MESSAGE, payload);
+        socket?.emit(REQUEST_SEND_MESSAGE, payload);
         setMessageReply(undefined);
         form.resetFields();
       }
@@ -103,37 +102,25 @@ const useMessageForm = () => {
     }
   }, []);
 
-  const handleTyping = (e: KeyboardEvent) => {
-    if (typingDebounce.current) {
-      typingDebounce.current.cancel();
-    }
-    typingDebounce.current = _debounce(() => {
-      const isTyping = typingRegex.test(e.key);
-      if (conversation && isTyping) {
-        const payload: ReqTypingMessageType = {
-          conversationId: conversation.id,
-        };
-        socket.emit(REQUEST_TYPING_MESSAGE, payload);
+  const handleTyping = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (conversation) {
+      const payload: ReqTypingMessageType = {
+        conversationId: conversation.id,
+      };
+
+      if (_isTyping) {
+        typingDebounce.current?.cancel();
+        typingDebounce.current = _debounce(() => {
+          socket?.emit(REQUEST_STOP_TYPING_MESSAGE, payload);
+          _setIsTyping(false);
+        }, 2000);
+        typingDebounce.current();
+      } else {
+        const validTyping = typingRegex.test(e.key);
+        validTyping && _setIsTyping(true);
+        validTyping && socket?.emit(REQUEST_TYPING_MESSAGE, payload);
       }
-    }, 1000);
-
-    typingDebounce.current();
-  };
-
-  const handleStopTyping = () => {
-    if (stopTypingDebounce.current) {
-      stopTypingDebounce.current.cancel();
     }
-
-    stopTypingDebounce.current = _debounce(() => {
-      if (conversation && participantTyping) {
-        const payload: ReqTypingMessageType = {
-          conversationId: conversation.id,
-        };
-        socket.emit(REQUEST_STOP_TYPING_MESSAGE, payload);
-      }
-    }, 2000);
-    stopTypingDebounce.current();
   };
 
   useEffect(() => {
@@ -141,8 +128,14 @@ const useMessageForm = () => {
 
     return () => {
       document.removeEventListener("click", handleDocumentClick, false);
+      if (conversation) {
+        const payload: ReqTypingMessageType = {
+          conversationId: conversation?.id,
+        };
+        socket?.emit(REQUEST_STOP_TYPING_MESSAGE, payload);
+      }
     };
-  }, [handleDocumentClick]);
+  }, [conversation, handleDocumentClick, socket]);
 
   return {
     inputRef,
@@ -151,7 +144,6 @@ const useMessageForm = () => {
     handleToggleVisibleEmoji,
     handleEmojiClick,
     handleTyping,
-    handleStopTyping,
     handleFinish,
   };
 };

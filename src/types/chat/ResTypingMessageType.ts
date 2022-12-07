@@ -1,5 +1,5 @@
 type ResTypingMessageType = {
-  userIdTyping: string;
-}
+  conversationId: string;
+};
 
 export default ResTypingMessageType;
