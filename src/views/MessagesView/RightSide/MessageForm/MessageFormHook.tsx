@@ -1,4 +1,4 @@
-import { Form, InputRef } from "antd";
+import { Form } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import _debounce from "lodash/debounce";
@@ -18,7 +18,6 @@ import {
 import { typingRegex } from "@/utils/regexes";
 
 const useMessageForm = () => {
-  const inputRef = useRef<InputRef>(null);
   const typingDebounce = useRef<any>();
 
   const [_isTyping, _setIsTyping] = useState(false);
@@ -31,6 +30,7 @@ const useMessageForm = () => {
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
+  const inputFormEl = useMessageStore((state) => state.inputFormEl);
   const conversation = useConversationStore((state) => state.conversation);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
@@ -41,15 +41,15 @@ const useMessageForm = () => {
   const handleEmojiClick = useCallback(
     (emojiData: EmojiClickData) => {
       const inputCurrentValue = form.getFieldValue("content");
-      const cursorPositionIndex = inputRef.current?.input?.selectionStart;
+      const cursorPositionIndex = inputFormEl.current?.input?.selectionStart;
       const newValue = cursorPositionIndex
         ? inputCurrentValue?.substring(0, cursorPositionIndex) +
           emojiData?.emoji +
-          inputCurrentValue?.substring(cursorPositionIndex + 1)
+          inputCurrentValue?.substring(cursorPositionIndex)
         : inputCurrentValue || "" + emojiData?.emoji;
       form.setFieldValue("content", newValue);
     },
-    [form],
+    [form, inputFormEl],
   );
 
   const handleFinish = useCallback(
@@ -138,7 +138,7 @@ const useMessageForm = () => {
   }, [conversation, handleDocumentClick, socket]);
 
   return {
-    inputRef,
+    inputFormEl,
     visibleEmoji,
     form,
     handleToggleVisibleEmoji,

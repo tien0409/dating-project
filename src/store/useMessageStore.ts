@@ -2,10 +2,13 @@ import create from "zustand";
 import { createRef, RefObject } from "react";
 
 import { MessageType } from "@/types";
+import { InputRef } from "antd";
 
 type MessageStoreType = {
   loadingGetMessages: boolean;
   setLoadingGetMessages: (_loading: boolean) => void;
+  inputFormEl: RefObject<InputRef>;
+  inputFocus: () => void;
   lastMessageEl: RefObject<HTMLDivElement>;
   scrollToLastMessage: () => void;
   messages: MessageType[];
@@ -19,6 +22,10 @@ type MessageStoreType = {
 const useMessageStore = create<MessageStoreType>((setState, getState) => ({
   loadingGetMessages: false,
   setLoadingGetMessages: (loading) => setState({ loadingGetMessages: loading }),
+  inputFormEl: createRef<InputRef>(),
+  inputFocus: () => {
+    getState()?.inputFormEl.current.focus();
+  },
   lastMessageEl: createRef<HTMLDivElement>(),
   scrollToLastMessage: () => {
     setTimeout(() => {

@@ -13,7 +13,7 @@ const cln = classNames.bind(styles);
 
 const MessageForm = () => {
   const {
-    inputRef,
+    inputFormEl,
     visibleEmoji,
     form,
     handleEmojiClick,
@@ -38,7 +38,7 @@ const MessageForm = () => {
               size="large"
               placeholder="Your message..."
               autoFocus
-              ref={inputRef}
+              ref={inputFormEl}
               onKeyDown={handleTyping}
             />
           </Form.Item>

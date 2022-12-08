@@ -21,6 +21,7 @@ const useMessageItem = (props: MessageItemProps) => {
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const messageDelete = useMessageStore((state) => state.messageDelete);
   const conversation = useConversationStore((state) => state.conversation);
+  const inputFocus = useMessageStore((state) => state.inputFocus);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
   const setMessageDelete = useMessageStore((state) => state.setMessageDelete);
 
@@ -58,6 +59,7 @@ const useMessageItem = (props: MessageItemProps) => {
 
   const handleReply = () => {
     message && setMessageReply(message);
+    inputFocus();
   };
 
   const handleScrollMessageReplied = () => {
@@ -66,6 +68,7 @@ const useMessageItem = (props: MessageItemProps) => {
 
       messageReplied?.scrollIntoView({
         behavior: "smooth",
+        block: "center",
       });
     }
   };

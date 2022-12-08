@@ -15,7 +15,7 @@ const cln = classNames.bind(styles);
 export type MessageItemProps = {
   loading?: boolean;
   message?: MessageType;
-  _participantTyping?: ParticipantType| null;
+  _participantTyping?: ParticipantType | null;
 };
 
 const MessageItem = (props: MessageItemProps) => {
@@ -52,52 +52,53 @@ const MessageItem = (props: MessageItemProps) => {
           <div>
             <Avatar className={cln("avatar")} src={avatar} />
           </div>
-          <div className={cln("content")}>
-            <If condition={!!message?.replyTo}>
-              <Then>
-                <div className={cln("message__reply")} onClick={handleScrollMessageReplied}>
-                  <div className={cln("message__reply-mark")}>&nbsp;</div>
 
-                  <div
-                    className={cln("message__reply-main", {
-                      "in-active": !message?.replyTo?.active,
-                      "is-sender": message?.participant?.id === senderParticipant?.id,
-                    })}
-                  >
-                    <If condition={message?.replyTo?.active}>
-                      <Then>
-                        <h5 className={cln("message__reply-main-fullName")}>
-                          {message?.replyTo?.participant?.user?.fullName}
-                        </h5>
-                      </Then>
-                    </If>
-                    <p className={cln("message__reply-main-content")}>
+          <Tooltip title={createdAtStr}>
+            <div className={cln("content")}>
+              <If condition={!!message?.replyTo}>
+                <Then>
+                  <div className={cln("message__reply")} onClick={handleScrollMessageReplied}>
+                    <div className={cln("message__reply-mark")}>&nbsp;</div>
+
+                    <div
+                      className={cln("message__reply-main", {
+                        "in-active": !message?.replyTo?.active,
+                        "is-sender": message?.participant?.id === senderParticipant?.id,
+                      })}
+                    >
                       <If condition={message?.replyTo?.active}>
-                        <Then>{message?.replyTo?.content}</Then>
-                        <Else>Tin nhắn đã bị xoá</Else>
+                        <Then>
+                          <h5 className={cln("message__reply-main-fullName")}>
+                            {message?.replyTo?.participant?.user?.fullName}
+                          </h5>
+                        </Then>
                       </If>
-                    </p>
+                      <p className={cln("message__reply-main-content")}>
+                        <If condition={message?.replyTo?.active}>
+                          <Then>{message?.replyTo?.content}</Then>
+                          <Else>Tin nhắn đã bị xoá</Else>
+                        </If>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Then>
-            </If>
+                </Then>
+              </If>
 
-            <If condition={!!_participantTyping}>
-              <Then>
-                <div className={cln("typing")}>
-                  <div className={cln("typing__dot")}></div>
-                  <div className={cln("typing__dot")}></div>
-                  <div className={cln("typing__dot")}></div>
-                </div>
-              </Then>
+              <If condition={!!_participantTyping}>
+                <Then>
+                  <div className={cln("typing")}>
+                    <div className={cln("typing__dot")}></div>
+                    <div className={cln("typing__dot")}></div>
+                    <div className={cln("typing__dot")}></div>
+                  </div>
+                </Then>
 
-              <Else>
-                <Tooltip title={createdAtStr}>
+                <Else>
                   <div>{message?.content}</div>
-                </Tooltip>
-              </Else>
-            </If>
-          </div>
+                </Else>
+              </If>
+            </div>
+          </Tooltip>
 
           <If condition={!_participantTyping && messageDelete?.id === message?.id}>
             <Then>
