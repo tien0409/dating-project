@@ -75,6 +75,7 @@ const RightSide = () => {
                 </div>
               </Then>
             </If>
+
             <MessageForm />
           </div>
         </div>
