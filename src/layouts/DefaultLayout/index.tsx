@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 import styles from "./DefaultLayout.module.scss";
 import Sidebar from "./Sidebar";
-import {ProtectedRoute} from "@/components";
+import { ProtectedRoute } from "@/components";
 
 const cln = classNames.bind(styles);
 

@@ -26,5 +26,10 @@ export const useRegisterData = ({ onSuccess, onError }: RQConfigsType) => {
 };
 
 export const useFetchUserAuthData = ({ onSuccess, onError, enabled }: RQConfigsType) => {
-  return useQuery(["user-auth"], _fetchUserAuth, { onSuccess, onError, enabled });
+  return useQuery(["user-auth"], _fetchUserAuth, {
+    onSuccess,
+    onError,
+    enabled,
+    staleTime: Infinity,
+  });
 };

@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfigProvider } from "antd";
 import { ToastContainer } from "react-toastify";
 import { QueryClient } from "@tanstack/query-core";
@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
-import { DefaultLayout } from "@/layouts";
 import { useSocketStore, useUserStore } from "@/store";
 
 type MyAppProps = AppProps & {
@@ -23,8 +22,6 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     if (profile) initSocket();
   }, [initSocket, profile]);
 
-  const getLayout =
-    Component.layout ?? ((page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>);
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -37,7 +34,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
           },
         }}
       >
-        {getLayout(<Component {...pageProps} />)}
+        <Component {...pageProps} />
         <ToastContainer bodyClassName="toast" />
       </ConfigProvider>
     </QueryClientProvider>
