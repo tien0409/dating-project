@@ -40,12 +40,12 @@ $padding-x: 10px;
 }
 
 .message__list {
+  display: grid;
   height: 100%;
   width: 100%;
   padding: 20px $padding-x 0 $padding-x;
   margin-bottom: 10px;
   overflow-y: auto;
-  scroll-behavior: smooth;
 }
 
 .form__input {
