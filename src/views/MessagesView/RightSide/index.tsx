@@ -3,12 +3,12 @@ import classNames from "classnames/bind";
 import { BsTelephoneFill } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";
 import _isEmpty from "lodash/isEmpty";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiFillEdit, AiOutlineClose } from "react-icons/ai";
 
 import styles from "./RightSide.module.scss";
 import MessageList from "./MessageList";
 import MessageForm from "./MessageForm";
-import { If, Then } from "react-if";
+import { Else, If, Then } from "react-if";
 import { GoReply } from "react-icons/go";
 import useRightSide from "@/views/MessagesView/RightSide/RightSideHook";
 
@@ -17,9 +17,10 @@ const cln = classNames.bind(styles);
 const RightSide = () => {
   const {
     router,
+    messageAction,
     messageReply,
     receiverParticipant,
-    handleRemoveMessageReply,
+    handleRemoveAction,
     handleScrollToMessage,
   } = useRightSide();
 
@@ -50,26 +51,34 @@ const RightSide = () => {
 
           <div
             className={cln("form__input", {
-              replying: !!messageReply,
+              replying: !!messageAction,
             })}
           >
-            <If condition={!!messageReply}>
+            <If condition={!!messageAction}>
               <Then>
                 <div className={cln("reply__wrapper")}>
                   <div className={cln("reply__icon")}>
-                    <GoReply size={24} />
+                    <If condition={!!messageReply}>
+                      <Then>
+                        <GoReply size={24} />
+                      </Then>
+
+                      <Else>
+                        <AiFillEdit size={24} />
+                      </Else>
+                    </If>
                   </div>
 
                   <div className={cln("message")} onClick={handleScrollToMessage}>
                     <h5 className={cln("text-truncate", "message__fullName")}>
-                      {messageReply?.participant?.user?.fullName}
+                      {messageAction?.participant?.user?.fullName}
                     </h5>
                     <p className={cln("text-truncate", "message__content")}>
-                      {messageReply?.content}
+                      {messageAction?.content}
                     </p>
                   </div>
 
-                  <button className={cln("close")} onClick={handleRemoveMessageReply}>
+                  <button className={cln("close")} onClick={handleRemoveAction}>
                     <AiOutlineClose size={20} />
                   </button>
                 </div>

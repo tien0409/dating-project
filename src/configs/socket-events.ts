@@ -14,3 +14,6 @@ export const REQUEST_TYPING_MESSAGE = "request_typing_message";
 export const SEND_TYPING_MESSAGE = "send_typing_message";
 export const REQUEST_STOP_TYPING_MESSAGE = "request_stop_typing_message";
 export const SEND_STOP_TYPING_MESSAGE = "send_stop_typing_message";
+
+export const REQUEST_UPDATE_MESSAGE = "request_update_message";
+export const SEND_UPDATE_MESSAGE = "send_update_message";

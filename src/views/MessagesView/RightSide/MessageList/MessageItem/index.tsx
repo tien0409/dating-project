@@ -27,6 +27,7 @@ const MessageItem = (props: MessageItemProps) => {
     avatar,
     createdAtStr,
     handleDeleteMessage,
+    handleEditMessage,
     handleReply,
     handleScrollMessageReplied,
   } = useMessageItem(props);
@@ -110,7 +111,7 @@ const MessageItem = (props: MessageItemProps) => {
               <div className={cln("message__actions")}>
                 <If condition={message?.participant?.id === senderParticipant?.id}>
                   <Then>
-                    <AiFillEdit size={17} cursor="pointer" />
+                    <AiFillEdit size={17} cursor="pointer" onClick={handleEditMessage} />
                     <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
                   </Then>
                 </If>

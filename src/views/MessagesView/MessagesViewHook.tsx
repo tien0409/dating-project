@@ -16,6 +16,7 @@ import {
   SEND_MESSAGE,
   SEND_STOP_TYPING_MESSAGE,
   SEND_TYPING_MESSAGE,
+  SEND_UPDATE_MESSAGE,
 } from "@/configs/socket-events";
 import {
   MessageType,
@@ -24,6 +25,7 @@ import {
   ResSendAllMessages,
   ResSendMessageType,
   ResTypingMessageType,
+  ResUpdateMessageType,
 } from "@/types";
 import { toast } from "react-toastify";
 
@@ -113,11 +115,23 @@ const useMessageView = () => {
       setParticipantTyping(false);
     });
 
-    socket?.on(SEND_MESSAGE, (data: ResSendMessageType) => {
-      if (data.message) {
-        setMessages([...messages, data.message]);
-        updateLastMessageConversation(data.conversationIdUpdated, data.message);
+    socket?.on(SEND_MESSAGE, (payload: ResSendMessageType) => {
+      if (payload.message) {
+        setMessages([...messages, payload.message]);
+        updateLastMessageConversation(payload.conversationIdUpdated, payload.message);
         scrollToLastMessage();
+      }
+    });
+
+    socket?.on(SEND_UPDATE_MESSAGE, (payload: ResUpdateMessageType) => {
+      const { conversationId, message } = payload;
+
+      if (payload.message) {
+        const newMessages = messages.map((_message) =>
+          _message.id === message.id ? message : _message,
+        );
+        setMessages(newMessages);
+        conversationId && updateLastMessageConversation(conversationId, message);
       }
     });
 
@@ -138,6 +152,7 @@ const useMessageView = () => {
       socket?.off(SEND_TYPING_MESSAGE);
       socket?.off(SEND_STOP_TYPING_MESSAGE);
       socket?.off(SEND_MESSAGE);
+      socket?.off(SEND_UPDATE_MESSAGE);
       socket?.off(SEND_DELETE_MESSAGE);
     };
   }, [

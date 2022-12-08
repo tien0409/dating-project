@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ForwardedRef } from "react";
+import { useMemo } from "react";
 
 import { useMessageStore, useParticipantStore } from "@/store";
 
@@ -8,10 +8,14 @@ const useRightSide = () => {
 
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
+  const messageEdit = useMessageStore((state) => state.messageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
+  const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
 
-  const handleRemoveMessageReply = () => {
-    setMessageReply(undefined);
+  const messageAction = useMemo(() => messageReply || messageEdit, [messageEdit, messageReply]);
+
+  const handleRemoveAction = () => {
+    messageReply ? setMessageReply(undefined) : setMessageEdit(undefined);
   };
 
   const handleScrollToMessage = () => {
@@ -27,8 +31,9 @@ const useRightSide = () => {
   return {
     router,
     receiverParticipant,
+    messageAction,
     messageReply,
-    handleRemoveMessageReply,
+    handleRemoveAction,
     handleScrollToMessage,
   };
 };

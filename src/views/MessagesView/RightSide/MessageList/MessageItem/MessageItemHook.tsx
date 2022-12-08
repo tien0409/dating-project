@@ -22,7 +22,9 @@ const useMessageItem = (props: MessageItemProps) => {
   const messageDelete = useMessageStore((state) => state.messageDelete);
   const conversation = useConversationStore((state) => state.conversation);
   const inputFocus = useMessageStore((state) => state.inputFocus);
+  const scrollToLastMessage = useMessageStore((state) => state.scrollToLastMessage);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
+  const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageDelete = useMessageStore((state) => state.setMessageDelete);
 
   const avatar = _participantTyping
@@ -57,9 +59,20 @@ const useMessageItem = (props: MessageItemProps) => {
     });
   };
 
+  const handleEditMessage = () => {
+    if (message) {
+      setMessageEdit(message);
+      inputFocus();
+      scrollToLastMessage();
+    }
+  };
+
   const handleReply = () => {
-    message && setMessageReply(message);
-    inputFocus();
+    if (message) {
+      setMessageReply(message);
+      inputFocus();
+      scrollToLastMessage();
+    }
   };
 
   const handleScrollMessageReplied = () => {
@@ -78,6 +91,7 @@ const useMessageItem = (props: MessageItemProps) => {
     senderParticipant,
     createdAtStr,
     avatar,
+    handleEditMessage,
     handleDeleteMessage,
     handleReply,
     handleScrollMessageReplied,

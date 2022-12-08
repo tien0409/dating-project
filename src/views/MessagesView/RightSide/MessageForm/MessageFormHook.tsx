@@ -9,11 +9,12 @@ import {
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { ReqTypingMessageType, SendMessageType } from "@/types";
+import { ReqTypingMessageType, ReqUpdateMessageType, SendMessageType } from "@/types";
 import {
   REQUEST_SEND_MESSAGE,
   REQUEST_STOP_TYPING_MESSAGE,
   REQUEST_TYPING_MESSAGE,
+  REQUEST_UPDATE_MESSAGE,
 } from "@/configs/socket-events";
 import { typingRegex } from "@/utils/regexes";
 
@@ -30,8 +31,10 @@ const useMessageForm = () => {
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const senderParticipant = useParticipantStore((state) => state.senderParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
+  const messageEdit = useMessageStore((state) => state.messageEdit);
   const inputFormEl = useMessageStore((state) => state.inputFormEl);
   const conversation = useConversationStore((state) => state.conversation);
+  const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
   const handleToggleVisibleEmoji = useCallback(() => {
@@ -58,24 +61,40 @@ const useMessageForm = () => {
       if (!content?.trim()) return;
 
       if (receiverParticipant?.user?.id && senderParticipant?.id && conversation) {
-        const payload: SendMessageType = {
-          content,
-          conversationId: conversation.id,
-          receiverId: receiverParticipant?.user?.id,
-          senderParticipantId: senderParticipant?.id,
-          replyTo: messageReply,
-        };
-        socket?.emit(REQUEST_SEND_MESSAGE, payload);
-        setMessageReply(undefined);
+        // update
+        if (messageEdit) {
+          const payload: ReqUpdateMessageType = {
+            messageId: messageEdit.id,
+            conversationId: conversation.id,
+            content,
+          };
+          socket?.emit(REQUEST_UPDATE_MESSAGE, payload);
+          setMessageEdit(undefined);
+        } else {
+          // create
+
+          const payload: SendMessageType = {
+            content,
+            conversationId: conversation.id,
+            receiverId: receiverParticipant?.user?.id,
+            senderParticipantId: senderParticipant?.id,
+            replyTo: messageReply,
+          };
+          socket?.emit(REQUEST_SEND_MESSAGE, payload);
+          setMessageReply(undefined);
+        }
+
         form.resetFields();
       }
     },
     [
       conversation,
       form,
+      messageEdit,
       messageReply,
       receiverParticipant?.user?.id,
       senderParticipant?.id,
+      setMessageEdit,
       setMessageReply,
       socket,
     ],
@@ -136,6 +155,11 @@ const useMessageForm = () => {
       }
     };
   }, [conversation, handleDocumentClick, socket]);
+
+  useEffect(() => {
+    if (messageEdit) form.setFieldValue("content", messageEdit.content);
+    else form.setFieldValue("content", "");
+  }, [form, messageEdit]);
 
   return {
     inputFormEl,

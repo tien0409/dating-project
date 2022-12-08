@@ -13,6 +13,8 @@ type MessageStoreType = {
   scrollToLastMessage: () => void;
   messages: MessageType[];
   setMessages: (_messages: MessageType[]) => void;
+  messageEdit?: MessageType;
+  setMessageEdit: (_messageEdit?: MessageType) => void;
   messageReply?: MessageType;
   setMessageReply: (_messageReply?: MessageType) => void;
   messageDelete?: MessageType;
@@ -24,7 +26,7 @@ const useMessageStore = create<MessageStoreType>((setState, getState) => ({
   setLoadingGetMessages: (loading) => setState({ loadingGetMessages: loading }),
   inputFormEl: createRef<InputRef>(),
   inputFocus: () => {
-    getState()?.inputFormEl.current.focus();
+    getState()?.inputFormEl.current?.focus();
   },
   lastMessageEl: createRef<HTMLDivElement>(),
   scrollToLastMessage: () => {
@@ -34,6 +36,8 @@ const useMessageStore = create<MessageStoreType>((setState, getState) => ({
   },
   messages: [],
   setMessages: (messages) => setState((state) => ({ ...state, messages })),
+  messageEdit: undefined,
+  setMessageEdit: (messageEdit) => setState((state) => ({ ...state, messageEdit })),
   messageReply: undefined,
   setMessageReply: (messageReply) => setState((state) => ({ ...state, messageReply })),
   messageDelete: undefined,
