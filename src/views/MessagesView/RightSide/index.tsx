@@ -15,7 +15,13 @@ import useRightSide from "@/views/MessagesView/RightSide/RightSideHook";
 const cln = classNames.bind(styles);
 
 const RightSide = () => {
-  const { router, messageReply, receiverParticipant, handleRemoveMessageReply, handleScrollToMessage } = useRightSide();
+  const {
+    router,
+    messageReply,
+    receiverParticipant,
+    handleRemoveMessageReply,
+    handleScrollToMessage,
+  } = useRightSide();
 
   return (
     <If condition={!_isEmpty(router.query)}>

@@ -9,10 +9,10 @@ const cln = classNames.bind(styles);
 
 const MessageList = () => {
   const {
+    lastMessageEl,
     isReceiverTyping,
     receiverParticipant,
     loadingGetMessages,
-    lastMessageRef,
     _messagesInternal,
   } = useMessageList();
 
@@ -30,7 +30,7 @@ const MessageList = () => {
           <MessageItem _participantTyping={receiverParticipant} />
         </Then>
       </If>
-      <div ref={lastMessageRef}></div>
+      <div ref={lastMessageEl}></div>
     </div>
   );
 };

@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 import { useConversationStore, useMessageStore, useParticipantStore } from "@/store";
 
 const useMessageList = () => {
-  const lastMessageRef = useRef<HTMLDivElement>(null);
-
+  const lastMessageEl = useMessageStore((state) => state.lastMessageEl);
   const messages = useMessageStore((state) => state.messages);
   const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
   const conversation = useConversationStore((state) => state.conversation);
@@ -12,10 +11,10 @@ const useMessageList = () => {
   const participantTyping = useParticipantStore((state) => state.participantTyping);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
 
-  const _messagesInternal = useMemo(
-    () => (loadingGetMessages ? Array(15).fill(0) : messages),
-    [loadingGetMessages, messages],
-  );
+  const _messagesInternal = useMemo(() => (loadingGetMessages ? Array(15).fill(0) : messages), [
+    loadingGetMessages,
+    messages,
+  ]);
 
   const isReceiverTyping = () => {
     return (
@@ -26,15 +25,15 @@ const useMessageList = () => {
     );
   };
 
-  useEffect(() => {
-    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
+  // useEffect(() => {
+  //   lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
+  //
   return {
     isReceiverTyping,
     receiverParticipant,
     loadingGetMessages,
-    lastMessageRef,
+    lastMessageEl,
     _messagesInternal,
   };
 };

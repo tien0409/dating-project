@@ -32,6 +32,7 @@ const useMessageView = () => {
 
   const socket = useSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
+  const scrollToLastMessage = useMessageStore((state) => state.scrollToLastMessage);
   const conversations = useConversationStore((state) => state.conversations);
   const conversation = useConversationStore((state) => state.conversation);
   const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
@@ -90,6 +91,7 @@ const useMessageView = () => {
       setMessages(messages);
       setReceiverParticipant(receiverParticipant);
       setSenderParticipant(senderParticipant);
+      scrollToLastMessage();
     });
 
     socket?.on(SEND_TYPING_MESSAGE, (payload: ResTypingMessageType) => {
@@ -99,6 +101,7 @@ const useMessageView = () => {
       newConversationIdsTyping.set(conversationId, true);
       setConversationIdsTyping(newConversationIdsTyping);
       setParticipantTyping(true);
+      scrollToLastMessage();
     });
 
     socket?.on(SEND_STOP_TYPING_MESSAGE, (payload: ResTypingMessageType) => {
@@ -114,6 +117,7 @@ const useMessageView = () => {
       if (data.message) {
         setMessages([...messages, data.message]);
         updateLastMessageConversation(data.conversationIdUpdated, data.message);
+        scrollToLastMessage();
       }
     });
 
@@ -141,6 +145,7 @@ const useMessageView = () => {
     conversationIdsTyping,
     conversations,
     messages,
+    scrollToLastMessage,
     setConversation,
     setConversationIdsTyping,
     setConversations,
