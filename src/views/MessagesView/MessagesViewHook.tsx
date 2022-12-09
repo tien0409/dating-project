@@ -12,6 +12,7 @@ import {
   REQUEST_ALL_MESSAGES,
   SEND_ALL_CONVERSATIONS,
   SEND_ALL_MESSAGES,
+  SEND_DELETE_CONVERSATION,
   SEND_DELETE_MESSAGE,
   SEND_MESSAGE,
   SEND_STOP_TYPING_MESSAGE,
@@ -21,6 +22,7 @@ import {
 import {
   MessageType,
   ReqAllMessageType,
+  ResDeleteConversationType,
   ResDeleteMessageType,
   ResSendAllMessages,
   ResSendMessageType,
@@ -65,14 +67,15 @@ const useMessageView = () => {
   );
 
   useEffect(() => {
-    if (router.query.conversationId?.[0]) {
+    const currentConversationId = router.query.conversationId?.[0];
+    if (currentConversationId && currentConversationId !== conversation?.id) {
       const payload: ReqAllMessageType = {
-        conversationId: router.query.conversationId?.[0],
+        conversationId: currentConversationId,
       };
       socket?.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
     }
-  }, [router.query.conversationId, setLoadingGetMessages, socket]);
+  }, [conversation, router.query.conversationId, setLoadingGetMessages, socket]);
 
   useEffect(() => {
     socket?.emit(REQUEST_ALL_CONVERSATIONS);
@@ -83,6 +86,13 @@ const useMessageView = () => {
     socket?.on(SEND_ALL_CONVERSATIONS, (conversations) => {
       setConversations(conversations);
       setLoadingGetConversations(false);
+    });
+
+    socket?.on(SEND_DELETE_CONVERSATION, (payload: ResDeleteConversationType) => {
+      const { conversations } = payload;
+
+      toast.success("Conversation deleted");
+      setConversations(conversations);
     });
 
     socket?.on(SEND_ALL_MESSAGES, (payload: ResSendAllMessages) => {
@@ -148,6 +158,7 @@ const useMessageView = () => {
 
     return () => {
       socket?.off(SEND_ALL_CONVERSATIONS);
+      socket?.off(SEND_DELETE_CONVERSATION);
       socket?.off(SEND_ALL_MESSAGES);
       socket?.off(SEND_TYPING_MESSAGE);
       socket?.off(SEND_STOP_TYPING_MESSAGE);

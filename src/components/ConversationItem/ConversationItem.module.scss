@@ -8,6 +8,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 13px;
+  position: relative;
   cursor: pointer;
 
   .info {
@@ -59,3 +60,8 @@
   }
 }
 
+.control__action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

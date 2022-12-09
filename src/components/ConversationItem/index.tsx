@@ -77,7 +77,7 @@ const ConversationItem = (props: ConversationItemProps) => {
 
             {hasControl && (
               <div className={cln("controls")}>
-                <Dropdown menu={{ items: controlOptions }} placement="bottomLeft">
+                <Dropdown menu={{ items: controlOptions }} placement="bottomLeft" trigger="click">
                   <SlOptionsVertical size={13} />
                 </Dropdown>
               </div>

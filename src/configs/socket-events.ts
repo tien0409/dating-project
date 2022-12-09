@@ -17,3 +17,6 @@ export const SEND_STOP_TYPING_MESSAGE = "send_stop_typing_message";
 
 export const REQUEST_UPDATE_MESSAGE = "request_update_message";
 export const SEND_UPDATE_MESSAGE = "send_update_message";
+
+export const REQUEST_DELETE_CONVERSATION = "request_delete_conversation";
+export const SEND_DELETE_CONVERSATION = "send_delete_conversation";
