@@ -7,6 +7,7 @@ import {
   useMessageStore,
   useParticipantStore,
   useSocketStore,
+  useUserStore,
 } from "@/store";
 import {
   REQUEST_ALL_CONVERSATIONS,
@@ -25,6 +26,7 @@ import {
   ReqAllMessageType,
   ResDeleteConversationType,
   ResDeleteMessageType,
+  ResSendAllConversationsType,
   ResSendAllMessages,
   ResSendMessageType,
   ResTypingMessageType,
@@ -34,6 +36,7 @@ import {
 const useMessageView = () => {
   const router = useRouter();
 
+  const profile = useUserStore((state) => state.profile);
   const socket = useSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
   const scrollToLastMessage = useMessageStore((state) => state.scrollToLastMessage);
@@ -66,14 +69,14 @@ const useMessageView = () => {
 
   useEffect(() => {
     const currentConversationId = router.query.conversationId?.[0];
-    if (currentConversationId && currentConversationId !== conversation?.id) {
+    if (profile?.id && currentConversationId && currentConversationId !== conversation?.id) {
       const payload: ReqAllMessageType = {
         conversationId: currentConversationId,
       };
       socket?.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
     }
-  }, [conversation, router.query.conversationId, setLoadingGetMessages, socket]);
+  }, [conversation, profile?.id, router.query.conversationId, setLoadingGetMessages, socket]);
 
   useEffect(() => {
     socket?.emit(REQUEST_ALL_CONVERSATIONS);
@@ -81,7 +84,10 @@ const useMessageView = () => {
   }, [setLoadingGetConversations, socket]);
 
   useEffect(() => {
-    socket?.on(SEND_ALL_CONVERSATIONS, (conversations) => {
+    socket?.on(SEND_ALL_CONVERSATIONS, (payload: ResSendAllConversationsType) => {
+      const { conversations } = payload;
+      console.log("conversations", conversations);
+
       setConversations(conversations);
       setLoadingGetConversations(false);
     });
@@ -105,7 +111,6 @@ const useMessageView = () => {
     });
 
     socket?.on(SEND_TYPING_MESSAGE, (payload: ResTypingMessageType) => {
-      console.log("send typing");
       const { conversationId } = payload;
 
       const newConversationIdsTyping = new Map(conversationIdsTyping);

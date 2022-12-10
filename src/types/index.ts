@@ -27,4 +27,5 @@ export type { default as ReqUpdateMessageType } from "./chat/ReqUpdateMessageTyp
 export type { default as ResUpdateMessageType } from "./chat/ResUpdateMessageType";
 export type { default as ReqDeleteConversationType } from "./chat/ReqDeleteConversationType";
 export type { default as ResDeleteConversationType } from "./chat/ResDeleteConversationType";
+export type { default as ResSendAllConversationsType } from "./chat/ResSendAllConversationsType";
 export * from "./chat/ResDeleteMessageType";

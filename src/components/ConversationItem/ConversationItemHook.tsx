@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 
 import styles from "./ConversationItem.module.scss";
 import { ConversationItemProps } from ".";
-import { useConversationStore, useMessageStore, useSocketStore } from "@/store";
+import { useConversationStore, useMessageStore, useSocketStore, useUserStore } from "@/store";
 import { REQUEST_DELETE_CONVERSATION } from "@/configs/socket-events";
 import { ReqDeleteConversationType } from "@/types";
 import { MESSAGES_ROUTE } from "@/configs/routes";
@@ -20,6 +20,7 @@ const useConversationItem = (props: ConversationItemProps) => {
 
   const router = useRouter();
 
+  const profile = useUserStore((state) => state.profile);
   const socket = useSocketStore((state) => state.socket);
   const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
   const currentConversation = useConversationStore((state) => state.conversation);
@@ -30,6 +31,11 @@ const useConversationItem = (props: ConversationItemProps) => {
 
   const isReceiverTyping = () =>
     currentConversation && conversationIdsTyping.get(currentConversation?.id);
+
+  const receiverConversation = useMemo(
+    () => conversation?.participants?.filter((item) => item?.user?.id !== profile?.id)?.[0],
+    [conversation?.participants, profile?.id],
+  );
 
   const doDeleteConversation = useCallback(async () => {
     if (conversation) {
@@ -102,6 +108,7 @@ const useConversationItem = (props: ConversationItemProps) => {
 
   return {
     isReceiverTyping,
+    receiverConversation,
     controlOptions,
   };
 };

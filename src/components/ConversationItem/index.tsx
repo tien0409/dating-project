@@ -23,7 +23,7 @@ export type ConversationItemProps = {
 const ConversationItem = (props: ConversationItemProps) => {
   const { loading, conversation, hasControl = false, imageSize = 42 } = props;
 
-  const { isReceiverTyping, controlOptions } = useConversationItem(props);
+  const { isReceiverTyping, receiverConversation, controlOptions } = useConversationItem(props);
 
   return (
     <If condition={loading}>
@@ -33,13 +33,14 @@ const ConversationItem = (props: ConversationItemProps) => {
           <Skeleton.Input block active />
         </div>
       </Then>
+
       <Else>
         <Link href={`${MESSAGES_ROUTE}/${conversation?.id}`}>
           <div className={cln("wrapper")}>
             <div className={cln("info")}>
               <div className={cln("avatar")} style={{ width: imageSize, height: imageSize }}>
                 <Image
-                  src={conversation?.participant?.user?.avatar || ""}
+                  src={receiverConversation?.user?.avatar || ""}
                   width={imageSize}
                   height={imageSize}
                   objectFit="cover"
@@ -48,7 +49,7 @@ const ConversationItem = (props: ConversationItemProps) => {
               </div>
               <div className={cln("content")}>
                 <h4 className={cln("text-truncate", "fullName")}>
-                  {conversation?.participant?.user?.fullName}
+                  {receiverConversation?.user?.fullName}
                 </h4>
                 <If condition={isReceiverTyping}>
                   <Then>
