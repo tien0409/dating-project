@@ -1,8 +1,0 @@
-.conversation__item {
-  padding: 10px;
-  transition: 0.2s ease-in;
-
-  &:hover, &.isActive {
-    background-color: rgba(0,0,0, 0.05);
-  }
-}
