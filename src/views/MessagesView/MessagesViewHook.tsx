@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import { useCallback, useEffect } from "react";
 
 import {
@@ -20,7 +21,7 @@ import {
   SEND_UPDATE_MESSAGE,
 } from "@/configs/socket-events";
 import {
-  MessageType,
+  ConversationType,
   ReqAllMessageType,
   ResDeleteConversationType,
   ResDeleteMessageType,
@@ -29,7 +30,6 @@ import {
   ResTypingMessageType,
   ResUpdateMessageType,
 } from "@/types";
-import { toast } from "react-toastify";
 
 const useMessageView = () => {
   const router = useRouter();
@@ -54,13 +54,11 @@ const useMessageView = () => {
   const setConversations = useConversationStore((state) => state.setConversations);
 
   const updateLastMessageConversation = useCallback(
-    (conversationId: string, message?: MessageType) => {
-      const newConversations = conversations.map((conversation) => {
-        if (conversation.id === conversationId) {
-          conversation.lastMessage = message;
-        }
-        return conversation;
-      });
+    (conversationUpdated: ConversationType) => {
+      const newConversations = conversations.filter(
+        (conversation) => conversation.id !== conversationUpdated.id,
+      );
+      newConversations.unshift(conversationUpdated);
       setConversations(newConversations);
     },
     [conversations, setConversations],
@@ -107,6 +105,7 @@ const useMessageView = () => {
     });
 
     socket?.on(SEND_TYPING_MESSAGE, (payload: ResTypingMessageType) => {
+      console.log("send typing");
       const { conversationId } = payload;
 
       const newConversationIdsTyping = new Map(conversationIdsTyping);
@@ -126,34 +125,34 @@ const useMessageView = () => {
     });
 
     socket?.on(SEND_MESSAGE, (payload: ResSendMessageType) => {
-      if (payload.message) {
-        setMessages([...messages, payload.message]);
-        updateLastMessageConversation(payload.conversationIdUpdated, payload.message);
+      const { conversationUpdated, message } = payload;
+
+      if (message) {
+        setMessages([...messages, message]);
+        updateLastMessageConversation(conversationUpdated);
         scrollToLastMessage();
       }
     });
 
     socket?.on(SEND_UPDATE_MESSAGE, (payload: ResUpdateMessageType) => {
-      const { conversationId, message } = payload;
+      const { conversationUpdated, message } = payload;
 
-      if (payload.message) {
+      if (message) {
         const newMessages = messages.map((_message) =>
           _message.id === message.id ? message : _message,
         );
         setMessages(newMessages);
-        conversationId && updateLastMessageConversation(conversationId, message);
+        conversationUpdated && updateLastMessageConversation(conversationUpdated);
       }
     });
 
     socket?.on(SEND_DELETE_MESSAGE, (payload: ResDeleteMessageType) => {
-      const { lastMessageConversation } = payload;
+      const { conversationUpdated, messages } = payload;
 
       toast.success("Delete message successfully");
       setMessageDelete();
-      setMessages(payload.messages);
-      if (lastMessageConversation) {
-        conversation && updateLastMessageConversation(conversation?.id, lastMessageConversation);
-      }
+      setMessages(messages);
+      conversationUpdated && updateLastMessageConversation(conversationUpdated);
     });
 
     return () => {

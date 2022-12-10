@@ -1,8 +1,8 @@
-import { MessageType } from "@/types";
+import { ConversationType, MessageType } from "@/types";
 
 type ResUpdateMessageType = {
   message: MessageType;
-  conversationId?: string;
+  conversationUpdated?: ConversationType;
 };
 
 export default ResUpdateMessageType;

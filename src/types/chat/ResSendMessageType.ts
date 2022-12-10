@@ -1,7 +1,7 @@
-import { MessageType } from "@/types";
+import { ConversationType, MessageType } from "@/types";
 
 type ResSendMessageType = {
-  conversationIdUpdated: string;
+  conversationUpdated: ConversationType;
   message: MessageType;
 };
 

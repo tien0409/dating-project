@@ -1,4 +1,6 @@
 import { useCallback, useMemo } from "react";
+import { Modal } from "antd";
+import { useRouter } from "next/router";
 import { FiVideo } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { BiBlock } from "react-icons/bi";
@@ -9,12 +11,14 @@ import { ConversationItemProps } from ".";
 import { useConversationStore, useMessageStore, useSocketStore } from "@/store";
 import { REQUEST_DELETE_CONVERSATION } from "@/configs/socket-events";
 import { ReqDeleteConversationType } from "@/types";
-import { Modal } from "antd";
+import { MESSAGES_ROUTE } from "@/configs/routes";
 
 const cln = classNames.bind(styles);
 
 const useConversationItem = (props: ConversationItemProps) => {
   const { conversation } = props;
+
+  const router = useRouter();
 
   const socket = useSocketStore((state) => state.socket);
   const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
@@ -27,8 +31,10 @@ const useConversationItem = (props: ConversationItemProps) => {
   const isReceiverTyping = () =>
     currentConversation && conversationIdsTyping.get(currentConversation?.id);
 
-  const doDeleteConversation = useCallback(() => {
+  const doDeleteConversation = useCallback(async () => {
     if (conversation) {
+      await router.replace(MESSAGES_ROUTE);
+
       // delete local
       const newConversations = conversations.filter((item) => item.id !== conversation?.id);
       setConversations(newConversations);
@@ -44,6 +50,7 @@ const useConversationItem = (props: ConversationItemProps) => {
     conversation,
     conversations,
     currentConversation?.id,
+    router,
     setConversation,
     setConversations,
     setMessages,
