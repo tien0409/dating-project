@@ -1,13 +1,16 @@
+$padding: 20px;
+
 .wrapper {
   background-color: var(--white-color);
   border-radius: 5%;
-  padding: 20px;
+  padding: $padding 0;
 }
 
 .heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 $padding;
 
   .title {
     font-size: 1.7rem;
@@ -20,9 +23,23 @@
   }
 }
 
-.message-list {
+.message__list {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
+
+
+  .message__loading-item {
+    padding: 0 $padding;
+  }
+
+  .message__item {
+    padding: 0 $padding;
+    transition: 0.2s ease-in;
+
+    &:hover {
+      background-color: var(--conversation-hover)
+    }
+  }
 }

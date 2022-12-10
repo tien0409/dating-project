@@ -1,17 +1,17 @@
-import { useMemo } from "react";
+import { useRouter } from "next/router";
 
 import { useConversationStore } from "@/store";
 
 const useConversationList = () => {
+  const router = useRouter();
+
   const conversations = useConversationStore((state) => state.conversations);
+  const conversation = useConversationStore((state) => state.conversation);
   const loadingGetConversations = useConversationStore((state) => state.loadingGetConversations);
 
-  const _conversationsInternal = useMemo(
-    () => (loadingGetConversations ? Array(7).fill(0) : conversations),
-    [conversations, loadingGetConversations],
-  );
+  const isConversationActive = conversation?.id === router.query.conversationId?.[0];
 
-  return { _conversationsInternal, loadingGetConversations };
+  return { isConversationActive, conversations, loadingGetConversations };
 };
 
 export default useConversationList;

@@ -1,9 +1,10 @@
 import classNames from "classnames/bind";
+import { Else, If, Then } from "react-if";
 
 import styles from "./MessageList.module.scss";
 import MessageItem from "./MessageItem";
 import useMessageList from "./MessageListHook";
-import { If, Then } from "react-if";
+import MessageItemLoading from "./MessageItemLoading";
 
 const cln = classNames.bind(styles);
 
@@ -13,24 +14,36 @@ const MessageList = () => {
     isReceiverTyping,
     receiverParticipant,
     loadingGetMessages,
-    _messagesInternal,
+    messages,
   } = useMessageList();
 
   return (
     <div className={cln("wrapper")}>
-      {_messagesInternal.map((message, index) => (
-        <MessageItem
-          loading={loadingGetMessages}
-          message={loadingGetMessages ? undefined : message}
-          key={message?.id || index}
-        />
-      ))}
-      <If condition={isReceiverTyping}>
+      <If condition={loadingGetMessages}>
         <Then>
-          <MessageItem _participantTyping={receiverParticipant} />
+          {Array(15)
+            .fill(0)
+            .map((_item, index) => (
+              <MessageItemLoading key={index} />
+            ))}
         </Then>
+
+        <Else>
+          {messages.map((message, index) => (
+            <MessageItem
+              message={loadingGetMessages ? undefined : message}
+              key={message?.id || index}
+            />
+          ))}
+
+          <If condition={isReceiverTyping}>
+            <Then>
+              <MessageItem _participantTyping={receiverParticipant} />
+            </Then>
+          </If>
+          <div ref={lastMessageEl}></div>
+        </Else>
       </If>
-      <div ref={lastMessageEl}></div>
     </div>
   );
 };

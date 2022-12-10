@@ -1,0 +1,10 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 8px 0;
+
+  &.is-sender {
+    flex-direction: row-reverse;
+  }
+}

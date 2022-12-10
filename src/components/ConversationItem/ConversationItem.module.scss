@@ -1,15 +1,12 @@
-.skeleton__wrapper {
-  display: flex;
-  gap: 13px;
-}
-
 .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 13px;
   position: relative;
+  padding: 10px 0;
   cursor: pointer;
+  transition: 0.2s ease-in;
 
   .info {
     display: flex;

@@ -16,7 +16,9 @@ const DatingView = () => {
           <EncounterCard />
         </section>
 
-        <section className="cols-span-5">
+        <section className={cln("cols-span-5", "right__section")}>
+          <RecentConversations />
+
           <RecentConversations />
         </section>
       </div>

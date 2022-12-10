@@ -1,37 +1,42 @@
+import { Else, If, Then } from "react-if";
+import { memo } from "react";
 import classNames from "classnames/bind";
-import { useRouter } from "next/router";
 
 import styles from "./ConversationList.module.scss";
-import { ConversationItem } from "@/components";
+import { ConversationItem, ConversationItemLoading } from "@/components";
 import useConversationList from "./ConversationListHook";
 
 const cln = classNames.bind(styles);
 
 const ConversationList = () => {
-  const router = useRouter();
-
-  const { _conversationsInternal, loadingGetConversations } = useConversationList();
+  const { isConversationActive, conversations, loadingGetConversations } = useConversationList();
 
   return (
-    <div className={cln("custom__scroll", "custom__scroll--tiny")}>
-      {_conversationsInternal.map((conversation, index) => (
-        <div
-          className={cln("conversation__item", {
-            isActive:
-              !loadingGetConversations && router.query?.conversationId?.[0] === conversation.id,
-          })}
-          key={conversation?.id || index}
-        >
-          <ConversationItem
-            loading={loadingGetConversations}
-            conversation={conversation}
-            hasControl
-            imageSize={50}
-          />
-        </div>
-      ))}
+    <div className="custom__scroll custom__scroll--tiny">
+      <If condition={loadingGetConversations}>
+        <Then>
+          <div className={cln("loading__wrapper")}>
+            {Array(7)
+              .fill(0)
+              .map((_item, index) => (
+                <ConversationItemLoading key={index} />
+              ))}
+          </div>
+        </Then>
+
+        <Else>
+          {conversations.map((conversation) => (
+            <div
+              key={conversation.id}
+              className={cln("conversation__item", { isActive: isConversationActive })}
+            >
+              <ConversationItem conversation={conversation} hasControl imageSize={50} />
+            </div>
+          ))}
+        </Else>
+      </If>
     </div>
   );
 };
 
-export default ConversationList;
+export default memo(ConversationList);

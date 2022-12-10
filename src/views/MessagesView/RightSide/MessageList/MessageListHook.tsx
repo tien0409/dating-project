@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import { useConversationStore, useMessageStore, useParticipantStore } from "@/store";
 
 const useMessageList = () => {
@@ -11,11 +9,6 @@ const useMessageList = () => {
   const participantTyping = useParticipantStore((state) => state.participantTyping);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
 
-  const _messagesInternal = useMemo(() => (loadingGetMessages ? Array(15).fill(0) : messages), [
-    loadingGetMessages,
-    messages,
-  ]);
-
   const isReceiverTyping = () => {
     return (
       participantTyping &&
@@ -25,16 +18,12 @@ const useMessageList = () => {
     );
   };
 
-  // useEffect(() => {
-  //   lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messages]);
-  //
   return {
     isReceiverTyping,
     receiverParticipant,
     loadingGetMessages,
     lastMessageEl,
-    _messagesInternal,
+    messages,
   };
 };
 

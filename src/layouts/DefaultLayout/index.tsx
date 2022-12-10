@@ -18,6 +18,7 @@ const DefaultLayout = (props: Props) => {
     <ProtectedRoute>
       <main className={cln("wrapper")}>
         <Sidebar />
+
         <main className={cln("main-content")}>
           <div className="container h-full w-full">{children}</div>
         </main>

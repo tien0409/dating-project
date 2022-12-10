@@ -1,0 +1,17 @@
+$padding: 0 15px;
+
+.loading__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: $padding;
+}
+
+.conversation__item {
+  padding: $padding;
+  transition: 0.3s background-color;
+
+  &:hover, &.isActive {
+    background-color: var(--conversation-hover);
+  }
+}

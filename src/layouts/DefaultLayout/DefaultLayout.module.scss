@@ -10,7 +10,5 @@
   max-width: 1400px;
   height: 100%;
   margin: 0 auto;
-  padding-left: calc(var(--sidebar-width) + 50px) ;
-  padding-top: var(--pt-home-page);
-  padding-bottom: var(--pt-home-page);
+  padding: var(--pt-home-page) 40px var(--pt-home-page) calc(var(--sidebar-width) + 40px);
 }
