@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 
 import styles from "./DatingView.module.scss";
 import EncounterCard from "./EncounterCard";
-import RecentMessages from "./RecentMessages";
+import RecentConversations from "./RecentConversations";
 import { DefaultLayout } from "@/layouts";
 
 const cln = classNames.bind(styles);
@@ -17,7 +17,7 @@ const DatingView = () => {
         </section>
 
         <section className="cols-span-5">
-          <RecentMessages />
+          <RecentConversations />
         </section>
       </div>
     </DefaultLayout>

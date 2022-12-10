@@ -1,13 +1,16 @@
 import classNames from "classnames/bind";
 import Link from "next/link";
 
-import styles from "./RecentMessages.module.scss";
+import styles from "./RecentConversations.module.scss";
 import { MESSAGES_ROUTE } from "@/configs/routes";
 import { ConversationItem } from "@/components";
+import useRecentConversation from "./RecentConversationsHook";
 
 const cln = classNames.bind(styles);
 
-const RecentMessages = () => {
+const RecentConversations = () => {
+  const { loadingGetConversations, _conversationsInternal } = useRecentConversation();
+
   return (
     <div className={cln("wrapper")}>
       <div className={cln("heading")}>
@@ -18,12 +21,16 @@ const RecentMessages = () => {
       </div>
 
       <div className={cln("message-list")}>
-        {[1, 2, 3, 4].map((item, index) => (
-          <ConversationItem key={index} />
+        {_conversationsInternal.map((conversation, index) => (
+          <ConversationItem
+            key={conversation.id || index}
+            conversation={conversation}
+            loading={loadingGetConversations}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-export default RecentMessages;
+export default RecentConversations;

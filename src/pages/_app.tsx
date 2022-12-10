@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
 import { useSocketStore, useUserStore } from "@/store";
+import useChatSocket from "@/hooks/useChatSocket";
 
 type MyAppProps = AppProps & {
   Component: PageType;
@@ -17,6 +18,8 @@ type MyAppProps = AppProps & {
 function MyApp({ Component, pageProps }: MyAppProps) {
   const profile = useUserStore((state) => state.profile);
   const initSocket = useSocketStore((state) => state.initSocket);
+
+  useChatSocket();
 
   useEffect(() => {
     if (profile) initSocket();
