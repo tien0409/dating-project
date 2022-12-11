@@ -5,7 +5,7 @@ import { AUTH_ROUTE } from "@/configs/routes";
 import useUserStore from "@/store/useUserStore";
 
 const useSidebar = () => {
-  const store = useUserStore();
+  const profile = useUserStore((state) => state.profile);
 
   const handleLogout = useCallback(() => {
     deleteCookie("Authentication");
@@ -14,7 +14,7 @@ const useSidebar = () => {
   }, []);
 
   return {
-    store,
+    profile,
     handleLogout,
   };
 };

@@ -1,10 +1,9 @@
 import Head from "next/head";
+import { NextPage } from "next";
 
 import CreateAccountView from "@/views/CreateAccountView";
-import { PageType } from "@/types";
-import { BlankLayout } from "@/layouts";
 
-export const CreateAccount: PageType = () => {
+export const CreateAccount: NextPage = () => {
   return (
     <div>
       <Head>
@@ -16,7 +15,5 @@ export const CreateAccount: PageType = () => {
     </div>
   );
 };
-
-CreateAccount.layout = (page) => <BlankLayout>{page}</BlankLayout>;
 
 export default CreateAccount;

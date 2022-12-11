@@ -9,6 +9,8 @@ import {
   firstNameValidator,
   genderValidator,
   lastNameValidator,
+  lookingForGenderValidate,
+  userPhotosValidator,
 } from "@/utils/validators";
 import useCreateAccountView from "./CreateAccountViewHook";
 import Image from "next/image";
@@ -20,9 +22,6 @@ const CreateAccountView = () => {
     formItemLayout,
     form,
     isLoading,
-    genders,
-    genderSelected,
-    setGenderSelected,
     previewOpen,
     previewTitle,
     previewImage,
@@ -45,7 +44,7 @@ const CreateAccountView = () => {
               required
               rules={[{ validator: firstNameValidator }]}
             >
-              <Input size="large" placeholder="Enter your first name" showCount maxLength={20} />
+              <Input size="large" placeholder="Enter your first name" maxLength={20} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -55,7 +54,7 @@ const CreateAccountView = () => {
               required
               rules={[{ validator: lastNameValidator }]}
             >
-              <Input size="large" placeholder="Enter your last name" showCount maxLength={15} />
+              <Input size="large" placeholder="Enter your last name" maxLength={15} />
             </Form.Item>
           </Col>
         </Row>
@@ -76,6 +75,9 @@ const CreateAccountView = () => {
               />
             </Form.Item>
           </Col>
+        </Row>
+
+        <Row gutter={24}>
           <Col span={12}>
             <Form.Item
               label="Gender"
@@ -83,16 +85,28 @@ const CreateAccountView = () => {
               required
               rules={[{ validator: genderValidator }]}
             >
-              <GenderSelect
-                genders={genders}
-                genderSelected={genderSelected}
-                setGenderSelected={setGenderSelected}
-              />
+              <GenderSelect form={form} field="gender" />
+            </Form.Item>
+          </Col>
+
+          <Col span={12}>
+            <Form.Item
+              label="Looking for"
+              name="interestedInGender"
+              required
+              rules={[{ validator: lookingForGenderValidate }]}
+            >
+              <GenderSelect form={form} field="interestedInGender" interestedInGender />
             </Form.Item>
           </Col>
         </Row>
 
-        <Form.Item label="Profile images" valuePropName="files">
+        <Form.Item
+          label="Profile images"
+          name="userPhotos"
+          required
+          rules={[{ validator: userPhotosValidator }]}
+        >
           <Upload
             listType="picture-card"
             multiple
@@ -134,7 +148,14 @@ const CreateAccountView = () => {
         </Form.Item>
 
         <Form.Item style={{ textAlign: "center" }}>
-          <Button type="primary" size="large" htmlType="submit" shape="round" loading={isLoading}>
+          <Button
+            type="primary"
+            size="large"
+            htmlType="submit"
+            shape="round"
+            loading={isLoading}
+            disabled={isLoading}
+          >
             <span className={cln("sign__up-text")}>Sign up</span>
           </Button>
         </Form.Item>

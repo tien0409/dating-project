@@ -10,23 +10,23 @@ const cln = classNames.bind(styles);
 type Props = {
   iconSuffix?: boolean;
   icon?: ReactNode;
-  genderSelected?: GenderType;
   text: string;
   value?: GenderType;
-  onClick?: (_value?: GenderType) => void;
+  onClick?: (_text: string, _value?: GenderType) => void;
+  isActive: boolean;
 };
 
 const SingleSelect = (props: Props) => {
-  const { text, value, genderSelected, icon, iconSuffix = false, onClick } = props;
+  const { text, value, icon, iconSuffix = false, isActive = false, onClick } = props;
 
   const handleClick = () => {
-    if (onClick) onClick(value);
+    if (onClick) onClick(text, value);
   };
 
   return (
     <div
       className={cln("wrapper", {
-        isActive: genderSelected?.id === value?.id,
+        isActive,
       })}
       onClick={handleClick}
     >

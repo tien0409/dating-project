@@ -1,0 +1,16 @@
+.header {
+  padding: 0 20px;
+  margin-bottom: 20px;
+
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+}
+
+.gender__list {
+  height: 50vh;
+  padding: 10px 20px;
+  overflow: auto;
+}

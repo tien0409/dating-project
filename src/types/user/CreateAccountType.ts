@@ -5,6 +5,7 @@ type CreateAccountType = {
   userPhotos: string[];
   bio?: string;
   gender: string;
+  interestedInGender: string
 };
 
 export default CreateAccountType;

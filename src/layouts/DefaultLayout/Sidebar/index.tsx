@@ -9,11 +9,8 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { ItemType } from "antd/es/menu/hooks/useItems";
 import { useRouter } from "next/router";
-import { Else, If, Then } from "react-if";
-import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 import styles from "./Sidebar.module.scss";
-import Avatar from "@/assets/images/avatar.jpg";
 import {
   AUTH_ROUTE,
   MESSAGES_ROUTE,
@@ -23,13 +20,14 @@ import {
   SETTINGS_ROUTE,
 } from "@/configs/routes";
 import useSidebar from "./SidebarHook";
+import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
 const Sidebar = () => {
   const router = useRouter();
 
-  const { store, handleLogout } = useSidebar();
+  const { profile, handleLogout } = useSidebar();
 
   const menuItems = useMemo<ItemType[]>(
     () => [
@@ -116,20 +114,18 @@ const Sidebar = () => {
   return (
     <aside className={cln("wrapper")}>
       <div className={cln("avatar__wrapper")}>
-        <Image src={Avatar} alt="avatar" objectFit="cover" />
+        <Image
+          src={getAvatar(profile?.avatar)}
+          alt="avatar"
+          objectFit="cover"
+          width={200}
+          height={200}
+        />
       </div>
 
       <div className={cln("profile")}>
         <div className={cln("basic__info")}>
-          <h3 className={cln("fullName")}>{store?.profile?.fullName}</h3>
-          <If condition={store?.profile?.gender?.name === "Male"}>
-            <Then>
-              <BsGenderMale size={15} />
-            </Then>
-            <Else>
-              <BsGenderFemale size={15} />
-            </Else>
-          </If>
+          <h3 className={cln("text-truncate", "fullName")}>{profile?.fullName}</h3>
         </div>
         <p className={cln("address")}>HaNoi, Viet Nam</p>
       </div>

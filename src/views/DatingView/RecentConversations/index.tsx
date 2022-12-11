@@ -27,8 +27,8 @@ const RecentConversations = () => {
             {Array(5)
               .fill(0)
               .map((_item, index) => (
-                <div className={cln("message__loading-item")}>
-                  <ConversationItemLoading key={index} />
+                <div key={index} className={cln("message__loading-item")}>
+                  <ConversationItemLoading />
                 </div>
               ))}
           </Then>

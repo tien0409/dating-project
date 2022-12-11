@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useUploadMultiImageData } from "@/hooks/useUploadData";
 import { AxiosResponseType, CreateAccountType, GenderType, ImageUploadType } from "@/types";
 import { convertToFormData } from "@/utils/upload";
-import { useCreateProfileData, useGendersData } from "@/hooks/useUsersData";
+import { useCreateProfileData } from "@/hooks/useUsersData";
 import { DATING_ROUTE } from "@/configs/routes";
 
 const useCreateAccountView = () => {
@@ -21,6 +21,7 @@ const useCreateAccountView = () => {
 
   const handleUploadSuccess = (res: AxiosResponseType<ImageUploadType[]>) => {
     const imageUrls = res?.data?.map((item) => item.url);
+
     const payload: CreateAccountType = {
       ...form.getFieldsValue(),
       birthday: new Date(form.getFieldValue("birthday")),
@@ -34,7 +35,6 @@ const useCreateAccountView = () => {
     await router.push(DATING_ROUTE);
   };
 
-  const { data: res } = useGendersData();
   const { mutate, isLoading: uploadLoading } = useUploadMultiImageData({
     onSuccess: handleUploadSuccess,
   });
@@ -42,11 +42,7 @@ const useCreateAccountView = () => {
     onSuccess: handleCreateSuccess,
   });
 
-  const isLoading = uploadLoading && createLoading;
-
-  const genders = useMemo(() => {
-    return res?.data || [];
-  }, [res?.data]);
+  const isLoading = uploadLoading || createLoading;
 
   const formItemLayout = useMemo(
     () => ({
@@ -96,7 +92,6 @@ const useCreateAccountView = () => {
     formItemLayout,
     form,
     isLoading,
-    genders,
     genderSelected,
     setGenderSelected,
     previewOpen,

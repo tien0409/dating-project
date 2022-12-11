@@ -1,77 +1,66 @@
-import { Modal } from "antd";
+import { If, Then } from "react-if";
+import { FormInstance } from "antd";
 import classNames from "classnames/bind";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { MdArrowForwardIos } from "react-icons/md";
 
 import styles from "./GenderSelect.module.scss";
 import SingleSelect from "./SingleSelect";
-import { GenderType } from "@/types";
-import { If, Then } from "react-if";
+import ModalSelect from "./ModalSelect";
+import useGenderSelect from "./GenderSelectHook";
 
 const cln = classNames.bind(styles);
 
-type Props = {
-  genders: GenderType[];
-  genderSelected?: GenderType;
-  setGenderSelected: Dispatch<SetStateAction<GenderType | undefined>>;
+export type GenderSelectProps = {
+  form: FormInstance;
+  field: string;
+  interestedInGender?: boolean;
 };
 
-type _GendersInternal = {
-  normal: GenderType[];
-  special?: GenderType[];
-};
+const GenderSelect = (props: GenderSelectProps) => {
+  const { interestedInGender } = props;
 
-const GenderSelect = (props: Props) => {
-  const { genders, genderSelected, setGenderSelected } = props;
-
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  const gendersInternal: _GendersInternal = useMemo(() => {
-    if (genders.length > 2) {
-      return {
-        normal: genders.slice(0, 2),
-        special: genders.slice(2),
-      };
-    }
-    return { normal: genders };
-  }, [genders]);
-
-  const handleSelected = (value?: GenderType) => {
-    if (!value) setVisibleModal(true);
-    setGenderSelected(value);
-  };
-
-  const handleCloseModal = () => {
-    setVisibleModal(false);
-  };
+  const {
+    visibleModal,
+    genderSpecialSelected,
+    setGenderSpecialSelected,
+    selected,
+    gendersNormal,
+    gendersSpecial,
+    handleSelectGender,
+    handleCloseModal,
+  } = useGenderSelect(props);
 
   return (
     <div className={cln("wrapper")}>
-      {gendersInternal.normal.map((gender) => (
+      {gendersNormal.map((gender) => (
         <SingleSelect
           key={gender.name}
           text={gender.name}
           value={gender}
-          genderSelected={genderSelected}
-          onClick={handleSelected}
+          isActive={selected === gender.name}
+          onClick={handleSelectGender}
         />
       ))}
-      <If condition={!!gendersInternal.special}>
+      <If condition={!!gendersSpecial?.length}>
         <Then>
           <SingleSelect
             text="More choices"
             value={undefined}
             iconSuffix
             icon={<MdArrowForwardIos />}
-            genderSelected={genderSelected}
-            onClick={handleSelected}
+            isActive={selected === "More choices"}
+            onClick={handleSelectGender}
           />
         </Then>
       </If>
 
-      <Modal open={visibleModal} onCancel={handleCloseModal} footer={false}>
-        abc
-      </Modal>
+      <ModalSelect
+        interestedInGender={interestedInGender}
+        open={visibleModal}
+        genderSpecialSelected={genderSpecialSelected}
+        setGenderSpecialSelected={setGenderSpecialSelected}
+        onCancel={handleCloseModal}
+      />
     </div>
   );
 };

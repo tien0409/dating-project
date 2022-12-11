@@ -1,0 +1,26 @@
+.wrapper {
+  list-style: none;
+
+  .empty {
+    text-align: center;
+  }
+
+  .gender__item {
+    padding: 8px 0;
+    margin: 10px 0;
+    text-align: center;
+    border: 1px solid var(--primary-fade-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+  }
+}

@@ -30,6 +30,12 @@ export const genderValidator = async (_: any, value: string) => {
   }
 };
 
+export const lookingForGenderValidate = async (_: any, value: string) => {
+  if (!value) {
+    return Promise.reject(new Error("Interested in gender is required"));
+  }
+};
+
 export const emailValidator = async (_: any, value: string) => {
   if (value && !emailRegex.test(value)) {
     return Promise.reject(new Error("Please enter a valid email address!"));
@@ -50,3 +56,9 @@ export const confirmPasswordValidator = ({ getFieldValue }: { getFieldValue: any
     return Promise.reject(new Error("The two passwords that you entered do not match!"));
   },
 });
+
+export const userPhotosValidator = async (_: any, value: any) => {
+  if (!value || value?.fileList?.length < 3) {
+    return Promise.reject(new Error("Please upload at least 3 photos!"));
+  }
+};
