@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 import { GenderConfigProps } from ".";
-import { GenderType } from "@/types";
+import { UserGenderType } from "@/types";
 import { useGenderStore } from "@/store";
 
 const useGenderConfig = (props: GenderConfigProps) => {
@@ -32,7 +32,7 @@ const useGenderConfig = (props: GenderConfigProps) => {
       ...genderSpecialSelected,
       isPrivacy,
       showMeInSearchesAs,
-    } as GenderType;
+    } as UserGenderType;
     setNextConfig(false);
     onCancel(genderSpecialSelectedUpdated);
   };

@@ -4,8 +4,8 @@ import axiosInstance from "@/configs/axios";
 import { AxiosResponseType, GenderType, RQConfigsType } from "@/types";
 
 const _getGenders = async () =>
-  (await axiosInstance.get<AxiosResponseType<GenderType[]>>("/users/genders"))?.data;
+  (await axiosInstance.get<AxiosResponseType<GenderType[]>>("/genders"))?.data;
 
 export const useGendersData = ({ onSuccess }: RQConfigsType) => {
-  return useQuery(["genders"], _getGenders, { staleTime: Infinity, onSuccess });
+  return useQuery(["gender"], _getGenders, { staleTime: Infinity, onSuccess });
 };

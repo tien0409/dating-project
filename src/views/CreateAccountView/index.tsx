@@ -81,11 +81,11 @@ const CreateAccountView = () => {
           <Col span={12}>
             <Form.Item
               label="Gender"
-              name="gender"
+              name="userGender"
               required
               rules={[{ validator: genderValidator }]}
             >
-              <GenderSelect form={form} field="gender" />
+              <GenderSelect form={form} field="userGender" />
             </Form.Item>
           </Col>
 

@@ -3,7 +3,7 @@ import { Dispatch, memo, SetStateAction } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./SpecialGenders.module.scss";
-import { GenderType } from "@/types";
+import { GenderType, UserGenderType } from "@/types";
 import useSpecialGenders from "./SpecialGendersHook";
 
 const cln = classNames.bind(styles);
@@ -11,9 +11,9 @@ const cln = classNames.bind(styles);
 export type SpecialGendersProps = {
   interestedInGender?: boolean;
   gendersFiltered?: GenderType[];
-  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | undefined>>;
+  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | UserGenderType | undefined>>;
   setNextConfig: Dispatch<SetStateAction<boolean>>;
-  onCancel: (_genderSpecialSelected?: GenderType) => void;
+  onCancel: (_genderSpecialSelected?: GenderType | UserGenderType) => void;
 };
 
 const SpecialGenders = (props: SpecialGendersProps) => {

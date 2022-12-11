@@ -4,18 +4,14 @@ import { AxiosResponseType, GenderType } from "@/types";
 import { GenderSelectProps } from ".";
 import { useGendersData } from "@/hooks/useGendersData";
 import { useGenderStore } from "@/store";
-
-type _GendersInternal = {
-  normal: GenderType[];
-  special?: GenderType[];
-};
+import UserGenderType from "@/types/user/UserGenderType";
 
 const useGenderSelect = (props: GenderSelectProps) => {
   const { form, field, interestedInGender } = props;
 
   const [visibleModal, setVisibleModal] = useState(false);
   const [selected, setSelected] = useState("");
-  const [genderSpecialSelected, setGenderSpecialSelected] = useState<GenderType>();
+  const [genderSpecialSelected, setGenderSpecialSelected] = useState<GenderType | UserGenderType>();
 
   const gendersNormal = useGenderStore((state) => state.gendersNormal);
   const gendersSpecial = useGenderStore((state) => state.gendersSpecial);
@@ -36,7 +32,7 @@ const useGenderSelect = (props: GenderSelectProps) => {
     [field, form],
   );
 
-  const handleCloseModal = (_genderSpecial?: GenderType) => {
+  const handleCloseModal = (_genderSpecial?: GenderType | UserGenderType) => {
     setVisibleModal(false);
     if (interestedInGender) {
       if (!_genderSpecial) {
@@ -45,7 +41,7 @@ const useGenderSelect = (props: GenderSelectProps) => {
         form.setFieldValue(field, _genderSpecial);
       }
     } else {
-      if (!_genderSpecial?.showMeInSearchesAs) {
+      if (!(_genderSpecial as UserGenderType)?.showMeInSearchesAs) {
         setSelected("");
       } else {
         form.setFieldValue(field, _genderSpecial);

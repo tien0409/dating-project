@@ -5,15 +5,15 @@ import { LeftOutlined } from "@ant-design/icons";
 
 import styles from "./GenderConfig.module.scss";
 import useGenderConfig from "./GenderConfigHook";
-import { GenderType } from "@/types";
+import { GenderType, UserGenderType } from "@/types";
 
 const cln = classNames.bind(styles);
 
 export type GenderConfigProps = {
-  genderSpecialSelected?: GenderType;
+  genderSpecialSelected?: GenderType | UserGenderType;
   setNextConfig: Dispatch<SetStateAction<boolean>>;
-  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | undefined>>;
-  onCancel: (_genderSpecialSelected?: GenderType) => void;
+  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | UserGenderType | undefined>>;
+  onCancel: (_genderSpecialSelected?: GenderType | UserGenderType) => void;
 };
 
 const GenderConfig = (props: GenderConfigProps) => {

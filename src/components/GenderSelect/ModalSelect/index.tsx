@@ -4,7 +4,7 @@ import { Else, If, Then } from "react-if";
 import { Form, Input, Modal } from "antd";
 
 import styles from "./ModalSelect.module.scss";
-import { GenderType } from "@/types";
+import { GenderType, UserGenderType } from "@/types";
 import useModalSelect from "./ModalSelectHook";
 import SpecialGenders from "./SpecialGenders";
 import GenderConfig from "./GenderConfig";
@@ -14,9 +14,9 @@ const cln = classNames.bind(styles);
 export type ModalSelectProps = {
   interestedInGender?: boolean;
   open: boolean;
-  genderSpecialSelected?: GenderType;
-  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | undefined>>;
-  onCancel: (_genderSpecialSelected?: GenderType) => void;
+  genderSpecialSelected?: GenderType | UserGenderType;
+  setGenderSpecialSelected: Dispatch<SetStateAction<GenderType | UserGenderType | undefined>>;
+  onCancel: (_genderSpecialSelected?: GenderType | UserGenderType) => void;
 };
 
 const ModalSelect = (props: ModalSelectProps) => {
