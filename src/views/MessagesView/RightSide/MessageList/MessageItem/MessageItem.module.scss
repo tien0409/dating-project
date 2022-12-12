@@ -81,6 +81,11 @@
   }
 }
 
+.attachment__list {
+  display: flex;
+  gap: 7px;
+}
+
 .message__actions {
   display: flex;
   gap: 15px;

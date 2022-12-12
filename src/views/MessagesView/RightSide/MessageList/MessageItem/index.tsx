@@ -87,17 +87,19 @@ const MessageItem = (props: MessageItemProps) => {
               <div>
                 <If condition={message?.attachments?.length}>
                   <Then>
-                    {message?.attachments?.map((attachment) => (
-                      <div key={attachment?.id} className={cln("attachment")}>
-                        <Image
-                          src={attachment.link}
-                          alt={"abc"}
-                          width={100}
-                          height={100}
-                          objectFit={"contain"}
-                        />
-                      </div>
-                    ))}
+                    <div className={cln("attachment__list")}>
+                      {message?.attachments?.map((attachment) => (
+                        <div key={attachment?.id} className={cln("attachment__item")}>
+                          <Image
+                            src={attachment.link}
+                            alt={"abc"}
+                            width={100}
+                            height={100}
+                            objectFit="cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </Then>
                 </If>
 
