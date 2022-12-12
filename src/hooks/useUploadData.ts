@@ -24,6 +24,7 @@ export const useUploadSingleImageData = () => {
   return useMutation(_uploadSingleImage);
 };
 
-export const useUploadMultiImageData = ({ onSuccess, onError }: RQConfigsType) => {
+export const useUploadMultiImageData = (props?: RQConfigsType) => {
+  const { onSuccess, onError } = props || {};
   return useMutation(_uploadMultiImage, { onSuccess, onError });
 };

@@ -42,26 +42,3 @@ $iconsSuffixWidth: 54px;
     }
   }
 }
-
-.modal__upload-title {
-  font-size: 1.8rem;
-  text-align: center;
-}
-
-.form__upload {
-  &-form {
-    margin-top: 20px;
-  }
-
-  &-list {
-    max-height: 40vh;
-    overflow-y: auto;
-  }
-
-  &-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-}

@@ -1,4 +1,4 @@
-import { ParticipantType } from "@/types";
+import { MessageAttachmentType, ParticipantType } from "@/types";
 
 type MessageType = {
   id: string;
@@ -9,6 +9,7 @@ type MessageType = {
   replyTo?: MessageType;
   createdAt: Date;
   updatedAt: Date;
+  attachments?: MessageAttachmentType[];
 };
 
 export default MessageType;

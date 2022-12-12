@@ -17,6 +17,8 @@ import {
   REQUEST_UPDATE_MESSAGE,
 } from "@/configs/socket-events";
 import { typingRegex } from "@/utils/regexes";
+import { useUploadMultiImageData } from "@/hooks/useUploadData";
+import { convertToFormData } from "@/utils/upload";
 
 const useMessageForm = () => {
   const typingDebounceRef = useRef<any>();
@@ -26,6 +28,7 @@ const useMessageForm = () => {
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
   const [filesUpload, setFilesUpload] = useState<FileList>();
+  const [filesUploadPreview, setFilesUploadPreview] = useState<string[]>([]);
 
   const [form] = Form.useForm();
 
@@ -38,6 +41,8 @@ const useMessageForm = () => {
   const conversation = useConversationStore((state) => state.conversation);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
+
+  const { mutateAsync, isLoading: uploadFileLoading } = useUploadMultiImageData();
 
   const handleToggleVisibleEmoji = useCallback(() => {
     setVisibleEmoji(!visibleEmoji);
@@ -57,49 +62,57 @@ const useMessageForm = () => {
     [form, inputFormEl],
   );
 
-  const handleFinish = useCallback(
-    (values: any) => {
-      const { content } = values;
-      if (!content?.trim()) return;
-
-      if (receiverParticipant?.user?.id && senderParticipant?.id && conversation) {
-        // update
-        if (messageEdit) {
-          const payload: ReqUpdateMessageType = {
-            messageId: messageEdit.id,
-            conversationId: conversation.id,
-            content,
-          };
-          socket?.emit(REQUEST_UPDATE_MESSAGE, payload);
-          setMessageEdit(undefined);
-        } else {
-          // create
-
-          const payload: SendMessageType = {
-            content,
-            conversationId: conversation.id,
-            receiverId: receiverParticipant?.user?.id,
-            senderParticipantId: senderParticipant?.id,
-            replyTo: messageReply,
-          };
-          socket?.emit(REQUEST_SEND_MESSAGE, payload);
-          setMessageReply(undefined);
-        }
-
-        form.resetFields();
+  const doCreate = useCallback(async () => {
+    if (conversation && receiverParticipant?.user?.id && senderParticipant?.id) {
+      const payload: SendMessageType = {
+        content: form.getFieldValue("content"),
+        conversationId: conversation.id,
+        receiverId: receiverParticipant?.user?.id,
+        senderParticipantId: senderParticipant?.id,
+        replyTo: messageReply,
+      };
+      if (filesUpload?.length) {
+        const res = (await mutateAsync(convertToFormData({ files: Array.from(filesUpload) }))).data;
+        payload.attachments = res?.data || [];
       }
+      socket?.emit(REQUEST_SEND_MESSAGE, payload);
+      setMessageReply(undefined);
+      setFilesUploadPreview([]);
+      setFilesUpload(undefined);
+    }
+  }, [
+    conversation,
+    filesUpload,
+    form,
+    messageReply,
+    mutateAsync,
+    receiverParticipant?.user?.id,
+    senderParticipant?.id,
+    setMessageReply,
+    socket,
+  ]);
+
+  const doUpdate = useCallback(() => {
+    if (messageEdit && conversation) {
+      const payload: ReqUpdateMessageType = {
+        messageId: messageEdit.id,
+        conversationId: conversation.id,
+        content: form.getFieldValue("content"),
+      };
+      socket?.emit(REQUEST_UPDATE_MESSAGE, payload);
+      setMessageEdit(undefined);
+    }
+  }, [conversation, form, messageEdit, setMessageEdit, socket]);
+
+  const handleFinish = useCallback(
+    async (values: any) => {
+      const { content } = values;
+      if (!content?.trim() && !filesUpload?.length) return;
+
+      messageEdit ? doUpdate() : await doCreate();
+      form.resetFields();
     },
-    [
-      conversation,
-      form,
-      messageEdit,
-      messageReply,
-      receiverParticipant?.user?.id,
-      senderParticipant?.id,
-      setMessageEdit,
-      setMessageReply,
-      socket,
-    ],
+    [doCreate, doUpdate, filesUpload, form, messageEdit],
   );
 
   const handleDocumentClick = useCallback((e: any) => {
@@ -149,11 +162,16 @@ const useMessageForm = () => {
   };
 
   const handleChangeFileAttach = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setFilesUpload(e.target.files);
+    if (e.target.files) {
+      setFilesUpload(e.target.files);
+      const filesPreview = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      setFilesUploadPreview(filesPreview);
+    }
   };
 
   const handleCancelSendFile = () => {
     setFilesUpload(undefined);
+    setFilesUploadPreview([]);
   };
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick, false);
@@ -178,6 +196,8 @@ const useMessageForm = () => {
     inputFormEl,
     fileAttachRef,
     visibleEmoji,
+    uploadFileLoading,
+    filesUploadPreview,
     filesUpload,
     form,
     handleToggleVisibleEmoji,

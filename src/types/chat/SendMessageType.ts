@@ -6,6 +6,7 @@ type SendMessageType = {
   receiverId: string;
   content: string;
   replyTo?: MessageType;
+  attachments?: string[];
 };
 
 export default SendMessageType;
