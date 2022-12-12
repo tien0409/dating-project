@@ -1,6 +1,6 @@
 import { Form } from "antd";
 import { EmojiClickData } from "emoji-picker-react";
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import _debounce from "lodash/debounce";
 
 import {
@@ -19,11 +19,13 @@ import {
 import { typingRegex } from "@/utils/regexes";
 
 const useMessageForm = () => {
-  const typingDebounce = useRef<any>();
+  const typingDebounceRef = useRef<any>();
+  const fileAttachRef = useRef<HTMLInputElement>(null);
 
   const [_isTyping, _setIsTyping] = useState(false);
 
   const [visibleEmoji, setVisibleEmoji] = useState(false);
+  const [filesUpload, setFilesUpload] = useState<FileList>();
 
   const [form] = Form.useForm();
 
@@ -128,12 +130,12 @@ const useMessageForm = () => {
       };
 
       if (_isTyping) {
-        typingDebounce.current?.cancel();
-        typingDebounce.current = _debounce(() => {
+        typingDebounceRef.current?.cancel();
+        typingDebounceRef.current = _debounce(() => {
           socket?.emit(REQUEST_STOP_TYPING_MESSAGE, payload);
           _setIsTyping(false);
         }, 2000);
-        typingDebounce.current();
+        typingDebounceRef.current();
       } else {
         const validTyping = typingRegex.test(e.key);
         validTyping && _setIsTyping(true);
@@ -142,6 +144,17 @@ const useMessageForm = () => {
     }
   };
 
+  const handleChooseFile = () => {
+    fileAttachRef.current?.click();
+  };
+
+  const handleChangeFileAttach = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setFilesUpload(e.target.files);
+  };
+
+  const handleCancelSendFile = () => {
+    setFilesUpload(undefined);
+  };
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick, false);
 
@@ -163,11 +176,16 @@ const useMessageForm = () => {
 
   return {
     inputFormEl,
+    fileAttachRef,
     visibleEmoji,
+    filesUpload,
     form,
     handleToggleVisibleEmoji,
     handleEmojiClick,
     handleTyping,
+    handleChooseFile,
+    handleChangeFileAttach,
+    handleCancelSendFile,
     handleFinish,
   };
 };
