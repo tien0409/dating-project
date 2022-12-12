@@ -19,7 +19,6 @@ const useMessageView = () => {
       const payload: ReqAllMessageType = {
         conversationId: currentConversationId,
       };
-      console.log("emit");
       socket?.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
     }

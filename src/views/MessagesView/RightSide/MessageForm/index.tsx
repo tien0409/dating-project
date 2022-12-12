@@ -39,7 +39,7 @@ const MessageForm = () => {
         onFinish={handleFinish}
       >
         <div className={cln("form__item-wrapper")}>
-          <Form.Item noStyle name="content">
+          <Form.Item noStyle name={!filesUploadPreview?.length ? "content" : ""}>
             <Input
               className={cln("input")}
               size="large"

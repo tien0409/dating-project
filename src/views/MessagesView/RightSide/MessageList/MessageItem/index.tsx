@@ -9,6 +9,7 @@ import { VscLoading } from "react-icons/vsc";
 import styles from "./MessageItem.module.scss";
 import { MessageType, ParticipantType } from "@/types";
 import useMessageItem from "./MessageItemHook";
+import Image from "next/image";
 
 const cln = classNames.bind(styles);
 
@@ -83,7 +84,25 @@ const MessageItem = (props: MessageItemProps) => {
             </Then>
 
             <Else>
-              <div>{message?.content}</div>
+              <div>
+                <If condition={message?.attachments?.length}>
+                  <Then>
+                    {message?.attachments?.map((attachment) => (
+                      <div key={attachment?.id} className={cln("attachment")}>
+                        <Image
+                          src={attachment.link}
+                          alt={"abc"}
+                          width={100}
+                          height={100}
+                          objectFit={"contain"}
+                        />
+                      </div>
+                    ))}
+                  </Then>
+                </If>
+
+                <span className={cln("text__content")}>{message?.content}</span>
+              </div>
             </Else>
           </If>
         </div>

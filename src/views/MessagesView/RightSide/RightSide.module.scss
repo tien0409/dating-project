@@ -16,7 +16,8 @@ $padding-x: 10px;
 }
 
 .divider {
-  width: 100%; height: 1px;
+  width: 100%;
+  height: 1px;
   background-color: var(--secondary-fade-color);
   border: none;
 }
@@ -77,6 +78,9 @@ $padding-x: 10px;
   }
 
   .message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     flex: 1;
     padding: 5px 10px;
     border-radius: 6px;
@@ -94,8 +98,9 @@ $padding-x: 10px;
     }
 
     &__content {
-      font-size: 1.2rem;
       margin-bottom: 0;
+      font-size: 1.2rem;
+      word-break: break-all;
     }
   }
 

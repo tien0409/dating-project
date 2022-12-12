@@ -72,8 +72,8 @@ const useMessageForm = () => {
         replyTo: messageReply,
       };
       if (filesUpload?.length) {
-        const res = (await mutateAsync(convertToFormData({ files: Array.from(filesUpload) }))).data;
-        payload.attachments = res?.data || [];
+        const res = await mutateAsync(convertToFormData({ files: Array.from(filesUpload) }));
+        payload.attachments = res?.data?.map((item: any) => item.url) || [];
       }
       socket?.emit(REQUEST_SEND_MESSAGE, payload);
       setMessageReply(undefined);
@@ -111,6 +111,7 @@ const useMessageForm = () => {
 
       messageEdit ? doUpdate() : await doCreate();
       form.resetFields();
+      if (fileAttachRef.current) fileAttachRef.current.value = "";
     },
     [doCreate, doUpdate, filesUpload, form, messageEdit],
   );
@@ -188,7 +189,7 @@ const useMessageForm = () => {
   }, [conversation, handleDocumentClick, socket]);
 
   useEffect(() => {
-    if (messageEdit) form.setFieldValue("content", messageEdit.content);
+    if (messageEdit) form.setFieldValue("content", "asdasd");
     else form.setFieldValue("content", "");
   }, [form, messageEdit]);
 

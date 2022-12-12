@@ -24,6 +24,7 @@ const ConversationItem = (props: ConversationItemProps) => {
   const { conversation, hasControl = false, imageSize = 42 } = props;
 
   const { isReceiverTyping, receiverConversation, controlOptions } = useConversationItem(props);
+  console.log("conversation", conversation);
 
   return (
     <Link href={`${MESSAGES_ROUTE}/${conversation?.id}`}>
@@ -69,7 +70,7 @@ const ConversationItem = (props: ConversationItemProps) => {
 
         {hasControl && (
           <div className={cln("controls")}>
-            <Dropdown menu={{ items: controlOptions }} placement="bottomLeft" trigger="click">
+            <Dropdown menu={{ items: controlOptions }} placement="bottomLeft" trigger={["click"]}>
               <SlOptionsVertical size={13} />
             </Dropdown>
           </div>

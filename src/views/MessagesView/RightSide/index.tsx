@@ -11,6 +11,8 @@ import MessageForm from "./MessageForm";
 import { Else, If, Then } from "react-if";
 import { GoReply } from "react-icons/go";
 import useRightSide from "@/views/MessagesView/RightSide/RightSideHook";
+import Image from "next/image";
+import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
@@ -70,12 +72,25 @@ const RightSide = () => {
                   </div>
 
                   <div className={cln("message")} onClick={handleScrollToMessage}>
-                    <h5 className={cln("text-truncate", "message__fullName")}>
-                      {messageAction?.participant?.user?.fullName}
-                    </h5>
-                    <p className={cln("text-truncate", "message__content")}>
-                      {messageAction?.content}
-                    </p>
+                    <If condition={messageAction?.attachments?.length}>
+                      <Then>
+                        <Image
+                          src={getAvatar(messageAction?.attachments?.[0]?.link)}
+                          width={50}
+                          height={50}
+                          objectFit="contain"
+                        />
+                      </Then>
+                    </If>
+
+                    <div>
+                      <h5 className={cln("text-truncate", "message__fullName")}>
+                        {messageAction?.participant?.user?.fullName}
+                      </h5>
+                      <p className={cln("text-truncate", "message__content")}>
+                        {messageAction?.content || "Image"}
+                      </p>
+                    </div>
                   </div>
 
                   <button className={cln("close")} onClick={handleRemoveAction}>

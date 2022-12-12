@@ -62,6 +62,7 @@ const useMessageItem = (props: MessageItemProps) => {
   const handleEditMessage = () => {
     if (message) {
       setMessageEdit(message);
+      setMessageReply(undefined);
       inputFocus();
       scrollToLastMessage();
     }
@@ -70,6 +71,7 @@ const useMessageItem = (props: MessageItemProps) => {
   const handleReply = () => {
     if (message) {
       setMessageReply(message);
+      setMessageEdit(undefined);
       inputFocus();
       scrollToLastMessage();
     }
