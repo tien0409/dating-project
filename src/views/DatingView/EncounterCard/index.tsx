@@ -6,43 +6,48 @@ import { FaHeart } from "react-icons/fa";
 
 import styles from "./EncounterCard.module.scss";
 import { SwiperCustom } from "@/components";
-import Avatar from "@/assets/images/avatar.jpg";
 import useEncounterCard from "./EncounterCardHook";
+import { UserAuthType } from "@/types";
+import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
-const EncounterCard = () => {
+type EncounterCardProps = {
+  user: UserAuthType;
+};
+
+const EncounterCard = (props: EncounterCardProps) => {
+  const { user } = props;
+
   const { swiperConfigs } = useEncounterCard();
 
+  console.log("user", user);
   return (
     <div className={cln("wrapper")}>
       <SwiperCustom configs={swiperConfigs}>
-        <SwiperSlide>
-          <div className={cln("image__wrapper", "image__wrapper--first")}>
-            <Image src={Avatar} alt="description" objectFit="contain" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cln("image__wrapper")}>
-            <Image src={Avatar} alt="description" objectFit="cover" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cln("image__wrapper")}>
-            <Image src={Avatar} alt="description" objectFit="cover" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cln("image__wrapper", "image__wrapper--last")}>
-            <Image src={Avatar} alt="description" objectFit="cover" />
-          </div>
-        </SwiperSlide>
+        {user?.photos?.map((photo) => (
+          <SwiperSlide key={photo?.id}>
+            <div className={cln("image__wrapper", "image__wrapper--first")}>
+              <Image
+                src={getAvatar(photo?.link)}
+                alt="description"
+                width={500}
+                height={500}
+                layout="responsive"
+                objectFit="cover"
+                objectPosition="center"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
       </SwiperCustom>
 
       <div className={cln("summary")}>
         <div className={cln("primary")}>
           <div>
-            <h3 className={cln("fullName", "online")}>Mabelle Keller, 21</h3>
+            <h3 className={cln("fullName", "online")}>
+              {user?.fullName}, {user?.age}
+            </h3>
             <p className={cln("location")}>Ha Noi, Viet Nam</p>
           </div>
 
@@ -56,10 +61,7 @@ const EncounterCard = () => {
           </div>
         </div>
 
-        <p className={cln("bio")}>
-          An interesting implication of the 2007 study concerns the use of hand sanitizers by
-          observant Muslims. Alcohol is forbiddien to Muslims.
-        </p>
+        <p className={cln("bio")}>{user?.bio}</p>
 
         <div className={cln("passions")}>
           <h4 className={cln("passions-title")}>Passions</h4>

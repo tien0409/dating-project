@@ -11,6 +11,7 @@ export type { default as UserAuthType } from "./auth/UserAuthType";
 
 export type { default as CreateAccountType } from "./user/CreateAccountType";
 export type { default as UserGenderType } from "./user/UserGenderType";
+export type { default as UserPhotoType } from "./user/UserPhotoType";
 
 export type { default as GenderType } from "./gender/GenderType";
 

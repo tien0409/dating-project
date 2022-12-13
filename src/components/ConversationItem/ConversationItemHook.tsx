@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 
 import styles from "./ConversationItem.module.scss";
 import { ConversationItemProps } from ".";
-import { useConversationStore, useMessageStore, useSocketStore, useUserStore } from "@/store";
+import { useConversationStore, useMessageStore, useSocketStore, useAuthStore } from "@/store";
 import { REQUEST_DELETE_CONVERSATION } from "@/configs/socket-events";
 import { ReqDeleteConversationType } from "@/types";
 import { MESSAGES_ROUTE } from "@/configs/routes";
@@ -20,7 +20,7 @@ const useConversationItem = (props: ConversationItemProps) => {
 
   const router = useRouter();
 
-  const profile = useUserStore((state) => state.profile);
+  const profile = useAuthStore((state) => state.profile);
   const socket = useSocketStore((state) => state.socket);
   const conversationIdsTyping = useConversationStore((state) => state.conversationIdsTyping);
   const currentConversation = useConversationStore((state) => state.conversation);

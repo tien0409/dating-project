@@ -1,14 +1,13 @@
 import create from "zustand";
-import UserAuthType from "@/types/auth/UserAuthType";
+
+import { UserAuthType } from "@/types";
 
 type UserStoreType = {
-  profile: UserAuthType | null;
-  setProfile: (_profile: UserAuthType | null) => void;
+  users?: UserAuthType;
 };
 
-const useUserStore = create<UserStoreType>((set) => ({
-  profile: null,
-  setProfile: (profile) => set((state) => ({ ...state, profile })),
+const useUserStore = create<UserStoreType>(() => ({
+  users: undefined,
 }));
 
 export default useUserStore;
