@@ -29,7 +29,6 @@
     "sass": "^1.55.0",
     "socket.io-client": "^4.5.4",
     "swiper": "^8.4.5",
-    "uuid": "^9.0.0",
     "zustand": "^4.1.4"
   },
   "devDependencies": {
@@ -42,7 +41,6 @@
     "@types/react-icons": "^3.0.0",
     "@types/react-toastify": "^4.1.0",
     "@types/swiper": "^6.0.0",
-    "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "eslint": "8.22.0",
     "eslint-config-next": "12.3.1",
