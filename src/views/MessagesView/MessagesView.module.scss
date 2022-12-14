@@ -8,6 +8,8 @@
 
 .left-side, .right-side {
   padding-top: 20px;
+  padding-bottom: 20px;
+  transition: 1s all;
 }
 
 .left-side {
@@ -23,4 +25,12 @@
 
 .right-side {
   flex: 1;
+}
+
+.left-side--calling {
+  width: 65%;
+}
+
+.right-side--calling {
+  width: 35%;
 }

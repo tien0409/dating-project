@@ -24,7 +24,6 @@ const ConversationItem = (props: ConversationItemProps) => {
   const { conversation, hasControl = false, imageSize = 42 } = props;
 
   const { isReceiverTyping, receiverConversation, controlOptions } = useConversationItem(props);
-  console.log("conversation", conversation);
 
   return (
     <Link href={`${MESSAGES_ROUTE}/${conversation?.id}`}>

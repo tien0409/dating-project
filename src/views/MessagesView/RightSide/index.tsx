@@ -21,6 +21,7 @@ const RightSide = () => {
     router,
     messageAction,
     messageReply,
+    isCalling,
     receiverParticipant,
     handleRemoveAction,
     handleScrollToMessage,
@@ -31,17 +32,25 @@ const RightSide = () => {
       <Then>
         <div className={cln("wrapper")}>
           <div className={cln("header")}>
-            <div className={cln("info")}>
-              <Avatar size={50} src={receiverParticipant?.user?.avatar} />
-              <h3 className={cln("text-truncate", "full-name")}>
-                {receiverParticipant?.user?.fullName}
-              </h3>
-            </div>
+            <If condition={!isCalling}>
+              <Then>
+                <div className={cln("info")}>
+                  <Avatar size={50} src={receiverParticipant?.user?.avatar} />
+                  <h3 className={cln("text-truncate", "full-name")}>
+                    {receiverParticipant?.user?.fullName}
+                  </h3>
+                </div>
+              </Then>
+            </If>
 
             <div className={cln("actions")}>
               <Input placeholder="Search message..." />
-              <BsTelephoneFill size={24} cursor="pointer" />
-              <FaVideo size={24} cursor="pointer" />
+              <If condition={!isCalling}>
+                <Then>
+                  <BsTelephoneFill size={24} cursor="pointer" />
+                  <FaVideo size={24} cursor="pointer" />
+                </Then>
+              </If>
             </div>
           </div>
 

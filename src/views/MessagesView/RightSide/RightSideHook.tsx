@@ -9,6 +9,7 @@ const useRightSide = () => {
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
   const messageEdit = useMessageStore((state) => state.messageEdit);
+  const isCalling = useMessageStore((state) => state.isCalling);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
 
@@ -33,6 +34,7 @@ const useRightSide = () => {
     receiverParticipant,
     messageAction,
     messageReply,
+    isCalling,
     handleRemoveAction,
     handleScrollToMessage,
   };

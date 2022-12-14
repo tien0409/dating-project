@@ -19,6 +19,8 @@ type MessageStoreType = {
   setMessageReply: (_messageReply?: MessageType) => void;
   messageDelete?: MessageType;
   setMessageDelete: (_messageDelete?: MessageType) => void;
+  isCalling: boolean;
+  setIsCalling: (_isCalling: boolean) => void;
 };
 
 const useMessageStore = create<MessageStoreType>((setState, getState) => ({
@@ -42,6 +44,8 @@ const useMessageStore = create<MessageStoreType>((setState, getState) => ({
   setMessageReply: (messageReply) => setState((state) => ({ ...state, messageReply })),
   messageDelete: undefined,
   setMessageDelete: (messageDelete) => setState((state) => ({ ...state, messageDelete })),
+  isCalling: false,
+  setIsCalling: (isCalling) => setState((state) => ({ ...state, isCalling })),
 }));
 
 export default useMessageStore;

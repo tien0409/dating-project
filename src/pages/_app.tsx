@@ -8,7 +8,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
-import { useSocketStore, useAuthStore } from "@/store";
+import { useSocketStore, useAuthStore, useWebRTCStore } from "@/store";
+import { CallingModal } from "@/components";
 import useChatSocket from "@/hooks/useChatSocket";
 
 type MyAppProps = AppProps & {
@@ -18,12 +19,16 @@ type MyAppProps = AppProps & {
 function MyApp({ Component, pageProps }: MyAppProps) {
   const profile = useAuthStore((state) => state.profile);
   const initSocket = useSocketStore((state) => state.initSocket);
+  const initPeer = useWebRTCStore((state) => state.initPeer);
 
   useChatSocket();
 
   useEffect(() => {
-    if (profile) initSocket();
-  }, [initSocket, profile]);
+    if (profile) {
+      initSocket();
+      initPeer();
+    }
+  }, [initPeer, initSocket, profile]);
 
   const [queryClient] = useState(() => new QueryClient());
 
@@ -39,6 +44,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       >
         <Component {...pageProps} />
         <ToastContainer bodyClassName="toast" />
+        <CallingModal />
       </ConfigProvider>
     </QueryClientProvider>
   );
