@@ -14,14 +14,14 @@ const cln = classNames.bind(styles);
 
 type EncounterCardProps = {
   user: UserAuthType;
+  onSkip: () => void;
 };
 
 const EncounterCard = (props: EncounterCardProps) => {
-  const { user } = props;
+  const { user, onSkip } = props;
 
   const { swiperConfigs } = useEncounterCard();
 
-  console.log("user", user);
   return (
     <div className={cln("wrapper")}>
       <SwiperCustom configs={swiperConfigs}>
@@ -52,7 +52,7 @@ const EncounterCard = (props: EncounterCardProps) => {
           </div>
 
           <div className={cln("actions")}>
-            <div className={cln("action-item", "action-item--skip")}>
+            <div className={cln("action-item", "action-item--skip")} onClick={onSkip}>
               <ImCross />
             </div>
             <div className={cln("action-item", "action-item--like")}>
