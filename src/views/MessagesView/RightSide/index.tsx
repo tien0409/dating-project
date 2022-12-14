@@ -25,6 +25,7 @@ const RightSide = () => {
     receiverParticipant,
     handleRemoveAction,
     handleScrollToMessage,
+    handleVideoCall,
   } = useRightSide();
 
   return (
@@ -48,7 +49,7 @@ const RightSide = () => {
               <If condition={!isCalling}>
                 <Then>
                   <BsTelephoneFill size={24} cursor="pointer" />
-                  <FaVideo size={24} cursor="pointer" />
+                  <FaVideo size={24} cursor="pointer" onClick={handleVideoCall} />
                 </Then>
               </If>
             </div>
@@ -88,6 +89,7 @@ const RightSide = () => {
                           width={50}
                           height={50}
                           objectFit="contain"
+                          alt=""
                         />
                       </Then>
                     </If>

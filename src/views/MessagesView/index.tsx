@@ -1,5 +1,4 @@
 import classNames from "classnames/bind";
-import { useRef } from "react";
 import { Else, If, Then } from "react-if";
 
 import styles from "./MessagesView.module.scss";
@@ -14,26 +13,15 @@ const cln = classNames.bind(styles);
 const MessagesView = () => {
   useMessageView();
 
-  const leftRef = useRef<HTMLElement>(null);
-  const rightRef = useRef<HTMLElement>(null);
-
   const isCalling = useMessageStore((state) => state.isCalling);
-  const setIsCalling = useMessageStore((state) => state.setIsCalling);
-
-  const handleResize = () => {
-    setIsCalling(!isCalling);
-    if (!isCalling) {
-      leftRef.current?.classList.add(cln("left-side--calling"));
-      rightRef.current?.classList.add(cln("right-side--calling"));
-    } else {
-      leftRef.current?.classList.remove(cln("left-side--calling"));
-      rightRef.current?.classList.remove(cln("right-side--calling"));
-    }
-  };
 
   return (
     <div className={cln("wrapper")}>
-      <section className={cln("left-side")} ref={leftRef}>
+      <section
+        className={cln("left-side", {
+          "left-side--calling": isCalling,
+        })}
+      >
         <If condition={isCalling}>
           <Then>
             <VideoCall />
@@ -47,7 +35,11 @@ const MessagesView = () => {
 
       <hr className={cln("divider")} />
 
-      <section className={cln("right-side")} onClick={handleResize} ref={rightRef}>
+      <section
+        className={cln("right-side", {
+          "right-side--calling": isCalling,
+        })}
+      >
         <RightSide />
       </section>
     </div>

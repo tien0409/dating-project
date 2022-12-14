@@ -5,12 +5,15 @@ import { AiFillPhone, AiOutlineClose } from "react-icons/ai";
 
 import styles from "./CallingModal.module.scss";
 import Avatar from "@/assets/images/avatar.jpg";
+import { useCallStore } from "@/store";
 
 const cln = classNames.bind(styles);
 
 const CallingModal = () => {
+  const callStatus = useCallStore((state) => state.callStatus);
+
   return (
-    <Modal open={false} footer={false}>
+    <Modal open={callStatus === "receivingCall"} footer={false}>
       <div className={cln("wrapper")}>
         <div className={cln("avatar")}>
           <Image src={Avatar} alt={"avatar"} />
