@@ -20,3 +20,10 @@ export const SEND_UPDATE_MESSAGE = "send_update_message";
 
 export const REQUEST_DELETE_CONVERSATION = "request_delete_conversation";
 export const SEND_DELETE_CONVERSATION = "send_delete_conversation";
+
+export const ON_VIDEO_CALL_INIT = "on_video_call_init";
+export const ON_VIDEO_CALL = "on_video_call";
+export const ON_VIDEO_CALL_ACCEPTED = "on_video_call_accepted";
+export const ON_VIDEO_CALL_ACCEPT = "on_video_call_accept";
+export const ON_VIDEO_CALL_REJECTED = "on_video_call_rejected";
+export const ON_VIDEO_CALL_REJECT = "on_video_call_reject";

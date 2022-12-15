@@ -32,3 +32,10 @@ export type { default as ResDeleteConversationType } from "./chat/ResDeleteConve
 export type { default as ResSendAllConversationsType } from "./chat/ResSendAllConversationsType";
 export type { default as MessageAttachmentType } from "./chat/MessageAttachmentType";
 export * from "./chat/ResDeleteMessageType";
+
+export type { default as ReqVideoCallInitType } from "./call/ReqVideoCallInitType";
+export type { default as ResVideoCallType } from "./call/ResVideoCallType";
+export type { default as HandleCallType } from "./call/HandleCallType";
+export type { default as ResVideoCallAcceptType } from "./call/ResVideoCallAcceptType";
+export type { default as CallStatusType } from "./call/CallStatusType";
+export type { default as ResVideoCallRejectType } from "./call/ResVideoCallRejectType";

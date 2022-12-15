@@ -1,26 +1,33 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
-import { useCallStore, useMessageStore, useParticipantStore } from "@/store";
+import {
+  useCallStore,
+  useConversationStore,
+  useMessageStore,
+  useParticipantStore,
+  useSocketStore,
+} from "@/store";
+import { ON_VIDEO_CALL_INIT } from "@/configs/socket-events";
+import { ReqVideoCallInitType } from "@/types";
 
 const useRightSide = () => {
   const router = useRouter();
 
-  const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const messageReply = useMessageStore((state) => state.messageReply);
   const messageEdit = useMessageStore((state) => state.messageEdit);
-  const peer = useCallStore((state) => state.peer);
-  const connection = useCallStore((state) => state.connection);
-  const call = useCallStore((state) => state.call);
+  const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
+  const conversation = useConversationStore((state) => state.conversation);
+  const socket = useSocketStore((state) => state.socket);
   const callStatus = useCallStore((state) => state.callStatus);
-  const setConnection = useCallStore((state) => state.setConnection);
-  const setCall = useCallStore((state) => state.setCall);
+  const setCallStatus = useCallStore((state) => state.setCallStatus);
+  const setLocalStream = useCallStore((state) => state.setLocalStream);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
   const messageAction = useMemo(() => messageReply || messageEdit, [messageEdit, messageReply]);
 
-  const isCalling = callStatus === "calling";
+  const isInCall = callStatus === "in-call";
 
   const handleRemoveAction = () => {
     messageReply ? setMessageReply(undefined) : setMessageEdit(undefined);
@@ -28,54 +35,34 @@ const useRightSide = () => {
 
   const handleScrollToMessage = () => {
     if (messageReply) {
-      const messageRepied = document.getElementById(messageReply?.id);
+      const messageReplied = document.getElementById(messageReply?.id);
 
-      messageRepied?.scrollIntoView({
+      messageReplied?.scrollIntoView({
         behavior: "smooth",
       });
     }
   };
 
   const handleVideoCall = async () => {
-    const peerConnection = peer?.connect(receiverParticipant?.user?.id);
-    setConnection(peerConnection);
-    // setCallStatus("calling");
+    if (conversation?.id && receiverParticipant?.user?.id) {
+      const payload: ReqVideoCallInitType = {
+        conversationId: conversation?.id,
+        receiverId: receiverParticipant?.user?.id,
+      };
+      socket?.emit(ON_VIDEO_CALL_INIT, payload);
 
-    const mediaScreen = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    const newCall = peer.call(receiverParticipant?.user?.id, mediaScreen);
-    setCall(newCall);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      setLocalStream(stream);
+      setCallStatus("calling");
+    }
   };
-
-  useEffect(() => {
-    if (connection) {
-      connection?.on("open", () => {
-        console.log("open");
-      });
-    }
-
-    return () => {
-      connection?.off("open");
-    };
-  }, [connection]);
-
-  useEffect(() => {
-    if (call) {
-      call?.on("stream", (remoteStream) => {
-        console.log("remoteStream", remoteStream);
-      });
-    }
-
-    return () => {
-      call?.off("stream");
-    };
-  }, [call]);
 
   return {
     router,
     receiverParticipant,
     messageAction,
     messageReply,
-    isCalling,
+    isInCall,
     handleRemoveAction,
     handleScrollToMessage,
     handleVideoCall,

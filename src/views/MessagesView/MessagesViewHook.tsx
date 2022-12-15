@@ -16,10 +16,11 @@ const useMessageView = () => {
 
   const profile = useAuthStore((state) => state.profile);
   const conversation = useConversationStore((state) => state.conversation);
+  const callStatus = useCallStore((state) => state.callStatus);
   const socket = useSocketStore((state) => state.socket);
-  const peer = useCallStore((state) => state.peer);
-  const setCallStatus = useCallStore((state) => state.setCallStatus);
   const setLoadingGetMessages = useMessageStore((state) => state.setLoadingGetMessages);
+
+  const isInCall = callStatus === "in-call";
 
   useEffect(() => {
     const currentConversationId = router.query.conversationId?.[0];
@@ -32,13 +33,7 @@ const useMessageView = () => {
     }
   }, [conversation, profile?.id, router.query.conversationId, setLoadingGetMessages, socket]);
 
-  useEffect(() => {
-    if (!peer) return;
-
-    peer.on("call", (mediaConnection) => {
-      setCallStatus("receivingCall");
-    });
-  }, [peer, setCallStatus]);
+  return { isInCall };
 };
 
 export default useMessageView;

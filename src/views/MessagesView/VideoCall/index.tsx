@@ -1,32 +1,34 @@
 import classNames from "classnames/bind";
-import { useEffect, useRef } from "react";
 import { BsFillTelephoneFill, BsMic } from "react-icons/bs";
-import { FiVideo, FiVideoOff } from "react-icons/fi";
+import { FiVideo } from "react-icons/fi";
 import { MdIosShare, MdZoomOutMap } from "react-icons/md";
 
 import styles from "./VideoCall.module.scss";
+import { useCallStore } from "@/store";
+import { useEffect, useRef } from "react";
 
 const cln = classNames.bind(styles);
 
 const VideoCall = () => {
-  const remoteVideoRef = useRef<HTMLVideoElement>(null);
+  const remoteStream = useCallStore((state) => state.remoteStream);
+  const localStream = useCallStore((state) => state.localStream);
+
   const localVideoRef = useRef<HTMLVideoElement>(null);
+  const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((stream) => {
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = stream;
-          remoteVideoRef.current.play();
-          localVideoRef.current.srcObject = stream;
-          localVideoRef.current.play();
-        }
-      });
-  }, []);
+    if (localVideoRef.current && localStream) {
+      localVideoRef.current.srcObject = localStream;
+      localVideoRef.current.play();
+    }
+  }, [localStream]);
+
+  useEffect(() => {
+    if (remoteVideoRef.current && remoteStream) {
+      remoteVideoRef.current.srcObject = remoteStream;
+      remoteVideoRef.current.play();
+    }
+  }, [remoteStream]);
 
   return (
     <div className={cln("wrapper")}>

@@ -1,7 +1,8 @@
 import create from "zustand";
 import { DataConnection, MediaConnection } from "peerjs";
 
-import { useAuthStore } from "@/store/index";
+import { useAuthStore } from "@/store";
+import { CallStatusType, UserAuthType } from "@/types";
 
 type CallStoreType = {
   peer?: any;
@@ -10,10 +11,14 @@ type CallStoreType = {
   setCall: (_call?: MediaConnection) => void;
   connection?: DataConnection;
   setConnection: (_connection?: DataConnection) => void;
-  callStatus: "idle" | "receivingCall" | "calling" | "in-call";
-  setCallStatus: (_status: "idle" | "receivingCall" | "calling" | "in-call") => void;
-  isCalling: boolean;
-  setIsCalling: (_isCalling: boolean) => void;
+  caller?: UserAuthType;
+  setCaller: (_caller?: UserAuthType) => void;
+  callStatus: CallStatusType;
+  setCallStatus: (_status: CallStatusType) => void;
+  localStream?: MediaStream;
+  setLocalStream: (_stream?: MediaStream) => void;
+  remoteStream?: MediaStream;
+  setRemoteStream: (_stream?: MediaStream) => void;
 };
 
 const useCallStore = create<CallStoreType>((setState) => ({
@@ -34,8 +39,12 @@ const useCallStore = create<CallStoreType>((setState) => ({
   setConnection: (connection?: DataConnection) => setState((state) => ({ ...state, connection })),
   callStatus: "idle",
   setCallStatus: (status) => setState((state) => ({ ...state, callStatus: status })),
-  isCalling: false,
-  setIsCalling: (isCalling) => setState((state) => ({ ...state, isCalling })),
+  caller: undefined,
+  setCaller: (caller) => setState((state) => ({ ...state, caller })),
+  localStream: undefined,
+  setLocalStream: (stream) => setState((state) => ({ ...state, localStream: stream })),
+  remoteStream: undefined,
+  setRemoteStream: (stream) => setState((state) => ({ ...state, remoteStream: stream })),
 }));
 
 export default useCallStore;

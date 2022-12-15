@@ -11,6 +11,7 @@ import { PageType } from "@/types";
 import { useSocketStore, useAuthStore, useCallStore } from "@/store";
 import { CallingModal } from "@/components";
 import useChatSocket from "@/hooks/useChatSocket";
+import useCallRTC from "@/hooks/useCallRTC";
 
 type MyAppProps = AppProps & {
   Component: PageType;
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const initPeer = useCallStore((state) => state.initPeer);
 
   useChatSocket();
+  useCallRTC();
 
   useEffect(() => {
     if (profile) {

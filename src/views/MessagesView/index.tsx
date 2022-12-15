@@ -4,25 +4,22 @@ import { Else, If, Then } from "react-if";
 import styles from "./MessagesView.module.scss";
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
-import useMessageView from "./MessagesViewHook";
 import VideoCall from "./VideoCall";
-import { useMessageStore } from "@/store";
+import useMessageView from "./MessagesViewHook";
 
 const cln = classNames.bind(styles);
 
 const MessagesView = () => {
-  useMessageView();
-
-  const isCalling = useMessageStore((state) => state.isCalling);
+  const { isInCall } = useMessageView();
 
   return (
     <div className={cln("wrapper")}>
       <section
         className={cln("left-side", {
-          "left-side--calling": isCalling,
+          "left-side--calling": isInCall,
         })}
       >
-        <If condition={isCalling}>
+        <If condition={isInCall}>
           <Then>
             <VideoCall />
           </Then>
@@ -37,7 +34,7 @@ const MessagesView = () => {
 
       <section
         className={cln("right-side", {
-          "right-side--calling": isCalling,
+          "right-side--calling": isInCall,
         })}
       >
         <RightSide />
