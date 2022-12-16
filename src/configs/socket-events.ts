@@ -26,4 +26,3 @@ export const ON_VIDEO_CALL = "on_video_call";
 export const ON_VIDEO_CALL_ACCEPTED = "on_video_call_accepted";
 export const ON_VIDEO_CALL_ACCEPT = "on_video_call_accept";
 export const ON_VIDEO_CALL_REJECTED = "on_video_call_rejected";
-export const ON_VIDEO_CALL_REJECT = "on_video_call_reject";

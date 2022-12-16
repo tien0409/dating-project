@@ -9,6 +9,8 @@ type CallStoreType = {
   initPeer: () => void;
   call?: MediaConnection;
   setCall: (_call?: MediaConnection) => void;
+  activeConversationId: string;
+  setActiveConversationId: (_activeConversationId: string) => void;
   connection?: DataConnection;
   setConnection: (_connection?: DataConnection) => void;
   caller?: UserAuthType;
@@ -19,6 +21,7 @@ type CallStoreType = {
   setLocalStream: (_stream?: MediaStream) => void;
   remoteStream?: MediaStream;
   setRemoteStream: (_stream?: MediaStream) => void;
+  resetCallState: () => void;
 };
 
 const useCallStore = create<CallStoreType>((setState) => ({
@@ -35,6 +38,9 @@ const useCallStore = create<CallStoreType>((setState) => ({
   },
   call: undefined,
   setCall: (call?: MediaConnection) => setState((state) => ({ ...state, call })),
+  activeConversationId: "",
+  setActiveConversationId: (activeConversationId: string) =>
+    setState((state) => ({ ...state, activeConversationId })),
   connection: undefined,
   setConnection: (connection?: DataConnection) => setState((state) => ({ ...state, connection })),
   callStatus: "idle",
@@ -45,6 +51,18 @@ const useCallStore = create<CallStoreType>((setState) => ({
   setLocalStream: (stream) => setState((state) => ({ ...state, localStream: stream })),
   remoteStream: undefined,
   setRemoteStream: (stream) => setState((state) => ({ ...state, remoteStream: stream })),
+  resetCallState: () => {
+    setState((state) => ({
+      ...state,
+      call: undefined,
+      connection: undefined,
+      callStatus: "idle",
+      caller: undefined,
+      localStream: undefined,
+      remoteStream: undefined,
+      activeConversationId: "",
+    }));
+  },
 }));
 
 export default useCallStore;
