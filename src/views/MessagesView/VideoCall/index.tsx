@@ -1,34 +1,24 @@
 import classNames from "classnames/bind";
-import { BsFillTelephoneFill, BsMic } from "react-icons/bs";
-import { FiVideo } from "react-icons/fi";
+import { BsFillTelephoneFill, BsMic, BsMicMute } from "react-icons/bs";
+import { FiVideo, FiVideoOff } from "react-icons/fi";
 import { MdIosShare, MdZoomOutMap } from "react-icons/md";
 
 import styles from "./VideoCall.module.scss";
-import { useCallStore } from "@/store";
-import { useEffect, useRef } from "react";
+import useVideoCall from "./VideoCallHook";
+import { Else, If, Then } from "react-if";
 
 const cln = classNames.bind(styles);
 
 const VideoCall = () => {
-  const remoteStream = useCallStore((state) => state.remoteStream);
-  const localStream = useCallStore((state) => state.localStream);
-
-  const localVideoRef = useRef<HTMLVideoElement>(null);
-  const remoteVideoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (localVideoRef.current && localStream) {
-      localVideoRef.current.srcObject = localStream;
-      localVideoRef.current.play();
-    }
-  }, [localStream]);
-
-  useEffect(() => {
-    if (remoteVideoRef.current && remoteStream) {
-      remoteVideoRef.current.srcObject = remoteStream;
-      remoteVideoRef.current.play();
-    }
-  }, [remoteStream]);
+  const {
+    remoteVideoRef,
+    localVideoRef,
+    enableCamera,
+    enableMic,
+    handleToggleMic,
+    handleToggleCamera,
+    handleCloseCall,
+  } = useVideoCall();
 
   return (
     <div className={cln("wrapper")}>
@@ -40,14 +30,37 @@ const VideoCall = () => {
           <li className={cln("video__controls-item")}>
             <MdZoomOutMap size={17} color={"#fff"} />
           </li>
-          <li className={cln("video__controls-item")}>
-            <BsMic size={17} color={"#fff"} />
+          <li className={cln("video__controls-item")} onClick={handleToggleMic}>
+            <If condition={enableMic}>
+              <Then>
+                <BsMic size={17} color={"#fff"} />
+              </Then>
+
+              <Else>
+                <BsMicMute size={17} color={"#fff"} />
+              </Else>
+            </If>
           </li>
+
           <li className={cln("video__controls-item", "video__controls-item--off")}>
-            <BsFillTelephoneFill size={17} color={"#fff"} style={{ rotate: "135deg" }} />
+            <BsFillTelephoneFill
+              size={17}
+              color={"#fff"}
+              style={{ rotate: "135deg" }}
+              onClick={handleCloseCall}
+            />
           </li>
-          <li className={cln("video__controls-item")}>
-            <FiVideo size={17} color={"#fff"} />
+
+          <li className={cln("video__controls-item")} onClick={handleToggleCamera}>
+            <If condition={enableCamera}>
+              <Then>
+                <FiVideo size={17} color={"#fff"} />
+              </Then>
+
+              <Else>
+                <FiVideoOff size={17} color={"#fff"} />
+              </Else>
+            </If>
           </li>
           <li className={cln("video__controls-item")}>
             <MdIosShare size={17} color={"#fff"} />

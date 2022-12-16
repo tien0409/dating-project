@@ -2,13 +2,14 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import {
+  useAuthStore,
   useCallStore,
   useConversationStore,
   useMessageStore,
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { ON_VIDEO_CALL_INIT } from "@/configs/socket-events";
+import { VIDEO_CALL_HANG_UP } from "@/configs/socket-events";
 import { ReqVideoCallInitType } from "@/types";
 
 const useRightSide = () => {
@@ -18,10 +19,13 @@ const useRightSide = () => {
   const messageEdit = useMessageStore((state) => state.messageEdit);
   const receiverParticipant = useParticipantStore((state) => state.receiverParticipant);
   const conversation = useConversationStore((state) => state.conversation);
+  const profile = useAuthStore((state) => state.profile);
   const socket = useSocketStore((state) => state.socket);
   const callStatus = useCallStore((state) => state.callStatus);
   const setCallStatus = useCallStore((state) => state.setCallStatus);
+  const setCaller = useCallStore((state) => state.setCaller);
   const setLocalStream = useCallStore((state) => state.setLocalStream);
+  const setReceiver = useCallStore((state) => state.setReceiver);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
@@ -44,16 +48,18 @@ const useRightSide = () => {
   };
 
   const handleVideoCall = async () => {
-    if (conversation?.id && receiverParticipant?.user?.id) {
+    if (conversation?.id && receiverParticipant?.user?.id && profile) {
       const payload: ReqVideoCallInitType = {
         conversationId: conversation?.id,
         receiverId: receiverParticipant?.user?.id,
       };
-      socket?.emit(ON_VIDEO_CALL_INIT, payload);
+      socket?.emit(VIDEO_CALL_HANG_UP, payload);
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setLocalStream(stream);
       setCallStatus("calling");
+      setCaller(profile);
+      setReceiver(receiverParticipant?.user);
     }
   };
 

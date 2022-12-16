@@ -7,6 +7,8 @@ import { CallStatusType, UserAuthType } from "@/types";
 type CallStoreType = {
   peer?: any;
   initPeer: () => void;
+  receiver?: UserAuthType;
+  setReceiver: (user?: UserAuthType) => void;
   call?: MediaConnection;
   setCall: (_call?: MediaConnection) => void;
   activeConversationId: string;
@@ -36,6 +38,8 @@ const useCallStore = create<CallStoreType>((setState) => ({
       }
     })();
   },
+  receiver: undefined,
+  setReceiver: (user) => setState((state) => ({ ...state, receiver: user })),
   call: undefined,
   setCall: (call?: MediaConnection) => setState((state) => ({ ...state, call })),
   activeConversationId: "",
