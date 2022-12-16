@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ConfigProvider } from "antd";
 import { ToastContainer } from "react-toastify";
 import { QueryClient } from "@tanstack/query-core";
@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
-import { useSocketStore, useAuthStore, useCallStore } from "@/store";
 import { CallingModal } from "@/components";
 import useChatSocket from "@/hooks/useChatSocket";
 import useCallRTC from "@/hooks/useCallRTC";
@@ -18,21 +17,10 @@ type MyAppProps = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-  const profile = useAuthStore((state) => state.profile);
-  const initSocket = useSocketStore((state) => state.initSocket);
-  const initPeer = useCallStore((state) => state.initPeer);
+  const [queryClient] = useState(() => new QueryClient());
 
   useChatSocket();
   useCallRTC();
-
-  useEffect(() => {
-    if (profile) {
-      initSocket();
-      initPeer();
-    }
-  }, [initPeer, initSocket, profile]);
-
-  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>

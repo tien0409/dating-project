@@ -15,14 +15,14 @@ const useSocketStore = create<SocketStoreType>((setState, getState) => ({
         withCredentials: true,
       });
 
-      _socket.on("connect", () => {
-        console.log("connected chat");
-      });
-
-      _socket.on("disconnect", () => {
-        console.log("disconnected chat");
-      });
-
+      // _socket.on("connect", () => {
+      //   console.log("connected chat");
+      // });
+      //
+      // _socket.on("disconnect", () => {
+      //   console.log("disconnected chat");
+      // });
+      //
       setState({ socket: _socket });
     }
   },

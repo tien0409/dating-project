@@ -30,6 +30,7 @@ import {
 } from "@/store";
 
 const useChatSocket = () => {
+  const initSocket = useSocketStore((state) => state.initSocket);
   const socket = useSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
   const scrollToLastMessage = useMessageStore((state) => state.scrollToLastMessage);
@@ -64,8 +65,10 @@ const useChatSocket = () => {
     if (socket) {
       socket.emit(REQUEST_ALL_CONVERSATIONS);
       setLoadingGetConversations(true);
+    } else {
+      initSocket();
     }
-  }, [setLoadingGetConversations, socket]);
+  }, [initSocket, setLoadingGetConversations, socket]);
 
   useEffect(() => {
     if (socket) {

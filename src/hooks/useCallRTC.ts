@@ -13,6 +13,7 @@ import { MESSAGES_ROUTE } from "@/configs/routes";
 const useCallRTC = () => {
   const router = useRouter();
 
+  const initPeer = useCallStore((state) => state.initPeer);
   const profile = useAuthStore((state) => state.profile);
   const peer = useCallStore((state) => state.peer);
   const socket = useSocketStore((state) => state.socket);
@@ -86,7 +87,10 @@ const useCallRTC = () => {
   ]);
 
   useEffect(() => {
-    if (!peer) return;
+    if (!peer) {
+      profile?.id && initPeer();
+      return;
+    }
 
     peer.on("call", (incomingCall: any) => {
       navigator.mediaDevices
@@ -104,7 +108,7 @@ const useCallRTC = () => {
     return () => {
       peer?.off("call");
     };
-  }, [peer, setCall, setCallStatus, setLocalStream]);
+  }, [initPeer, peer, profile?.id, setCall, setCallStatus, setLocalStream]);
 
   useEffect(() => {
     if (!call) return;
