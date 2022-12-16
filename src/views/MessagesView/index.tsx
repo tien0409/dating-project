@@ -10,13 +10,14 @@ import useMessageView from "./MessagesViewHook";
 const cln = classNames.bind(styles);
 
 const MessagesView = () => {
-  const { isInCall } = useMessageView();
+  const { isInCall, isZoom } = useMessageView();
 
   return (
     <div className={cln("wrapper")}>
       <section
         className={cln("left-side", {
           "left-side--calling": isInCall,
+          "is-video-zoom": isZoom,
         })}
       >
         <If condition={isInCall}>
@@ -35,6 +36,7 @@ const MessagesView = () => {
       <section
         className={cln("right-side", {
           "right-side--calling": isInCall,
+          "is-video-zoom": isZoom,
         })}
       >
         <RightSide />

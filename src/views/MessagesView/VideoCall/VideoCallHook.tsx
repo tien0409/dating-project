@@ -1,14 +1,16 @@
 import { useCallStore, useSocketStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
-import { ON_VIDEO_CALL_HANG_UP } from "@/configs/socket-events";
+import { VIDEO_CALL_HANG_UP } from "@/configs/socket-events";
 
 const useVideoCall = () => {
   const socket = useSocketStore((state) => state.socket);
   const remoteStream = useCallStore((state) => state.remoteStream);
   const localStream = useCallStore((state) => state.localStream);
   const call = useCallStore((state) => state.call);
+  const isZoom = useCallStore((state) => state.isZoom);
   const caller = useCallStore((state) => state.caller);
   const receiver = useCallStore((state) => state.receiver);
+  const setIsZoom = useCallStore((state) => state.setIsZoom);
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -19,7 +21,7 @@ const useVideoCall = () => {
     localStream &&
       setEnableMic((prevState) => {
         localStream.getAudioTracks()[0].enabled = !prevState;
-        return prevState;
+        return !prevState;
       });
   };
 
@@ -27,14 +29,18 @@ const useVideoCall = () => {
     localStream &&
       setEnableCamera((prevState) => {
         localStream.getVideoTracks()[0].enabled = !prevState;
-        return prevState;
+        return !prevState;
       });
   };
 
   const handleCloseCall = () => {
     if (call) {
-      socket?.emit(ON_VIDEO_CALL_HANG_UP, { caller, receiver });
+      socket?.emit(VIDEO_CALL_HANG_UP, { caller, receiver });
     }
+  };
+
+  const handleToggleZoom = () => {
+    setIsZoom(!isZoom);
   };
 
   useEffect(() => {
@@ -58,8 +64,10 @@ const useVideoCall = () => {
   return {
     localVideoRef,
     remoteVideoRef,
+    isZoom,
     enableCamera,
     enableMic,
+    handleToggleZoom,
     handleToggleMic,
     handleToggleCamera,
     handleCloseCall,

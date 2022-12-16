@@ -23,10 +23,12 @@ type CallStoreType = {
   setLocalStream: (_stream?: MediaStream) => void;
   remoteStream?: MediaStream;
   setRemoteStream: (_stream?: MediaStream) => void;
+  isZoom: boolean;
+  setIsZoom: (_isZoom: boolean) => void;
   resetCallState: () => void;
 };
 
-const useCallStore = create<CallStoreType>((setState) => ({
+const useCallStore = create<CallStoreType>((setState, getState) => ({
   peer: undefined,
   initPeer: () => {
     (async () => {
@@ -55,17 +57,33 @@ const useCallStore = create<CallStoreType>((setState) => ({
   setLocalStream: (stream) => setState((state) => ({ ...state, localStream: stream })),
   remoteStream: undefined,
   setRemoteStream: (stream) => setState((state) => ({ ...state, remoteStream: stream })),
+  isZoom: false,
+  setIsZoom: (isZoom) => setState((state) => ({ ...state, isZoom })),
   resetCallState: () => {
-    setState((state) => ({
-      ...state,
-      call: undefined,
-      connection: undefined,
-      callStatus: "idle",
-      caller: undefined,
-      localStream: undefined,
-      remoteStream: undefined,
-      activeConversationId: "",
-    }));
+    setState((state) => {
+      if (getState()?.localStream) {
+        getState()
+          ?.localStream?.getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      if (getState()?.remoteStream) {
+        getState()
+          ?.remoteStream?.getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      return {
+        ...state,
+        call: undefined,
+        connection: undefined,
+        callStatus: "idle",
+        caller: undefined,
+        localStream: undefined,
+        remoteStream: undefined,
+        activeConversationId: "",
+      };
+    });
   },
 }));
 

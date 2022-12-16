@@ -9,7 +9,7 @@ import {
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { VIDEO_CALL_HANG_UP } from "@/configs/socket-events";
+import { ON_VIDEO_CALL_INIT } from "@/configs/socket-events";
 import { ReqVideoCallInitType } from "@/types";
 
 const useRightSide = () => {
@@ -24,7 +24,6 @@ const useRightSide = () => {
   const callStatus = useCallStore((state) => state.callStatus);
   const setCallStatus = useCallStore((state) => state.setCallStatus);
   const setCaller = useCallStore((state) => state.setCaller);
-  const setLocalStream = useCallStore((state) => state.setLocalStream);
   const setReceiver = useCallStore((state) => state.setReceiver);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
@@ -47,16 +46,14 @@ const useRightSide = () => {
     }
   };
 
-  const handleVideoCall = async () => {
+  const handleVideoCall = () => {
     if (conversation?.id && receiverParticipant?.user?.id && profile) {
       const payload: ReqVideoCallInitType = {
         conversationId: conversation?.id,
         receiverId: receiverParticipant?.user?.id,
       };
-      socket?.emit(VIDEO_CALL_HANG_UP, payload);
+      socket?.emit(ON_VIDEO_CALL_INIT, payload);
 
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      setLocalStream(stream);
       setCallStatus("calling");
       setCaller(profile);
       setReceiver(receiverParticipant?.user);

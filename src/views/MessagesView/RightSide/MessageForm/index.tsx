@@ -49,6 +49,7 @@ const MessageForm = () => {
               onKeyDown={handleTyping}
             />
           </Form.Item>
+
           <div className={cln("icon__suffix")}>
             <GrAttachment size={20} cursor="pointer" onClick={handleChooseFile} />
             <input

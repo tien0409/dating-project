@@ -58,7 +58,7 @@ const useCallRTC = () => {
   useEffect(() => {
     if (!socket) return;
 
-    socket?.on(ON_VIDEO_CALL, (payload: ResVideoCallType) => {
+    socket?.on(ON_VIDEO_CALL, async (payload: ResVideoCallType) => {
       const { caller, conversationId } = payload;
 
       if (callStatus !== "idle") return;
@@ -68,19 +68,20 @@ const useCallRTC = () => {
       profile && setReceiver(profile);
       setCaller(caller);
 
-      router.push(MESSAGES_ROUTE + `/${conversationId}`);
+      await router.push(MESSAGES_ROUTE + `/${conversationId}`);
     });
 
-    socket?.on(ON_VIDEO_CALL_ACCEPT, (payload: ResVideoCallAcceptType) => {
+    socket?.on(ON_VIDEO_CALL_ACCEPT, async (payload: ResVideoCallAcceptType) => {
       const { caller, acceptor } = payload;
 
       if (caller?.id === profile?.id) {
         const connection = peer.connect(acceptor.id);
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+
         setConnection(connection);
-        if (localStream) {
-          const newCall = peer?.call(acceptor.id, localStream);
-          setCall(newCall);
-        }
+        const newCall = peer?.call(acceptor.id, stream);
+        setLocalStream(stream);
+        setCall(newCall);
       }
       setCallStatus("in-call");
     });
@@ -116,6 +117,7 @@ const useCallRTC = () => {
     setCallStatus,
     setCaller,
     setConnection,
+    setLocalStream,
     setReceiver,
     socket,
   ]);

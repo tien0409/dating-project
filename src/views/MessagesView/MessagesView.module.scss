@@ -4,6 +4,7 @@
   background-color: var(--white-color);
   border: 1px solid var(--secondary-fade-color);
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .left-side, .right-side {
@@ -14,6 +15,14 @@
 
 .left-side {
   width: 330px;
+
+  &.left-side--calling {
+    width: 65%;
+
+    &.is-video-zoom {
+      width: 100%;
+    }
+  }
 }
 
 .divider {
@@ -25,12 +34,14 @@
 
 .right-side {
   flex: 1;
-}
+  overflow: hidden;
 
-.left-side--calling {
-  width: 65%;
-}
+  &.right-side--calling {
+    width: 35%;
 
-.right-side--calling {
-  width: 35%;
+    &.is-video-zoom {
+      width: 0;
+      flex: 0;
+    }
+  }
 }

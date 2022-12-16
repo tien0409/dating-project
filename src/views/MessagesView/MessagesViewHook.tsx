@@ -17,6 +17,7 @@ const useMessageView = () => {
   const profile = useAuthStore((state) => state.profile);
   const conversation = useConversationStore((state) => state.conversation);
   const callStatus = useCallStore((state) => state.callStatus);
+  const isZoom = useCallStore((state) => state.isZoom);
   const socket = useSocketStore((state) => state.socket);
   const setLoadingGetMessages = useMessageStore((state) => state.setLoadingGetMessages);
 
@@ -33,7 +34,7 @@ const useMessageView = () => {
     }
   }, [conversation, profile?.id, router.query.conversationId, setLoadingGetMessages, socket]);
 
-  return { isInCall };
+  return { isInCall, isZoom };
 };
 
 export default useMessageView;

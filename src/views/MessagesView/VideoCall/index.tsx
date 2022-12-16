@@ -1,7 +1,8 @@
 import classNames from "classnames/bind";
 import { BsFillTelephoneFill, BsMic, BsMicMute } from "react-icons/bs";
 import { FiVideo, FiVideoOff } from "react-icons/fi";
-import { MdIosShare, MdZoomOutMap } from "react-icons/md";
+import { AiOutlineFullscreenExit, AiOutlineFullscreen } from "react-icons/ai";
+import { MdIosShare } from "react-icons/md";
 
 import styles from "./VideoCall.module.scss";
 import useVideoCall from "./VideoCallHook";
@@ -13,8 +14,10 @@ const VideoCall = () => {
   const {
     remoteVideoRef,
     localVideoRef,
+    isZoom,
     enableCamera,
     enableMic,
+    handleToggleZoom,
     handleToggleMic,
     handleToggleCamera,
     handleCloseCall,
@@ -27,9 +30,18 @@ const VideoCall = () => {
         <video className={cln("local__video")} ref={localVideoRef} />
 
         <ul className={cln("video__controls")}>
-          <li className={cln("video__controls-item")}>
-            <MdZoomOutMap size={17} color={"#fff"} />
+          <li className={cln("video__controls-item")} onClick={handleToggleZoom}>
+            <If condition={isZoom}>
+              <Then>
+                <AiOutlineFullscreenExit size={17} color={"#fff"} />
+              </Then>
+
+              <Else>
+                <AiOutlineFullscreen size={17} color={"#fff"} />
+              </Else>
+            </If>
           </li>
+
           <li className={cln("video__controls-item")} onClick={handleToggleMic}>
             <If condition={enableMic}>
               <Then>
