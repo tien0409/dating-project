@@ -7,15 +7,19 @@ const useVideoCall = () => {
   const remoteStream = useCallStore((state) => state.remoteStream);
   const localStream = useCallStore((state) => state.localStream);
   const call = useCallStore((state) => state.call);
+  const callStatus = useCallStore((state) => state.callStatus);
   const isZoom = useCallStore((state) => state.isZoom);
   const caller = useCallStore((state) => state.caller);
   const receiver = useCallStore((state) => state.receiver);
+  const switchToMiniVideo = useCallStore((state) => state.switchToMiniVideo);
   const setIsZoom = useCallStore((state) => state.setIsZoom);
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const [enableMic, setEnableMic] = useState(true);
   const [enableCamera, setEnableCamera] = useState(true);
+
+  const iconSize = switchToMiniVideo ? 15: 17;
 
   const handleToggleMic = () => {
     localStream &&
@@ -45,21 +49,21 @@ const useVideoCall = () => {
 
   useEffect(() => {
     (async () => {
-      if (localVideoRef.current && localStream) {
+      if (localVideoRef.current && localStream && !switchToMiniVideo) {
         localVideoRef.current.srcObject = localStream;
         await localVideoRef.current.play();
       }
     })();
-  }, [localStream]);
+  }, [callStatus, localStream, switchToMiniVideo]);
 
   useEffect(() => {
     (async () => {
-      if (remoteVideoRef.current && remoteStream) {
+      if (remoteVideoRef.current && remoteStream ) {
         remoteVideoRef.current.srcObject = remoteStream;
-        await remoteVideoRef.current.play();
+        await remoteVideoRef.current?.play();
       }
     })();
-  }, [remoteStream]);
+  }, [callStatus, remoteStream, switchToMiniVideo]);
 
   return {
     localVideoRef,
@@ -67,6 +71,7 @@ const useVideoCall = () => {
     isZoom,
     enableCamera,
     enableMic,
+    iconSize,
     handleToggleZoom,
     handleToggleMic,
     handleToggleCamera,

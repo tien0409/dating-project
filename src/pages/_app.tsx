@@ -17,12 +17,13 @@ type MyAppProps = AppProps & {
 };
 
 const CallModal = dynamic(() => import("@/components/CallModal"), { ssr: false });
+const VideoCallMini = dynamic(() => import("@/components/VideoCallMini"), { ssr: false });
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-  const [queryClient] = useState(() => new QueryClient());
-
   useChatSocket();
   useCallRTC();
+
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -37,6 +38,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         <Component {...pageProps} />
         <ToastContainer bodyClassName="toast" />
         <CallModal />
+        <VideoCallMini />
       </ConfigProvider>
     </QueryClientProvider>
   );

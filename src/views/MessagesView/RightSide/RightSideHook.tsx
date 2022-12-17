@@ -25,6 +25,7 @@ const useRightSide = () => {
   const setCallStatus = useCallStore((state) => state.setCallStatus);
   const setCaller = useCallStore((state) => state.setCaller);
   const setReceiver = useCallStore((state) => state.setReceiver);
+  const setActiveConversationId = useCallStore((state) => state.setActiveConversationId);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
 
@@ -57,6 +58,7 @@ const useRightSide = () => {
       setCallStatus("calling");
       setCaller(profile);
       setReceiver(receiverParticipant?.user);
+      setActiveConversationId(conversation?.id);
     }
   };
 

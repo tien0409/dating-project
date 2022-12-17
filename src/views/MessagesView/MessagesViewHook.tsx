@@ -18,10 +18,13 @@ const useMessageView = () => {
   const conversation = useConversationStore((state) => state.conversation);
   const callStatus = useCallStore((state) => state.callStatus);
   const isZoom = useCallStore((state) => state.isZoom);
+  const activeConversationId = useCallStore((state) => state.activeConversationId);
+  const switchToMiniVideo = useCallStore((state) => state.switchToMiniVideo);
   const socket = useSocketStore((state) => state.socket);
+  const setConversation = useConversationStore((state) => state.setConversation);
   const setLoadingGetMessages = useMessageStore((state) => state.setLoadingGetMessages);
 
-  const isInCall = callStatus === "in-call";
+  const isInCall = callStatus === "in-call" && conversation?.id === activeConversationId;
 
   useEffect(() => {
     const currentConversationId = router.query.conversationId?.[0];
@@ -31,10 +34,19 @@ const useMessageView = () => {
       };
       socket?.emit(REQUEST_ALL_MESSAGES, payload);
       setLoadingGetMessages(true);
+    } else if (!currentConversationId) {
+      setConversation(undefined);
     }
-  }, [conversation, profile?.id, router.query.conversationId, setLoadingGetMessages, socket]);
+  }, [
+    conversation,
+    profile?.id,
+    router.query.conversationId,
+    setConversation,
+    setLoadingGetMessages,
+    socket,
+  ]);
 
-  return { isInCall, isZoom };
+  return { isInCall, isZoom, switchToMiniVideo };
 };
 
 export default useMessageView;

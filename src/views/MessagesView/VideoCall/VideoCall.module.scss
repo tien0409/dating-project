@@ -13,6 +13,11 @@
   margin: 0 10px;
   border-radius: 20px;
   overflow: hidden;
+
+  &.is-mini {
+    border-radius: 0;
+    margin: 0;
+  }
 }
 
 .remote__video {
@@ -55,6 +60,11 @@
     transition: 0.3s;
     cursor: pointer;
 
+    &.is-mini {
+      width: 40px;
+      height: 40px;
+    }
+
     &:hover {
       background-color: var(--video-call-control-hover);
     }
@@ -64,6 +74,12 @@
       height: 60px;
       border-radius: 25px;
       background-color: var(--video-call-control-off);
+
+      &.is-mini {
+        width: 50px;
+        height: 50px;
+      }
+
 
       &:hover {
         background-color: var(--video-call-control-off-hover);

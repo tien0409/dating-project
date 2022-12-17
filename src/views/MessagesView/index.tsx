@@ -10,7 +10,7 @@ import useMessageView from "./MessagesViewHook";
 const cln = classNames.bind(styles);
 
 const MessagesView = () => {
-  const { isInCall, isZoom } = useMessageView();
+  const { isInCall, isZoom, switchToMiniVideo } = useMessageView();
 
   return (
     <div className={cln("wrapper")}>
@@ -20,7 +20,7 @@ const MessagesView = () => {
           "is-video-zoom": isZoom,
         })}
       >
-        <If condition={isInCall}>
+        <If condition={isInCall && !switchToMiniVideo}>
           <Then>
             <VideoCall />
           </Then>

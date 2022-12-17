@@ -25,6 +25,8 @@ type CallStoreType = {
   setRemoteStream: (_stream?: MediaStream) => void;
   isZoom: boolean;
   setIsZoom: (_isZoom: boolean) => void;
+  switchToMiniVideo: boolean;
+  setSwitchToMiniVideo: (_switchToMiniVideo: boolean) => void;
   resetCallState: () => void;
 };
 
@@ -59,6 +61,9 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
   setRemoteStream: (stream) => setState((state) => ({ ...state, remoteStream: stream })),
   isZoom: false,
   setIsZoom: (isZoom) => setState((state) => ({ ...state, isZoom })),
+  switchToMiniVideo: false,
+  setSwitchToMiniVideo: (switchToMiniVideo) =>
+    setState((state) => ({ ...state, switchToMiniVideo })),
   resetCallState: () => {
     setState((state) => {
       getState()?.localStream &&
@@ -82,6 +87,7 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
         localStream: undefined,
         remoteStream: undefined,
         activeConversationId: "",
+        switchToMiniVideo: false,
       };
     });
   },

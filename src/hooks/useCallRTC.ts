@@ -20,6 +20,7 @@ const useCallRTC = () => {
   const socket = useSocketStore((state) => state.socket);
   const callStatus = useCallStore((state) => state.callStatus);
   const call = useCallStore((state) => state.call);
+  const activeConversationId = useCallStore((state) => state.activeConversationId);
   const localStream = useCallStore((state) => state.localStream);
   const setRemoteStream = useCallStore((state) => state.setRemoteStream);
   const setLocalStream = useCallStore((state) => state.setLocalStream);
@@ -29,6 +30,7 @@ const useCallRTC = () => {
   const setCaller = useCallStore((state) => state.setCaller);
   const setReceiver = useCallStore((state) => state.setReceiver);
   const setActiveConversationId = useCallStore((state) => state.setActiveConversationId);
+  const setSwitchToMiniVideo = useCallStore((state) => state.setSwitchToMiniVideo);
   const resetCallState = useCallStore((state) => state.resetCallState);
 
   useEffect(() => {
@@ -77,9 +79,9 @@ const useCallRTC = () => {
       if (caller?.id === profile?.id) {
         const connection = peer.connect(acceptor.id);
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const newCall = peer?.call(acceptor.id, stream);
 
         setConnection(connection);
-        const newCall = peer?.call(acceptor.id, stream);
         setLocalStream(stream);
         setCall(newCall);
       }
@@ -138,6 +140,12 @@ const useCallRTC = () => {
       call?.off("close");
     };
   }, [call, setRemoteStream]);
+
+  useEffect(() => {
+    if (callStatus === "in-call") {
+      setSwitchToMiniVideo(router?.query?.conversationId?.[0] !== activeConversationId);
+    }
+  }, [activeConversationId, callStatus, router?.query?.conversationId, setSwitchToMiniVideo]);
 
   // useEffect(() => {
   //   if (!connection) return;
