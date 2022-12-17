@@ -9,7 +9,7 @@ import {
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { ON_VIDEO_CALL_INIT } from "@/configs/socket-events";
+import { VIDEO_CALL_INIT } from "@/configs/socket-events";
 import { ReqVideoCallInitType } from "@/types";
 
 const useRightSide = () => {
@@ -52,7 +52,7 @@ const useRightSide = () => {
         conversationId: conversation?.id,
         receiverId: receiverParticipant?.user?.id,
       };
-      socket?.emit(ON_VIDEO_CALL_INIT, payload);
+      socket?.emit(VIDEO_CALL_INIT, payload);
 
       setCallStatus("calling");
       setCaller(profile);

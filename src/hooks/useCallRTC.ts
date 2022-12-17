@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useAuthStore, useCallStore, useSocketStore } from "@/store";
 import {
   ON_VIDEO_CALL,
-  ON_VIDEO_CALL_ACCEPT,
+  ON_VIDEO_CALL_ACCEPTED,
   ON_VIDEO_CALL_HANG_UP,
   ON_VIDEO_CALL_REJECTED,
 } from "@/configs/socket-events";
@@ -71,7 +71,7 @@ const useCallRTC = () => {
       await router.push(MESSAGES_ROUTE + `/${conversationId}`);
     });
 
-    socket?.on(ON_VIDEO_CALL_ACCEPT, async (payload: ResVideoCallAcceptType) => {
+    socket?.on(ON_VIDEO_CALL_ACCEPTED, async (payload: ResVideoCallAcceptType) => {
       const { caller, acceptor } = payload;
 
       if (caller?.id === profile?.id) {
@@ -99,7 +99,7 @@ const useCallRTC = () => {
 
     return () => {
       socket?.off(ON_VIDEO_CALL);
-      socket?.off(ON_VIDEO_CALL_ACCEPT);
+      socket?.off(ON_VIDEO_CALL_ACCEPTED);
       socket?.off(ON_VIDEO_CALL_REJECTED);
       socket?.off(ON_VIDEO_CALL_HANG_UP);
     };
