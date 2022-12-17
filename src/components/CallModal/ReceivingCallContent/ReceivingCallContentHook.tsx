@@ -1,10 +1,9 @@
 import { HandleCallType } from "@/types";
-import { useAuthStore, useCallStore, useSocketStore } from "@/store";
 import { VIDEO_CALL_ACCEPTED, VIDEO_CALL_REJECTED } from "@/configs/socket-events";
+import { useCallStore, useSocketStore } from "@/store";
 
-const useCallingModal = () => {
+const useReceivingCallContent = () => {
   const socket = useSocketStore((state) => state.socket);
-  const callStatus = useCallStore((state) => state.callStatus);
   const caller = useCallStore((state) => state.caller);
 
   const handleCall = (type: HandleCallType) => () => {
@@ -19,10 +18,9 @@ const useCallingModal = () => {
   };
 
   return {
-    callStatus,
     caller,
     handleCall,
   };
 };
 
-export default useCallingModal;
+export default useReceivingCallContent;

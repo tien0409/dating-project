@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { useAuthStore, useCallStore, useSocketStore } from "@/store";
 import {
-  ON_VIDEO_CALL,
+  ON_VIDEO_CALL_INIT,
   ON_VIDEO_CALL_ACCEPTED,
   ON_VIDEO_CALL_HANG_UP,
   ON_VIDEO_CALL_REJECTED,
@@ -58,7 +58,7 @@ const useCallRTC = () => {
   useEffect(() => {
     if (!socket) return;
 
-    socket?.on(ON_VIDEO_CALL, async (payload: ResVideoCallType) => {
+    socket?.on(ON_VIDEO_CALL_INIT, async (payload: ResVideoCallType) => {
       const { caller, conversationId } = payload;
 
       if (callStatus !== "idle") return;
@@ -98,7 +98,7 @@ const useCallRTC = () => {
     });
 
     return () => {
-      socket?.off(ON_VIDEO_CALL);
+      socket?.off(ON_VIDEO_CALL_INIT);
       socket?.off(ON_VIDEO_CALL_ACCEPTED);
       socket?.off(ON_VIDEO_CALL_REJECTED);
       socket?.off(ON_VIDEO_CALL_HANG_UP);

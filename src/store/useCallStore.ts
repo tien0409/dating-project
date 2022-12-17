@@ -61,17 +61,16 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
   setIsZoom: (isZoom) => setState((state) => ({ ...state, isZoom })),
   resetCallState: () => {
     setState((state) => {
-      if (getState()?.localStream) {
+      getState()?.localStream &&
         getState()
           ?.localStream?.getTracks()
           .forEach((track) => track.stop());
-      }
 
-      if (getState()?.remoteStream) {
+      getState()?.remoteStream &&
         getState()
           ?.remoteStream?.getTracks()
           .forEach((track) => track.stop());
-      }
+      getState()?.call && getState()?.call?.close();
 
       return {
         ...state,

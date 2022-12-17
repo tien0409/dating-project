@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { ConfigProvider } from "antd";
 import { ToastContainer } from "react-toastify";
@@ -8,13 +9,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
-import { CallingModal } from "@/components";
 import useChatSocket from "@/hooks/useChatSocket";
 import useCallRTC from "@/hooks/useCallRTC";
 
 type MyAppProps = AppProps & {
   Component: PageType;
 };
+
+const CallModal = dynamic(() => import("@/components/CallModal"), { ssr: false });
 
 function MyApp({ Component, pageProps }: MyAppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -34,7 +36,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       >
         <Component {...pageProps} />
         <ToastContainer bodyClassName="toast" />
-        <CallingModal />
+        <CallModal />
       </ConfigProvider>
     </QueryClientProvider>
   );
