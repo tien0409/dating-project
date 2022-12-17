@@ -1,4 +1,4 @@
-import { ConversationType, MessageType } from "@/types";
+import { ConversationType } from "@/types";
 
 type ReqDeleteMessageType = {
   messageId: string;

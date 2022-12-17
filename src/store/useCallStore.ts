@@ -8,7 +8,7 @@ type CallStoreType = {
   peer?: any;
   initPeer: () => void;
   receiver?: UserAuthType;
-  setReceiver: (user?: UserAuthType) => void;
+  setReceiver: (_user?: UserAuthType) => void;
   call?: MediaConnection;
   setCall: (_call?: MediaConnection) => void;
   activeConversationId: string;
@@ -71,6 +71,7 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
           ?.remoteStream?.getTracks()
           .forEach((track) => track.stop());
       getState()?.call && getState()?.call?.close();
+      getState()?.connection && getState()?.connection?.close();
 
       return {
         ...state,

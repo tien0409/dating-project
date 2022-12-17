@@ -132,6 +132,11 @@ const useCallRTC = () => {
     call?.on("close", () => {
       console.log("call close");
     });
+
+    return () => {
+      call?.off("stream");
+      call?.off("close");
+    };
   }, [call, setRemoteStream]);
 
   // useEffect(() => {

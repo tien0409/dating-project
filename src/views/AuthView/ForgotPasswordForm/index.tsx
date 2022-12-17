@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import className from "classnames/bind";
 import { Dispatch, SetStateAction } from "react";
 import { GiHeartKey } from "react-icons/gi";
@@ -25,7 +25,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
         <h2 className={cln("heading-text")}>Forgot password</h2>
       </div>
       <p className={cln("heading-description")}>
-        Enter your email that you used to register <br /> your account, so we can send you a link to{" "}
+        Enter your email that you used to register <br /> your account, so we can send you a link to
         <br /> reset your password
       </p>
 

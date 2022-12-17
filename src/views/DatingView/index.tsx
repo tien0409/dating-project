@@ -1,25 +1,17 @@
-import { memo, useMemo, useState } from "react";
+import { memo } from "react";
 import { Else, If, Then } from "react-if";
 import classNames from "classnames/bind";
 
 import styles from "./DatingView.module.scss";
+import useDatingView from "./DatingViewHook";
 import EncounterCard from "./EncounterCard";
 import RecentConversations from "./RecentConversations";
 import { DefaultLayout } from "@/layouts";
-import { useGetUsersExploreData } from "@/hooks/useUsersData";
-import { UserAuthType } from "@/types";
 
 const cln = classNames.bind(styles);
 
 const DatingView = () => {
-  const { data: res } = useGetUsersExploreData();
-
-  const usersExplore = useMemo<UserAuthType[]>(() => res?.data || [], [res?.data]);
-  const [indexEncounter, setIndexEncounter] = useState(0);
-
-  const handleSkip = () => {
-    if (usersExplore.length >= indexEncounter + 1) setIndexEncounter(indexEncounter + 1);
-  };
+  const { usersExplore, indexEncounter, handleSkip } = useDatingView();
 
   return (
     <DefaultLayout>

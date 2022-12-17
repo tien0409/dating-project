@@ -26,8 +26,8 @@ const useForgotPasswordHook = (props: ForgotPasswordFormProps) => {
     setFormType("LoginForm");
   };
 
-  const handleSubmit = (values: { email: string }) => {
-    const { email } = values;
+  const handleSubmit = (_values: { email: string }) => {
+    // const { email } = values;
     // send login
   };
 
