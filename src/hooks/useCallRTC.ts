@@ -49,7 +49,6 @@ const useCallRTC = () => {
 
       if (callStatus !== "idle") return;
 
-      console.log("callType", callType);
       profile && setReceiver(profile);
       setCallStatus("receiving-call");
       setActiveConversationId(conversationId);
@@ -100,7 +99,11 @@ const useCallRTC = () => {
     }
 
     peer.on("call", async (incomingCall: any) => {
-      incomingCall.answer(localStream);
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: enableCamera,
+        audio: true,
+      });
+      incomingCall.answer(localStream || stream);
       setLocalStream(localStream);
       setCall(incomingCall);
     });
@@ -148,7 +151,6 @@ const useCallRTC = () => {
 
       if (userIdDisableMic === profile?.id) {
         localStream?.getAudioTracks().forEach((track) => (track.enabled = !enableMic));
-        console.log("setEnableMic");
         setEnableMic(!enableMic);
       } else {
         remoteStream?.getAudioTracks().forEach((track) => (track.enabled = !enableMic));
@@ -180,9 +182,7 @@ const useCallRTC = () => {
   useEffect(() => {
     if (!call) return;
 
-    console.log("useEffect call");
     call?.on("stream", (remoteStream) => {
-      console.log("call stream", remoteStream);
       setRemoteStream(remoteStream);
     });
 

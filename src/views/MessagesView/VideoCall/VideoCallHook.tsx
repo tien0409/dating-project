@@ -43,10 +43,8 @@ const useVideoCall = () => {
       video: !enableCamera,
       audio: true,
     });
-    console.log("enableMic", enableMic);
     if (!enableMic) {
-      console.log("zo");
-      localStream?.getAudioTracks().forEach((track) => (track.enabled = false));
+      stream?.getAudioTracks().forEach((track) => (track.enabled = false));
     }
 
     setLocalStream(stream);
