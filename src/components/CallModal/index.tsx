@@ -4,6 +4,8 @@ import { Case, Switch } from "react-if";
 import useCallModal from "./CallModalHook";
 import ReceivingCallContent from "./ReceivingCallContent";
 import CallingContent from "./CallingContent";
+import UserCallUnavailableContent from "./UserCallUnavailableContent";
+import CallRejectedContent from "./CallRejectedContent";
 
 const CallModal = () => {
   const { open, callStatus } = useCallModal();
@@ -13,6 +15,12 @@ const CallModal = () => {
       <Switch>
         <Case condition={callStatus === "calling"}>
           <CallingContent />
+        </Case>
+        <Case condition={callStatus === "unavailable"}>
+          <UserCallUnavailableContent />
+        </Case>
+        <Case condition={callStatus === "rejected"}>
+          <CallRejectedContent />
         </Case>
         <Case condition={callStatus === "receiving-call"}>
           <ReceivingCallContent />

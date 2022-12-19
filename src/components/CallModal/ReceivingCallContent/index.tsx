@@ -9,7 +9,7 @@ import useReceivingCallContent from "./ReceivingCallContentHook";
 const cln = classNames.bind(styles);
 
 const ReceivingCallContent = () => {
-  const { caller, handleCall } = useReceivingCallContent();
+  const { caller, callType, handleCall } = useReceivingCallContent();
 
   return (
     <div className={cln("wrapper")}>
@@ -24,12 +24,16 @@ const ReceivingCallContent = () => {
       </div>
       <p className={cln("text")}>
         <span className={cln("full-name")}>{caller?.fullName} </span>
-        <span>muốn gọi cho bạn</span>
+        <span>muốn gọi {callType === "video-call" ? "video" : ""} cho bạn</span>
       </p>
 
       <ul className={cln("controls")}>
         <li
-          className={cln("controls__item", "controls__item--accept")}
+          className={cln(
+            "controls__item",
+            "controls__item--accept",
+            "controls__item--accept--calling",
+          )}
           onClick={handleCall("accept")}
         >
           <AiFillPhone color={"#fff"} />

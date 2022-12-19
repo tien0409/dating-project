@@ -26,6 +26,7 @@ const VideoCall = (props: VideoCallProps) => {
     isZoom,
     enableCamera,
     enableMic,
+    switchToMiniVideo,
     iconSize,
     receiver,
     remoteStream,
@@ -55,8 +56,8 @@ const VideoCall = (props: VideoCallProps) => {
             <div className={cln("remote__video-placeholder")}>
               <Image
                 src={getAvatar(receiver?.id === profile?.id ? caller?.avatar : receiver?.avatar)}
-                width={100}
-                height={100}
+                width={switchToMiniVideo ? 70 : 100}
+                height={switchToMiniVideo ? 70 : 100}
                 className={cln("remote__video-placeholder--image")}
                 alt={receiver?.id === profile?.id ? caller?.fullName : receiver?.fullName}
               />

@@ -35,3 +35,4 @@ export const CALL_HANG_UP = "call_hang_up";
 export const ON_CALL_HANG_UP = "on_call_hang_up";
 export const TOGGLE_MIC = "toggle_mic";
 export const ON_TOGGLE_MIC = "on_toggle_mic";
+export const ON_USER_UNAVAILABLE = "on_user_unavailable";

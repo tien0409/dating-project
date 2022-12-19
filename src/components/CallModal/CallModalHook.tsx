@@ -3,7 +3,7 @@ import { useCallStore } from "@/store";
 const useCallModal = () => {
   const callStatus = useCallStore((state) => state.callStatus);
 
-  const open = callStatus === "calling" || callStatus === "receiving-call";
+  const open = ["calling", "receiving-call", "unavailable", "rejected"].includes(callStatus);
 
   return {
     open,

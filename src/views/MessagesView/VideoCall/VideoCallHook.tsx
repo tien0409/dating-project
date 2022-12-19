@@ -97,6 +97,7 @@ const useVideoCall = () => {
     localVideoRef,
     remoteVideoRef,
     isZoom,
+    switchToMiniVideo,
     enableCamera,
     enableMic,
     iconSize,

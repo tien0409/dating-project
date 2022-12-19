@@ -10,9 +10,9 @@ import {
   ON_VOICE_CALL_INIT,
   ON_VOICE_CALL_ACCEPTED,
   ON_TOGGLE_MIC,
+  ON_USER_UNAVAILABLE,
 } from "@/configs/socket-events";
 import { ResCallAcceptType, ResCallInitType, ResToggleMicType } from "@/types";
-import { MESSAGES_ROUTE } from "@/configs/routes";
 
 const useCallRTC = () => {
   const router = useRouter();
@@ -44,7 +44,7 @@ const useCallRTC = () => {
   const resetCallState = useCallStore((state) => state.resetCallState);
 
   const handleOnInit = useCallback(
-    async (payload: ResCallInitType) => {
+    (payload: ResCallInitType) => {
       const { caller, conversationId, callType } = payload;
 
       if (callStatus !== "idle") return;
@@ -55,13 +55,10 @@ const useCallRTC = () => {
       setCaller(caller);
       setCallType(callType);
       setEnableCamera(callType === "video-call");
-
-      await router.push(MESSAGES_ROUTE + `/${conversationId}`);
     },
     [
       callStatus,
       profile,
-      router,
       setActiveConversationId,
       setCallStatus,
       setCallType,
@@ -138,7 +135,7 @@ const useCallRTC = () => {
 
     // for receiver + caller
     socket?.on(ON_CALL_REJECTED, () => {
-      resetCallState();
+      setCallStatus("rejected");
     });
 
     // for receiver + caller
@@ -155,6 +152,10 @@ const useCallRTC = () => {
       } else {
         remoteStream?.getAudioTracks().forEach((track) => (track.enabled = !enableMic));
       }
+    });
+
+    socket?.on(ON_USER_UNAVAILABLE, () => {
+      setCallStatus("unavailable");
     });
 
     return () => {
@@ -175,6 +176,7 @@ const useCallRTC = () => {
     profile?.id,
     remoteStream,
     resetCallState,
+    setCallStatus,
     setEnableMic,
     socket,
   ]);
