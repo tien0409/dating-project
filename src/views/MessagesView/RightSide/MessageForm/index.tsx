@@ -80,7 +80,7 @@ const MessageForm = () => {
                 visible: visibleEmoji,
               })}
             >
-              <EmojiPicker onEmojiClick={handleEmojiClick} />
+              {/*<EmojiPicker lazyLoadEmojis onEmojiClick={handleEmojiClick} />*/}
             </div>
             <Button hidden htmlType="submit"></Button>
           </div>

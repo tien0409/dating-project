@@ -1,7 +1,7 @@
 import { UserAuthType } from "@/types";
 
-type ResVideoCallRejectType = {
+type ResCallRejectType = {
   receiver: UserAuthType;
 };
 
-export default ResVideoCallRejectType;
+export default ResCallRejectType;

@@ -9,8 +9,8 @@ import {
   useParticipantStore,
   useSocketStore,
 } from "@/store";
-import { VIDEO_CALL_INIT } from "@/configs/socket-events";
-import { ReqVideoCallInitType } from "@/types";
+import { VIDEO_CALL_INIT, VOICE_CALL_INIT } from "@/configs/socket-events";
+import { CallType, ReqCallInitType } from "@/types";
 
 const useRightSide = () => {
   const router = useRouter();
@@ -25,6 +25,8 @@ const useRightSide = () => {
   const setCallStatus = useCallStore((state) => state.setCallStatus);
   const setCaller = useCallStore((state) => state.setCaller);
   const setReceiver = useCallStore((state) => state.setReceiver);
+  const setCallType = useCallStore((state) => state.setCallType);
+  const setEnableCamera = useCallStore((state) => state.setEnableCamera);
   const setActiveConversationId = useCallStore((state) => state.setActiveConversationId);
   const setMessageEdit = useMessageStore((state) => state.setMessageEdit);
   const setMessageReply = useMessageStore((state) => state.setMessageReply);
@@ -47,13 +49,23 @@ const useRightSide = () => {
     }
   };
 
-  const handleVideoCall = () => {
-    if (conversation?.id && receiverParticipant?.user?.id && profile) {
-      const payload: ReqVideoCallInitType = {
-        conversationId: conversation?.id,
+  const handleCall = (type: CallType) => () => {
+    if (receiverParticipant?.user?.id && profile && conversation?.id) {
+      const payload: ReqCallInitType = {
         receiverId: receiverParticipant?.user?.id,
+        conversationId: conversation?.id,
+        callType: type,
       };
-      socket?.emit(VIDEO_CALL_INIT, payload);
+
+      if (type === "video-call") {
+        setCallType("video-call");
+        setEnableCamera(true);
+        socket?.emit(VIDEO_CALL_INIT, payload);
+      } else {
+        setCallType("audio-call");
+        setEnableCamera(false);
+        socket?.emit(VOICE_CALL_INIT, payload);
+      }
 
       setCallStatus("calling");
       setCaller(profile);
@@ -70,7 +82,7 @@ const useRightSide = () => {
     isInCall,
     handleRemoveAction,
     handleScrollToMessage,
-    handleVideoCall,
+    handleCall,
   };
 };
 

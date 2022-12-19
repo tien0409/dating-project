@@ -1,9 +1,9 @@
 import { ConversationType, UserAuthType } from "@/types";
 
-type ResVideoCallAcceptType = {
+type ResCallAcceptType = {
   acceptor: UserAuthType;
   caller: UserAuthType;
   conversation: ConversationType;
 };
 
-export default ResVideoCallAcceptType;
+export default ResCallAcceptType;

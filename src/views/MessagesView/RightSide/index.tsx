@@ -25,7 +25,7 @@ const RightSide = () => {
     receiverParticipant,
     handleRemoveAction,
     handleScrollToMessage,
-    handleVideoCall,
+    handleCall,
   } = useRightSide();
 
   return (
@@ -48,8 +48,8 @@ const RightSide = () => {
               <Input placeholder="Search message..." />
               <If condition={!isInCall}>
                 <Then>
-                  <BsTelephoneFill size={24} cursor="pointer" />
-                  <FaVideo size={24} cursor="pointer" onClick={handleVideoCall} />
+                  <BsTelephoneFill size={24} cursor="pointer" onClick={handleCall("audio-call")} />
+                  <FaVideo size={24} cursor="pointer" onClick={handleCall("video-call")} />
                 </Then>
               </If>
             </div>

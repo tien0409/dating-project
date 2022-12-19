@@ -1,45 +1,63 @@
-import { useCallStore, useSocketStore } from "@/store";
-import { useEffect, useRef, useState } from "react";
-import { VIDEO_CALL_HANG_UP } from "@/configs/socket-events";
+import { useEffect, useRef } from "react";
+
+import { useAuthStore, useCallStore, useSocketStore } from "@/store";
+import { CALL_HANG_UP, TOGGLE_MIC } from "@/configs/socket-events";
 
 const useVideoCall = () => {
+  const profile = useAuthStore((state) => state.profile);
   const socket = useSocketStore((state) => state.socket);
   const remoteStream = useCallStore((state) => state.remoteStream);
   const localStream = useCallStore((state) => state.localStream);
   const call = useCallStore((state) => state.call);
   const callStatus = useCallStore((state) => state.callStatus);
+  const activeConversationId = useCallStore((state) => state.activeConversationId);
   const isZoom = useCallStore((state) => state.isZoom);
+  const peer = useCallStore((state) => state.peer);
   const caller = useCallStore((state) => state.caller);
+  const enableMic = useCallStore((state) => state.enableMic);
+  const enableCamera = useCallStore((state) => state.enableCamera);
   const receiver = useCallStore((state) => state.receiver);
   const switchToMiniVideo = useCallStore((state) => state.switchToMiniVideo);
   const setIsZoom = useCallStore((state) => state.setIsZoom);
+  const setLocalStream = useCallStore((state) => state.setLocalStream);
+  const setEnableCamera = useCallStore((state) => state.setEnableCamera);
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
-  const [enableMic, setEnableMic] = useState(true);
-  const [enableCamera, setEnableCamera] = useState(true);
 
-  const iconSize = switchToMiniVideo ? 15: 17;
+  const iconSize = switchToMiniVideo ? 15 : 17;
 
-  const handleToggleMic = () => {
-    localStream &&
-      setEnableMic((prevState) => {
-        localStream.getAudioTracks()[0].enabled = !prevState;
-        return !prevState;
+  const handleToggleMic = async () => {
+    if (profile?.id && socket) {
+      socket.emit(TOGGLE_MIC, {
+        conversationId: activeConversationId,
+        userIdDisableMic: profile?.id,
       });
+    }
   };
 
-  const handleToggleCamera = () => {
-    localStream &&
-      setEnableCamera((prevState) => {
-        localStream.getVideoTracks()[0].enabled = !prevState;
-        return !prevState;
-      });
+  const handleToggleCamera = async () => {
+    if (enableCamera) localStream?.getVideoTracks().forEach((track) => track.stop());
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: !enableCamera,
+      audio: true,
+    });
+    console.log("enableMic", enableMic);
+    if (!enableMic) {
+      console.log("zo");
+      localStream?.getAudioTracks().forEach((track) => (track.enabled = false));
+    }
+
+    setLocalStream(stream);
+    setEnableCamera(!enableCamera);
+
+    peer.call(caller?.id === profile?.id ? receiver?.id : caller?.id, stream);
   };
 
   const handleCloseCall = () => {
     if (call) {
-      socket?.emit(VIDEO_CALL_HANG_UP, { caller, receiver });
+      socket?.emit(CALL_HANG_UP, { caller, receiver });
     }
   };
 
@@ -48,30 +66,46 @@ const useVideoCall = () => {
   };
 
   useEffect(() => {
+    const ref = localVideoRef.current;
+
     (async () => {
-      if (localVideoRef.current && localStream && !switchToMiniVideo) {
-        localVideoRef.current.srcObject = localStream;
-        await localVideoRef.current.play();
+      if (ref && localStream) {
+        ref.srcObject = localStream;
+        await ref.play();
       }
     })();
+
+    return () => {
+      ref?.pause();
+    };
   }, [callStatus, localStream, switchToMiniVideo]);
 
   useEffect(() => {
+    const ref = remoteVideoRef.current;
+
     (async () => {
-      if (remoteVideoRef.current && remoteStream ) {
-        remoteVideoRef.current.srcObject = remoteStream;
-        await remoteVideoRef.current?.play();
+      if (ref && remoteStream) {
+        ref.srcObject = remoteStream;
+        await ref?.play();
       }
     })();
+    return () => {
+      ref?.pause();
+    };
   }, [callStatus, remoteStream, switchToMiniVideo]);
 
   return {
+    profile,
     localVideoRef,
     remoteVideoRef,
     isZoom,
     enableCamera,
     enableMic,
     iconSize,
+    caller,
+    receiver,
+    remoteStream,
+    localStream,
     handleToggleZoom,
     handleToggleMic,
     handleToggleCamera,

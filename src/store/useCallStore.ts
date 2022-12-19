@@ -2,13 +2,19 @@ import create from "zustand";
 import { DataConnection, MediaConnection } from "peerjs";
 
 import { useAuthStore } from "@/store";
-import { CallStatusType, UserAuthType } from "@/types";
+import { CallStatusType, CallType, UserAuthType } from "@/types";
 
 type CallStoreType = {
   peer?: any;
   initPeer: () => void;
   receiver?: UserAuthType;
   setReceiver: (_user?: UserAuthType) => void;
+  enableMic: boolean;
+  setEnableMic: (_enableMic: boolean) => void;
+  enableCamera: boolean;
+  setEnableCamera: (_enableCamera: boolean) => void;
+  callType?: CallType;
+  setCallType: (_callType?: CallType) => void;
   call?: MediaConnection;
   setCall: (_call?: MediaConnection) => void;
   activeConversationId: string;
@@ -42,8 +48,14 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
       }
     })();
   },
+  callType: undefined,
+  setCallType: (callType?: CallType) => setState((state) => ({ ...state, callType })),
   receiver: undefined,
   setReceiver: (user) => setState((state) => ({ ...state, receiver: user })),
+  enableMic: true,
+  setEnableMic: (enableMic) => setState((state) => ({ ...state, enableMic })),
+  enableCamera: false,
+  setEnableCamera: (enableCamera) => setState((state) => ({ ...state, enableCamera })),
   call: undefined,
   setCall: (call?: MediaConnection) => setState((state) => ({ ...state, call })),
   activeConversationId: "",
@@ -88,6 +100,8 @@ const useCallStore = create<CallStoreType>((setState, getState) => ({
         remoteStream: undefined,
         activeConversationId: "",
         switchToMiniVideo: false,
+        enableMic: true,
+        enableCamera: false,
       };
     });
   },
