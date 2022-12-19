@@ -1,0 +1,24 @@
+.wrapper {
+  text-align: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.description {
+  width: 90%;
+  margin: auto;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.delete__action {
+  width: 100% !important;
+}

@@ -1,0 +1,15 @@
+.wrapper {
+  gap: 20px;
+  width: 100%;
+  max-width: var(--setting-max-width);
+  height: 100%;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--white-color);
+  border-radius: 5px;
+  overflow: auto;
+
+  & > *:not(:first-of-type) {
+    margin-top: 20px;
+  }
+}

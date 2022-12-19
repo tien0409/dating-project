@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: var(--white-color);
+  border: 1px solid var(--subtext-color);
+  border-radius: 20px;
+  transition: 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--setting-container-hover-color);
+  }
+}
