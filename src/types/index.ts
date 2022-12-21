@@ -41,3 +41,5 @@ export type { default as CallStatusType } from "./call/CallStatusType";
 export type { default as ResCallRejectType } from "./call/ResCallRejectType";
 export type { default as ResToggleMicType } from "./call/ResToggleMicType";
 export type { default as CallType } from "./call/CallType";
+
+export type { default as PassionType } from "./passion/PassionType";

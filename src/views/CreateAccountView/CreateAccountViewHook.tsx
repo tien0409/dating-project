@@ -5,9 +5,10 @@ import { useRouter } from "next/router";
 
 import { useUploadMultiImageData } from "@/hooks/useUploadData";
 import { AxiosResponseType, CreateAccountType, GenderType, ImageUploadType } from "@/types";
-import { convertToFormData } from "@/utils/upload";
 import { useCreateProfileData } from "@/hooks/useUsersData";
 import { DATING_ROUTE } from "@/configs/routes";
+import { convertToFormData } from "@/utils/upload";
+import { toast } from "react-toastify";
 
 const useCreateAccountView = () => {
   const [genderSelected, setGenderSelected] = useState<GenderType>();
@@ -15,9 +16,24 @@ const useCreateAccountView = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+  const [openPassions, setOpenPassions] = useState(false);
 
   const router = useRouter();
   const [form] = Form.useForm<CreateAccountType>();
+
+  const initForm: CreateAccountType = useMemo(
+    () => ({
+      firstName: "",
+      lastName: "",
+      birthday: undefined,
+      bio: "",
+      userPhotos: [],
+      interestedInGender: undefined,
+      passions: [],
+      userGender: undefined,
+    }),
+    [],
+  );
 
   const handleUploadSuccess = (res: AxiosResponseType<ImageUploadType[]>) => {
     const imageUrls = res?.data?.map((item) => item.url);
@@ -35,11 +51,17 @@ const useCreateAccountView = () => {
     await router.push(DATING_ROUTE);
   };
 
+  const handleCreateError = async (error: any) => {
+    setOpenPassions(false);
+    toast.error(error?.message);
+  };
+
   const { mutate, isLoading: uploadLoading } = useUploadMultiImageData({
     onSuccess: handleUploadSuccess,
   });
   const { mutate: createMutate, isLoading: createLoading } = useCreateProfileData({
     onSuccess: handleCreateSuccess,
+    onError: handleCreateError,
   });
 
   const isLoading = uploadLoading || createLoading;
@@ -80,6 +102,10 @@ const useCreateAccountView = () => {
     setPreviewOpen(false);
   };
 
+  const handleOpenPassions = () => {
+    setOpenPassions(true);
+  };
+
   const handleSubmit = () => {
     mutate(convertToFormData({ files: fileList }));
   };
@@ -92,6 +118,9 @@ const useCreateAccountView = () => {
     formItemLayout,
     form,
     isLoading,
+    openPassions,
+    setOpenPassions,
+    initForm,
     genderSelected,
     setGenderSelected,
     previewOpen,
@@ -99,8 +128,9 @@ const useCreateAccountView = () => {
     previewImage,
     handleCancelPreview,
     handlePreview,
-    handleSubmit,
+    handleOpenPassions,
     handleChangeUpload,
+    handleSubmit,
   };
 };
 

@@ -1,0 +1,21 @@
+.wrapper {
+  display: inline-block;
+  margin: 5px;
+  padding: 3px 13px;
+  background-color: #F8F9FF;
+  color: #525176;
+  border: 1px solid #EAEAEB;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.3s all;
+  user-select: none;
+
+  &:not(.disabled).is-active {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+  }
+
+  &.disabled {
+    cursor: default;
+  }
+}

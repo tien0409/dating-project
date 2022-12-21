@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  height: 50vh;
+  text-align: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 2.3rem;
+  color: var(--primary-color);
+}
+
+.description {
+  color: var(--subtext-color);
+}
+
+.passion__list {
+  flex: 1;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.loading__wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: var(--subtext-color);
+}
+
+.btn__wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 20px;
+}

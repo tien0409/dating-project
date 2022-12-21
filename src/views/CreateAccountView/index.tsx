@@ -1,9 +1,10 @@
 import { Button, Col, DatePicker, Form, Input, Modal, Row, Upload } from "antd";
+import Image from "next/image";
 import classNames from "classnames/bind";
 import { PlusOutlined } from "@ant-design/icons";
 
 import styles from "./CreateAccountView.module.scss";
-import { GenderSelect } from "@/components";
+import { GenderSelect, PassionsSelect } from "@/components";
 import {
   birthdayValidator,
   firstNameValidator,
@@ -13,7 +14,6 @@ import {
   userPhotosValidator,
 } from "@/utils/validators";
 import useCreateAccountView from "./CreateAccountViewHook";
-import Image from "next/image";
 
 const cln = classNames.bind(styles);
 
@@ -22,20 +22,30 @@ const CreateAccountView = () => {
     formItemLayout,
     form,
     isLoading,
+    openPassions,
+    setOpenPassions,
+    initForm,
     previewOpen,
     previewTitle,
     previewImage,
     handleCancelPreview,
     handlePreview,
-    handleSubmit,
+    handleOpenPassions,
     handleChangeUpload,
+    handleSubmit,
   } = useCreateAccountView();
 
   return (
     <div className={cln("container", "wrapper")}>
       <h1 className={cln("title")}>Create account</h1>
 
-      <Form name="createAccount" {...formItemLayout} form={form} onFinish={handleSubmit}>
+      <Form
+        name="createAccount"
+        {...formItemLayout}
+        form={form}
+        initialValues={initForm}
+        onFinish={handleOpenPassions}
+      >
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item
@@ -147,16 +157,20 @@ const CreateAccountView = () => {
           />
         </Form.Item>
 
-        <Form.Item style={{ textAlign: "center" }}>
-          <Button
-            type="primary"
-            size="large"
-            htmlType="submit"
-            shape="round"
+        <Form.Item name="passions">
+          <PassionsSelect
+            form={form}
+            field="passions"
+            open={openPassions}
+            setOpen={setOpenPassions}
             loading={isLoading}
-            disabled={isLoading}
-          >
-            <span className={cln("sign__up-text")}>Sign up</span>
+            handleSubmit={handleSubmit}
+          />
+        </Form.Item>
+
+        <Form.Item style={{ textAlign: "center" }}>
+          <Button type="primary" size="large" htmlType="submit" shape="round">
+            <span className={cln("sign__up-text")}>Continue</span>
           </Button>
         </Form.Item>
       </Form>
