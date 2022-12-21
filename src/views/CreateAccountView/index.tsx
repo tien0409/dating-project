@@ -82,6 +82,11 @@ const CreateAccountView = () => {
                 size="large"
                 style={{ width: "100%" }}
                 placeholder="Enter your birthday"
+                // disabledDate={(current) =>
+                //   current &&
+                //   new Date(current.valueOf()) >
+                //     new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+                // }
               />
             </Form.Item>
           </Col>

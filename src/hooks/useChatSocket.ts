@@ -23,6 +23,7 @@ import {
   ResUpdateMessageType,
 } from "@/types";
 import {
+  useAuthStore,
   useConversationStore,
   useMessageStore,
   useParticipantStore,
@@ -30,6 +31,7 @@ import {
 } from "@/store";
 
 const useChatSocket = () => {
+  const profile = useAuthStore((state) => state.profile);
   const initSocket = useSocketStore((state) => state.initSocket);
   const socket = useSocketStore((state) => state.socket);
   const messages = useMessageStore((state) => state.messages);
@@ -62,13 +64,15 @@ const useChatSocket = () => {
   );
 
   useEffect(() => {
+    if (!profile) return;
+
     if (socket) {
       socket.emit(REQUEST_ALL_CONVERSATIONS);
       setLoadingGetConversations(true);
     } else {
       initSocket();
     }
-  }, [initSocket, setLoadingGetConversations, socket]);
+  }, [initSocket, profile, setLoadingGetConversations, socket]);
 
   useEffect(() => {
     if (socket) {

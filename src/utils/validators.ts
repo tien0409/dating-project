@@ -21,6 +21,18 @@ export const lastNameValidator = async (_: any, value: string) => {
 export const birthdayValidator = async (_: any, value: string) => {
   if (!value) {
     return Promise.reject(new Error("Birthday is required"));
+  } else if (value && new Date(value) > new Date()) {
+    return Promise.reject(new Error("Birthday must be in the past"));
+  } else if (value && new Date(value) < new Date("1900-01-01")) {
+    return Promise.reject(new Error("Birthday must be after 1900"));
+  } else {
+    const currentTime = new Date();
+    const currentYear = currentTime.getFullYear();
+    const yearMin = currentYear - 18;
+    currentTime.setFullYear(yearMin);
+    if (new Date(value) > currentTime) {
+      return Promise.reject(new Error("You must be at least 18 years old"));
+    }
   }
 };
 
