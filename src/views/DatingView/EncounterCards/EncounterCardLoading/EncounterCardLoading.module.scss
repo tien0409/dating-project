@@ -1,0 +1,20 @@
+.wrapper {
+  border-radius: 5%;
+  overflow: hidden;
+}
+
+.image, .image * {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 10/9 !important;
+}
+
+.summary {
+  height: 280px;
+  padding: 22px 20px;
+  background-color: var(--white-color);
+}
+
+.paragraph {
+  margin-top: 20px;
+}

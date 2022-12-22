@@ -1,11 +1,20 @@
 .wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
   margin: 0 auto;
   border-radius: 5%;
   overflow: hidden;
+
+  &.is-front {
+    position: relative;
+    z-index: 10;
+  }
 }
 
-.image__wrapper {
-  width: 100%;
+.image__wrapper, .image__wrapper-loading, .image__wrapper-loading * {
+  width: 100% !important;
+  height: 100% !important;
   aspect-ratio: 10/9;
   overflow: hidden;
 }
@@ -89,26 +98,26 @@
 }
 
 .passions {
-  &-title {
+  &__title {
     margin-top: 20px;
     font-size: 1.9rem;
     font-weight: 500;
   }
 
-  .passions-list {
+  &__list {
     display: flex;
     gap: 10px;
     margin-top: 15px;
     list-style: none;
+  }
 
-    .passions-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 10px;
-      font-weight: 500;
-      border-radius: 5px;
-      background-color: var(--green-10);
-    }
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 13px;
+    font-weight: 500;
+    border-radius: 5px;
+    user-select: none;
   }
 }
