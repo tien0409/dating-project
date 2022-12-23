@@ -15,17 +15,22 @@ import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
-type EncounterCardItemProps = {
+export type EncounterCardItemProps = {
   user: UserAuthType;
   isFront: boolean;
-  onSkip: () => void;
-  onLike: () => void;
+  handleNext: () => void;
 };
 
 const EncounterCardItem = (props: EncounterCardItemProps) => {
-  const { user, isFront, onSkip, onLike } = props;
+  const { user, isFront } = props;
 
-  const { loadedPhotos, swiperConfigs, handleLoadedPhotos } = useEncounterCardItem();
+  const {
+    loadedPhotos,
+    swiperConfigs,
+    handleLoadedPhotos,
+    handleLike,
+    handleDiscard,
+  } = useEncounterCardItem(props);
 
   return (
     <If condition={!!user}>
@@ -65,10 +70,10 @@ const EncounterCardItem = (props: EncounterCardItemProps) => {
               </div>
 
               <div className={cln("actions")}>
-                <div className={cln("action-item", "action-item--skip")} onClick={onSkip}>
+                <div className={cln("action-item", "action-item--skip")} onClick={handleDiscard}>
                   <ImCross />
                 </div>
-                <div className={cln("action-item", "action-item--like")} onClick={onLike}>
+                <div className={cln("action-item", "action-item--like")} onClick={handleLike}>
                   <FaHeart />
                 </div>
               </div>

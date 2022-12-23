@@ -10,7 +10,7 @@ import EncounterCardLoading from "./EncounterCardLoading";
 const cln = classNames.bind(styles);
 
 const EncounterCards = () => {
-  const { userExplores, indexEncounter, isFetching, handleSkip, handleLike } = useEncounterCards();
+  const { userExplores, indexEncounter, isFetching, handleNext } = useEncounterCards();
 
   return (
     <div className={cln("wrapper")}>
@@ -25,8 +25,7 @@ const EncounterCards = () => {
               key={user?.id}
               user={user}
               isFront={indexEncounter === index}
-              onSkip={handleSkip}
-              onLike={handleLike}
+              handleNext={handleNext}
             />
           ))}
         </Else>

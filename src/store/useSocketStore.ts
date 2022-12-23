@@ -16,11 +16,11 @@ const useSocketStore = create<SocketStoreType>((setState, getState) => ({
       });
 
       // _socket.on("connect", () => {
-      //   console.log("connected chat");
+      //   console.log("connected gateway");
       // });
       //
       // _socket.on("disconnect", () => {
-      //   console.log("disconnected chat");
+      //   console.log("disconnected gateway");
       // });
       //
       setState({ socket: _socket });

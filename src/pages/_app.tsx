@@ -11,6 +11,7 @@ import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
 import useChatSocket from "@/hooks/useChatSocket";
 import useCallRTC from "@/hooks/useCallRTC";
+import useUserMatchesSocket from "@/hooks/useUserMatchesSocket";
 
 type MyAppProps = AppProps & {
   Component: PageType;
@@ -22,6 +23,7 @@ const VideoCallMini = dynamic(() => import("@/components/VideoCallMini"), { ssr:
 function MyApp({ Component, pageProps }: MyAppProps) {
   useChatSocket();
   useCallRTC();
+  useUserMatchesSocket();
 
   const [queryClient] = useState(() => new QueryClient());
 

@@ -36,3 +36,9 @@ export const ON_CALL_HANG_UP = "on_call_hang_up";
 export const TOGGLE_MIC = "toggle_mic";
 export const ON_TOGGLE_MIC = "on_toggle_mic";
 export const ON_USER_UNAVAILABLE = "on_user_unavailable";
+
+// user matches
+export const CREATE_USER_MATCH = "create_user_match";
+export const ON_CREATE_USER_MATCH = "on_create_user_match";
+
+export const ON_USER_MATCHED = "on_user_matched";
