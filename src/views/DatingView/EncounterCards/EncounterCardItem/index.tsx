@@ -19,10 +19,11 @@ type EncounterCardItemProps = {
   user: UserAuthType;
   isFront: boolean;
   onSkip: () => void;
+  onLike: () => void;
 };
 
 const EncounterCardItem = (props: EncounterCardItemProps) => {
-  const { user, isFront, onSkip } = props;
+  const { user, isFront, onSkip, onLike } = props;
 
   const { loadedPhotos, swiperConfigs, handleLoadedPhotos } = useEncounterCardItem();
 
@@ -44,6 +45,7 @@ const EncounterCardItem = (props: EncounterCardItemProps) => {
                     objectPosition="center"
                     onLoad={handleLoadedPhotos}
                     hidden={!loadedPhotos}
+                    priority={isFront}
                   />
                   <When condition={!loadedPhotos}>
                     <Skeleton.Image active className={cln("image__wrapper-loading")} />
@@ -66,7 +68,7 @@ const EncounterCardItem = (props: EncounterCardItemProps) => {
                 <div className={cln("action-item", "action-item--skip")} onClick={onSkip}>
                   <ImCross />
                 </div>
-                <div className={cln("action-item", "action-item--like")}>
+                <div className={cln("action-item", "action-item--like")} onClick={onLike}>
                   <FaHeart />
                 </div>
               </div>
