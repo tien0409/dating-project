@@ -6,3 +6,4 @@ export { default as GenderSelect } from "./GenderSelect";
 export { default as CallModal } from "./CallModal";
 export { default as VideoCallMini } from "./VideoCallMini";
 export { default as PassionsSelect } from "./PassionsSelect";
+export { default as EncounterMatchedModal } from "./EncounterMatchedModal";

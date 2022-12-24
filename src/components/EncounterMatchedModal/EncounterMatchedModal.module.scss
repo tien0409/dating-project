@@ -1,0 +1,102 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 100%;
+  max-width: 500px;
+  pointer-events: auto;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 600;
+  color: var(--white-color);
+}
+
+.users__matched {
+  display: flex;
+  gap: 10px;
+  position: relative;
+
+  .heart {
+    position: absolute;
+    top: 38%;
+    left: calc(50% - 40px);
+    translate: 0 -50%;
+    animation: heartbeat 2s infinite;
+    z-index: 2;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      left: 40px;
+      top: 0;
+      width: 40px;
+      height: 60px;
+      background: var(--primary-color);
+      border-radius: 40px 40px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    &:after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+  }
+
+  .yourself, .enemy {
+    border-radius: 50%;
+    border: 3px solid var(--white-color);
+    overflow: hidden;
+  }
+}
+
+.sub__title {
+  width: 350px;
+  margin-top: 20px;
+  color: var(--white-color);
+  text-align: center;
+}
+
+.action__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+
+  span {
+    font-weight: 500;
+  }
+
+  .back__action {
+    background-color: transparent;
+    color: var(--white-color);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(.92);
+  }
+  20% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(.92);
+  }
+  60% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(.92);
+  }
+  100% {
+    transform: scale(.92);
+  }
+}
