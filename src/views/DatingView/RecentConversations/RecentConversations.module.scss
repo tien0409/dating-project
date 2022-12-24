@@ -1,7 +1,10 @@
 $padding: 20px;
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
   background-color: var(--white-color);
+  gap: 20px;
   border-radius: 5%;
   padding: $padding 0;
 }
@@ -24,17 +27,17 @@ $padding: 20px;
 }
 
 .message__list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-
+  flex: 1;
+  display: grid;
 
   .message__loading-item {
     padding: 0 $padding;
   }
 
   .message__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
     padding: 0 $padding;
     transition: 0.2s ease-in;
 

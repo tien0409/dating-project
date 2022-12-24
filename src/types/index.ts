@@ -15,6 +15,8 @@ export type { default as UserPhotoType } from "./user/UserPhotoType";
 export type { default as CreateUserLikeType } from "./user/CreateUserLikeType";
 export type { default as CreateUserDiscardType } from "./user/CreateUserDiscardType";
 export type { default as ResUserExploresType } from "./user/ResUserExploresType";
+export type { default as ResUserMatchedType } from "./user/ResUserMatchedType";
+export type { default as UserMatchType } from "./user/UserMatchType";
 
 export type { default as GenderType } from "./gender/GenderType";
 

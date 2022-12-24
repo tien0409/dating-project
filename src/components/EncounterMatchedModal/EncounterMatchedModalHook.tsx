@@ -1,22 +1,48 @@
 import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 
 import { MESSAGES_ROUTE } from "@/configs/routes";
-import { EncounterMatchedModalProps } from ".";
+import { useAuthStore, useUserMatchStore } from "@/store";
 
-const useEncounterMatchedModal = (props: EncounterMatchedModalProps) => {
-  const { setOpen } = props;
-
+const useEncounterMatchedModal = () => {
   const router = useRouter();
 
-  const handleGoToChat = () => {
-    router.push(MESSAGES_ROUTE);
-  };
+  const profile = useAuthStore((state) => state.profile);
+  const usersMatched = useUserMatchStore((state) => state.usersMatched);
+  const setUsersMatched = useUserMatchStore((state) => state.setUsersMatched);
+
+  const [visible, setVisible] = useState(false);
+
+  const userCurrentMatched = useMemo(() => usersMatched[0], [usersMatched]);
 
   const handleBackToSwipe = () => {
-    setOpen(false);
+    const newUsersMatched = usersMatched.slice(1);
+    setUsersMatched(newUsersMatched);
+    setVisible(false);
   };
 
+  const handleGoToChat = async () => {
+    await router.push({
+      pathname: MESSAGES_ROUTE,
+      query: { id: userCurrentMatched?.conversation?.id },
+    });
+    handleBackToSwipe();
+  };
+
+  useEffect(() => {
+    const timerDisplay = setTimeout(() => {
+      setVisible(usersMatched.length > 0);
+    }, 700);
+
+    return () => {
+      clearTimeout(timerDisplay);
+    };
+  }, [usersMatched.length]);
+
   return {
+    visible,
+    profile,
+    userCurrentMatched,
     handleGoToChat,
     handleBackToSwipe,
   };

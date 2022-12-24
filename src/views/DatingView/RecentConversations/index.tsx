@@ -34,7 +34,7 @@ const RecentConversations = () => {
           </Then>
 
           <Else>
-            {conversations.map((conversation) => (
+            {conversations.slice(0, 5).map((conversation) => (
               <div key={conversation.id} className={cln("message__item")}>
                 <ConversationItem conversation={conversation} />
               </div>
