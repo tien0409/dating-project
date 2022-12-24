@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useAuthStore, useSocketStore, useUserMatchStore } from "@/store";
 import { ON_CREATE_USER_LIKE, ON_USER_MATCHED } from "@/configs/socket-events";
 import { ResUserMatchedType } from "@/types";
+import { toast } from "react-toastify";
 
 const useUserMatchesSocket = () => {
   const socket = useSocketStore((state) => state.socket);
@@ -17,8 +18,10 @@ const useUserMatchesSocket = () => {
       setUsersMatched([...usersMatched, payload]);
     });
 
-    socket.on(ON_CREATE_USER_LIKE, (data: any) => {
-      console.log("data", data);
+    socket.on(ON_CREATE_USER_LIKE, () => {
+      toast.success("Have a new user like you. Check it out now", {
+        icon: "🥰",
+      });
     });
 
     return () => {
