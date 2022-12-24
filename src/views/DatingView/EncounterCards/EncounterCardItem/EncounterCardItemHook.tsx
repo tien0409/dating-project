@@ -1,10 +1,9 @@
 import { useMemo, useState } from "react";
 
 import { useSocketStore } from "@/store";
-import { CreateMatchType } from "@/types";
-import { DISCARD_ENUM, LIKE_ENUM } from "@/configs/consts";
+import { CreateUserDiscardType, CreateUserLikeType } from "@/types";
 import { EncounterCardItemProps } from ".";
-import { CREATE_USER_MATCH } from "@/configs/socket-events";
+import { CREATE_USER_DISCARD, CREATE_USER_LIKE } from "@/configs/socket-events";
 
 const useEncounterCardItem = (props: EncounterCardItemProps) => {
   const { user, handleNext } = props;
@@ -28,22 +27,20 @@ const useEncounterCardItem = (props: EncounterCardItemProps) => {
   };
 
   const handleDiscard = () => {
-    const payload: CreateMatchType = {
-      userMatchId: user?.id,
-      type: DISCARD_ENUM,
+    const payload: CreateUserDiscardType = {
+      userDiscardedId: user?.id,
     };
 
-    socket?.emit(CREATE_USER_MATCH, payload);
+    socket?.emit(CREATE_USER_DISCARD, payload);
     handleNext();
   };
 
   const handleLike = () => {
-    const payload: CreateMatchType = {
-      userMatchId: user?.id,
-      type: LIKE_ENUM,
+    const payload: CreateUserLikeType = {
+      userLikedId: user?.id,
     };
 
-    socket?.emit(CREATE_USER_MATCH, payload);
+    socket?.emit(CREATE_USER_LIKE, payload);
     handleNext();
   };
 
