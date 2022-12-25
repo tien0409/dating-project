@@ -6,6 +6,7 @@ import styles from "./EncounterCards.module.scss";
 import useEncounterCards from "./EncounterCardsHook";
 import EncounterCardItem from "./EncounterCardItem";
 import EncounterCardLoading from "./EncounterCardLoading";
+import EncounterNotFound from "./EncounterNotFound";
 
 const cln = classNames.bind(styles);
 
@@ -20,14 +21,22 @@ const EncounterCards = () => {
         </Then>
 
         <Else>
-          {userExplores?.map((user, index) => (
-            <EncounterCardItem
-              key={user?.id}
-              user={user}
-              isFront={indexEncounter === index}
-              handleNext={handleNext}
-            />
-          ))}
+          <If condition={userExplores.length}>
+            <Then>
+              {userExplores?.map((user, index) => (
+                <EncounterCardItem
+                  key={user?.id}
+                  user={user}
+                  isFront={indexEncounter === index}
+                  handleNext={handleNext}
+                />
+              ))}
+            </Then>
+
+            <Else>
+              <EncounterNotFound />
+            </Else>
+          </If>
         </Else>
       </If>
     </div>

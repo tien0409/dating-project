@@ -29,6 +29,7 @@ $padding: 20px;
 .message__list {
   flex: 1;
   display: grid;
+  align-content: flex-start;
 
   .message__loading-item {
     padding: 0 $padding;

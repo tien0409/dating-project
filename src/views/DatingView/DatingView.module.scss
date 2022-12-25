@@ -1,7 +1,21 @@
+.wrapper {
+  display: flex;
+  gap: 30px;
+  height: 100%;
+}
+
+.left__section {
+  width: 60%;
+  position: relative;
+  object-fit: cover;
+}
+
 .right__section {
   display: flex;
   flex-direction: column;
+  width: 40%;
   gap: 40px;
+  position: relative;
 
   & > * {
     flex: 1;

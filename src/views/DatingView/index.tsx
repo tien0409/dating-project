@@ -13,12 +13,12 @@ const DatingView = () => {
   return (
     <DefaultLayout>
       <EncounterMatchedModal />
-      <div className="grid grid-cols-12 gap-7">
-        <section className={cln("cols-span-7")}>
+      <div className={cln("wrapper")}>
+        <section className={cln("left__section")}>
           <EncounterCards />
         </section>
 
-        <section className={cln("cols-span-5", "right__section")}>
+        <section className={cln("right__section")}>
           <RecentConversations />
 
           <RecentConversations />

@@ -1,0 +1,33 @@
+.wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto;
+  position: relative;
+}
+
+.segmented {
+  background-color: var(--setting-container-hover-color);
+  border-radius: 99px !important;
+  border: 1px solid var(--subtext-color);
+  overflow: hidden;
+}
+
+.segment__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.segment__content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 20px;
+
+  & > * {
+    background-color: var(--setting-container-hover-color);
+    padding: 25px;
+    border-radius: 10px;
+  }
+}
