@@ -21,6 +21,7 @@ const VideoCall = (props: VideoCallProps) => {
 
   const {
     profile,
+    callType,
     remoteVideoRef,
     localVideoRef,
     isZoom,
@@ -60,6 +61,7 @@ const VideoCall = (props: VideoCallProps) => {
                 height={switchToMiniVideo ? 70 : 100}
                 className={cln("remote__video-placeholder--image")}
                 alt={receiver?.id === profile?.id ? caller?.fullName : receiver?.fullName}
+                objectFit="cover"
               />
             </div>
           </When>
@@ -81,6 +83,7 @@ const VideoCall = (props: VideoCallProps) => {
                   height={50}
                   className={cln("local__video-placeholder--image")}
                   alt={profile?.fullName}
+                  objectFit="cover"
                 />
               </div>
             </When>
@@ -143,9 +146,11 @@ const VideoCall = (props: VideoCallProps) => {
               </Else>
             </If>
           </li>
-          <li className={cln("video__controls-item", { "is-mini": isMini })}>
-            <MdIosShare size={iconSize} color={"#fff"} />
-          </li>
+          <When condition={callType === "video-call"}>
+            <li className={cln("video__controls-item", { "is-mini": isMini })}>
+              <MdIosShare size={iconSize} color={"#fff"} />
+            </li>
+          </When>
         </ul>
       </div>
     </div>

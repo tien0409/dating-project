@@ -4,5 +4,8 @@
   right: 10px;
   width: 400px;
   height: 250px;
-  background-color: black;
+  background-color: var(--black-color);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 50;
 }

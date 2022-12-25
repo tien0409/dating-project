@@ -10,6 +10,7 @@ const useVideoCall = () => {
   const localStream = useCallStore((state) => state.localStream);
   const call = useCallStore((state) => state.call);
   const callStatus = useCallStore((state) => state.callStatus);
+  const callType = useCallStore((state) => state.callType);
   const activeConversationId = useCallStore((state) => state.activeConversationId);
   const isZoom = useCallStore((state) => state.isZoom);
   const peer = useCallStore((state) => state.peer);
@@ -97,6 +98,7 @@ const useVideoCall = () => {
     localVideoRef,
     remoteVideoRef,
     isZoom,
+    callType,
     switchToMiniVideo,
     enableCamera,
     enableMic,
