@@ -91,9 +91,13 @@
 }
 
 .bio {
+  display: -webkit-box;
   margin-top: 20px;
   font-size: 1.2rem;
   line-height: 1.5;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .passions {

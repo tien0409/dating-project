@@ -16,8 +16,9 @@ export const useCreateProfileData = ({ onSuccess }: RQConfigsType) => {
   return useMutation(_createProfile, { onSuccess });
 };
 
-export const useGetUsersExploreData = (page = 1) => {
+export const useGetUsersExploreData = (page = 1, { onSuccess }: RQConfigsType) => {
   return useQuery(["user-explores", page], () => _getUsersExplore(page), {
     staleTime: Infinity,
+    onSuccess,
   });
 };
