@@ -189,7 +189,7 @@ const useMessageForm = () => {
   }, [conversation, handleDocumentClick, socket]);
 
   useEffect(() => {
-    if (messageEdit) form.setFieldValue("content", "asdasd");
+    if (messageEdit) form.setFieldValue("content", messageEdit.content);
     else form.setFieldValue("content", "");
   }, [form, messageEdit]);
 
