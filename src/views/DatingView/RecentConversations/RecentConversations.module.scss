@@ -32,14 +32,14 @@ $padding: 20px;
   align-content: flex-start;
 
   .message__loading-item {
-    padding: 0 $padding;
+    padding: 5px $padding;
   }
 
   .message__item {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0 $padding;
+    padding: 5px $padding;
     transition: 0.2s ease-in;
 
     &:hover {

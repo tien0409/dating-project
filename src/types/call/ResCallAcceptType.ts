@@ -1,8 +1,8 @@
-import { ConversationType, UserAuthType } from "@/types";
+import { ConversationType, UserType } from "@/types";
 
 type ResCallAcceptType = {
-  acceptor: UserAuthType;
-  caller: UserAuthType;
+  acceptor: UserType;
+  caller: UserType;
   conversation: ConversationType;
 };
 

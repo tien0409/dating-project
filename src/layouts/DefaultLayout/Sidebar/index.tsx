@@ -13,8 +13,8 @@ import { useRouter } from "next/router";
 import styles from "./Sidebar.module.scss";
 import {
   AUTH_ROUTE,
-  MESSAGES_ROUTE,
   DATING_ROUTE,
+  MESSAGES_ROUTE,
   NOTIFICATIONS_ROUTE,
   PROFILE_ROUTE,
   SETTINGS_ROUTE,
@@ -132,16 +132,16 @@ const Sidebar = () => {
 
       <div className={cln("special__info")}>
         <div className={cln("special__info-item")}>
-          <span className={cln("number")}>87</span>
-          <span className={cln("label")}>Friends</span>
+          <span className={cln("number")}>{profile?.userMatches?.length}</span>
+          <span className={cln("label")}>Matches</span>
         </div>
         <div className={cln("special__info-item")}>
-          <span className={cln("number")}>67</span>
+          <span className={cln("number")}>{profile?.userLikes?.length}</span>
           <span className={cln("label")}>Likes</span>
         </div>
         <div className={cln("special__info-item")}>
-          <span className={cln("number")}>20</span>
-          <span className={cln("label")}>Matches</span>
+          <span className={cln("number")}>{profile?.userDiscards?.length}</span>
+          <span className={cln("label")}>Discards</span>
         </div>
       </div>
 

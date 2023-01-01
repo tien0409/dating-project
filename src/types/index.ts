@@ -17,6 +17,7 @@ export type { default as CreateUserDiscardType } from "./user/CreateUserDiscardT
 export type { default as ResUserExploresType } from "./user/ResUserExploresType";
 export type { default as ResUserMatchedType } from "./user/ResUserMatchedType";
 export type { default as UserMatchType } from "./user/UserMatchType";
+export type { default as UserType } from "./user/UserType";
 
 export type { default as GenderType } from "./gender/GenderType";
 
@@ -48,3 +49,5 @@ export type { default as ResToggleMicType } from "./call/ResToggleMicType";
 export type { default as CallType } from "./call/CallType";
 
 export type { default as PassionType } from "./passion/PassionType";
+
+export type { default as PremiumPackageType } from "./premium-package/PremiumPackageType";

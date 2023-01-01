@@ -1,14 +1,16 @@
 import classNames from "classnames/bind";
-import Image from "next/image";
 import { MdOutlineAttachMoney, MdOutlineSettingsBackupRestore } from "react-icons/md";
 import { BiTimeFive } from "react-icons/bi";
 
 import styles from "./PremiumPackages.module.scss";
-import Avatar from "@/assets/images/avatar.jpg";
+import usePremiumPackages from "./PremiumPackagesHook";
+import PremiumPackageItem from "@/views/PaymentsView/PremiumPackages/PremiumPackageItem";
 
 const cln = classNames.bind(styles);
 
 const PremiumPackages = () => {
+  const { premiumPackages } = usePremiumPackages();
+
   return (
     <div className={cln("wrapper")}>
       <h4 className={cln("title")}>Unlock Premium Package</h4>
@@ -37,41 +39,9 @@ const PremiumPackages = () => {
         </ul>
 
         <ul className={cln("packages")}>
-          <li className={cln("package__item")}>
-            <div className={cln("package__item-info")}>
-              <Image src={Avatar} alt="avatar" width={30} height={30} objectFit="cover" />
-              <div>
-                <h6 className={cln("package__item-info-month")}>6 months</h6>
-                <span className={cln("package__item-info-discount")}>Save -69%</span>
-              </div>
-            </div>
-
-            <span className={cln("package__item-price")}>990,000d</span>
-          </li>
-
-          <li className={cln("package__item", "selected")}>
-            <div className={cln("package__item-info")}>
-              <Image src={Avatar} alt="avatar" width={30} height={30} objectFit="cover" />
-              <div>
-                <h6 className={cln("package__item-info-month")}>6 months</h6>
-                <span className={cln("package__item-info-discount")}>Save -69%</span>
-              </div>
-            </div>
-
-            <span className={cln("package__item-price")}>990,000d</span>
-          </li>
-
-          <li className={cln("package__item")}>
-            <div className={cln("package__item-info")}>
-              <Image src={Avatar} alt="avatar" width={30} height={30} objectFit="cover" />
-              <div>
-                <h6 className={cln("package__item-info-month")}>6 months</h6>
-                <span className={cln("package__item-info-discount")}>Save -69%</span>
-              </div>
-            </div>
-
-            <span className={cln("package__item-price")}>990,000d</span>
-          </li>
+          {premiumPackages.map((item) => (
+            <PremiumPackageItem key={item.id} premiumPackage={item} />
+          ))}
         </ul>
       </div>
     </div>

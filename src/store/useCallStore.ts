@@ -2,13 +2,13 @@ import create from "zustand";
 import { DataConnection, MediaConnection } from "peerjs";
 
 import { useAuthStore } from "@/store";
-import { CallStatusType, CallType, UserAuthType } from "@/types";
+import { CallStatusType, CallType, UserType } from "@/types";
 
 type CallStoreType = {
   peer?: any;
   initPeer: () => void;
-  receiver?: UserAuthType;
-  setReceiver: (_user?: UserAuthType) => void;
+  receiver?: UserType;
+  setReceiver: (_user?: UserType) => void;
   enableMic: boolean;
   setEnableMic: (_enableMic: boolean) => void;
   enableCamera: boolean;
@@ -21,8 +21,8 @@ type CallStoreType = {
   setActiveConversationId: (_activeConversationId: string) => void;
   connection?: DataConnection;
   setConnection: (_connection?: DataConnection) => void;
-  caller?: UserAuthType;
-  setCaller: (_caller?: UserAuthType) => void;
+  caller?: UserType;
+  setCaller: (_caller?: UserType) => void;
   callStatus: CallStatusType;
   setCallStatus: (_status: CallStatusType) => void;
   localStream?: MediaStream;

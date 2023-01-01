@@ -6,7 +6,7 @@ import {
   RQConfigsType,
   SignInType,
   SignUpType,
-  UserAuthType,
+  UserType,
 } from "@/types";
 import axiosInstance from "@/configs/axios";
 
@@ -15,7 +15,7 @@ const _signIn = async (body: SignInType) =>
 const _signUp = async (body: SignUpType) =>
   (await axiosInstance.post<AxiosResponseType>("/auth/signup", body))?.data;
 const _fetchUserAuth = async () =>
-  (await axiosInstance.get<AxiosResponseType<UserAuthType>>("/auth/user-auth"))?.data;
+  (await axiosInstance.get<AxiosResponseType<UserType>>("/auth/user-auth"))?.data;
 
 export const useLoginData = ({ onSuccess, onError }: RQConfigsType) => {
   return useMutation(_signIn, { onSuccess, onError });

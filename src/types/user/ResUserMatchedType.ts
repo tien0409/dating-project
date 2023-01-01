@@ -1,7 +1,7 @@
-import { ConversationType, UserAuthType } from "@/types";
+import { ConversationType, UserType } from "@/types";
 
 type ResUserMatchedType = {
-  userMatched: UserAuthType;
+  userMatched: UserType;
   conversation: ConversationType;
 };
 

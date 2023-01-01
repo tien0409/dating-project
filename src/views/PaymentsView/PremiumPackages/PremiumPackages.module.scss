@@ -48,42 +48,4 @@
   gap: 15px;
   font-size: 1.2rem;
   list-style: none;
-
-  .package__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 15px;
-    background-color: var(--white-color);
-    border: 1px solid var(--subtext-color);
-    border-radius: 8px;
-    cursor: pointer;
-
-    &-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      &-month {
-        font-weight: 500;
-        font-size: 1.3rem;
-        margin-bottom: 3px;
-      }
-
-      &-discount {
-        color: var(--secondary-color);
-        font-size: 1rem;
-      }
-    }
-
-    &-price {
-      font-weight: 500;
-      font-size: 1.3rem;
-    }
-
-    &.selected {
-      border-width: 2px;
-      border-color: var(--green-50);
-    }
-  }
 }

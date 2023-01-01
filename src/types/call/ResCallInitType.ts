@@ -1,9 +1,9 @@
-import { CallType, UserAuthType } from "@/types";
+import { CallType, UserType } from "@/types";
 
 type ResCallInitType = {
   conversationId: string;
   receiverId: string;
-  caller: UserAuthType;
+  caller: UserType;
   callType: CallType;
 };
 

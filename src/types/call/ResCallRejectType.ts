@@ -1,7 +1,7 @@
-import { UserAuthType } from "@/types";
+import { UserType } from "@/types";
 
 type ResCallRejectType = {
-  receiver: UserAuthType;
+  receiver: UserType;
 };
 
 export default ResCallRejectType;

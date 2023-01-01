@@ -10,13 +10,13 @@ import { FaHeart } from "react-icons/fa";
 import styles from "./EncounterCardItem.module.scss";
 import { SwiperCustom } from "@/components";
 import useEncounterCardItem from "./EncounterCardItemHook";
-import { UserAuthType } from "@/types";
+import { UserType } from "@/types";
 import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
 export type EncounterCardItemProps = {
-  user: UserAuthType;
+  user: UserType;
   isFront: boolean;
   handleNext: () => void;
 };

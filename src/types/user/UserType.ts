@@ -1,6 +1,6 @@
 import { GenderType, PassionType, UserPhotoType } from "@/types";
 
-type UserAuthType = Partial<{
+type UserType = Partial<{
   id: string;
   firstName: string;
   lastName: string;
@@ -12,9 +12,6 @@ type UserAuthType = Partial<{
   avatar: string;
   photos: UserPhotoType[];
   passions: PassionType[];
-  userLikes: string[];
-  userDiscards: string[];
-  userMatches: string[];
 }>;
 
-export default UserAuthType;
+export default UserType;

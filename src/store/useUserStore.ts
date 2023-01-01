@@ -1,9 +1,9 @@
 import create from "zustand";
 
-import { UserAuthType } from "@/types";
+import { UserType } from "@/types";
 
 type UserStoreType = {
-  users?: UserAuthType;
+  users?: UserType;
 };
 
 const useUserStore = create<UserStoreType>(() => ({

@@ -1,14 +1,14 @@
 import { useCallback, useState } from "react";
 
 import { useGetUsersExploreData } from "@/hooks/useUsersData";
-import { AxiosResponseType, UserAuthType } from "@/types";
+import { AxiosResponseType, UserType } from "@/types";
 
 const useEncounterCards = () => {
   const [page, setPage] = useState(1);
   const [indexEncounter, setIndexEncounter] = useState(0);
-  const [userExplores, setUserExplores] = useState<UserAuthType[]>([]);
+  const [userExplores, setUserExplores] = useState<UserType[]>([]);
 
-  const handleSuccess = useCallback((res: AxiosResponseType<UserAuthType[]>) => {
+  const handleSuccess = useCallback((res: AxiosResponseType<UserType[]>) => {
     res?.data?.userExplores && setUserExplores(res?.data?.userExplores);
   }, []);
 

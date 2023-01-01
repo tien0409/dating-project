@@ -1,8 +1,8 @@
-import { GenderType, UserAuthType } from "@/types";
+import { GenderType, UserType } from "@/types";
 
 type UserGenderType = {
   id?: string;
-  user?: UserAuthType;
+  user?: UserType;
   describe?: string;
   isPrivacy: boolean;
   showMeInSearchesAs?: GenderType;

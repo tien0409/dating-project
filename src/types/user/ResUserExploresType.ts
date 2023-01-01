@@ -1,7 +1,7 @@
-import { UserAuthType } from "@/types";
+import { UserType } from "@/types";
 
 type ResUserExploresType = {
-  userExplores: UserAuthType[];
+  userExplores: UserType[];
   pagination: {
     currentPage: number;
     perPage: number;

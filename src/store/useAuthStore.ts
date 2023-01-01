@@ -1,5 +1,6 @@
 import create from "zustand";
-import UserAuthType from "@/types/auth/UserAuthType";
+
+import { UserAuthType } from "@/types";
 
 type AuthStoreType = {
   profile: UserAuthType | null;

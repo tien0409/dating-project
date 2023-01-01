@@ -1,9 +1,9 @@
-import { UserAuthType } from "@/types";
+import { UserType } from "@/types";
 
 type ParticipantType = {
   id: string;
   timeJoined: Date;
-  user: UserAuthType;
+  user: UserType;
 };
 
 export default ParticipantType;
