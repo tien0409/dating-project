@@ -28,7 +28,9 @@ const ConversationList = () => {
           {conversations.map((conversation) => (
             <div
               key={conversation.id}
-              className={cln("conversation__item", { isActive: isConversationActive })}
+              className={cln("conversation__item", {
+                isActive: isConversationActive(conversation),
+              })}
             >
               <ConversationItem conversation={conversation} hasControl imageSize={50} />
             </div>
