@@ -55,13 +55,6 @@
         }
 
 
-        &.in-active {
-          background: transparent !important;
-          cursor: context-menu;
-          user-select: none;
-
-        }
-
         &-fullName {
           font-size: 1.4rem;
           font-weight: 500;
@@ -107,4 +100,9 @@
   100% {
     rotate: 360deg;
   }
+}
+
+.in-active {
+  background: transparent !important;
+  user-select: none;
 }

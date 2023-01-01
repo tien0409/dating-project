@@ -32,10 +32,12 @@ const useMessageItem = (props: MessageItemProps) => {
     : message?.participant?.user?.avatar;
 
   const createdAtStr = useMemo(() => {
-    if (message && isThisWeek(new Date(message?.createdAt))) {
-      return formatDate(new Date(message?.createdAt), "EEEE HH:mm");
+    const propDate = message?.active ? "createdAt" : "updatedAt";
+
+    if (message && isThisWeek(new Date(message?.[propDate]))) {
+      return formatDate(new Date(message?.[propDate]), "EEEE HH:mm");
     }
-    return formatDate(message?.createdAt, "dd/MM/yyyy HH:mm");
+    return formatDate(message?.[propDate], "dd/MM/yyyy HH:mm");
   }, [message]);
 
   const handleDeleteMessage = () => {

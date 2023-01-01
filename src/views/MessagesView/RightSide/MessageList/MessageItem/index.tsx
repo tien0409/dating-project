@@ -66,7 +66,7 @@ const MessageItem = (props: MessageItemProps) => {
                   <p className={cln("message__reply-main-content")}>
                     <If condition={message?.replyTo?.active}>
                       <Then>{message?.replyTo?.content}</Then>
-                      <Else>Tin nhắn đã bị xoá</Else>
+                      <Else>Message has been deleted</Else>
                     </If>
                   </p>
                 </div>
@@ -103,7 +103,13 @@ const MessageItem = (props: MessageItemProps) => {
                   </Then>
                 </If>
 
-                <span className={cln("text__content")}>{message?.content}</span>
+                <span
+                  className={cln("text__content", {
+                    "in-active": !message?.active,
+                  })}
+                >
+                  {message?.active ? message?.content : "Message has been deleted"}
+                </span>
               </div>
             </Else>
           </If>
@@ -117,15 +123,19 @@ const MessageItem = (props: MessageItemProps) => {
           </div>
         </Then>
         <Else>
-          <div className={cln("message__actions")}>
-            <If condition={message?.participant?.id === senderParticipant?.id}>
-              <Then>
-                <AiFillEdit size={17} cursor="pointer" onClick={handleEditMessage} />
-                <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
-              </Then>
-            </If>
-            <GoReply size={17} cursor="pointer" onClick={handleReply} />
-          </div>
+          <If condition={message?.active}>
+            <Then>
+              <div className={cln("message__actions")}>
+                <If condition={message?.participant?.id === senderParticipant?.id}>
+                  <Then>
+                    <AiFillEdit size={17} cursor="pointer" onClick={handleEditMessage} />
+                    <AiFillDelete size={17} cursor="pointer" onClick={handleDeleteMessage} />
+                  </Then>
+                </If>
+                <GoReply size={17} cursor="pointer" onClick={handleReply} />
+              </div>
+            </Then>
+          </If>
         </Else>
       </If>
     </div>
