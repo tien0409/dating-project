@@ -123,9 +123,9 @@ const useChatSocket = () => {
       socket.on(SEND_MESSAGE, (payload: ResSendMessageType) => {
         const { conversationUpdated, message } = payload;
 
-        if (message) {
+        updateLastMessageConversation(conversationUpdated);
+        if (message && conversation && conversation?.id === conversationUpdated?.id) {
           setMessages([...messages, message]);
-          updateLastMessageConversation(conversationUpdated);
           scrollToLastMessage();
         }
       });

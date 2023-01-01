@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 
 import styles from "./ConversationItem.module.scss";
 import { ConversationItemProps } from ".";
-import { useConversationStore, useMessageStore, useSocketStore, useAuthStore } from "@/store";
+import { useAuthStore, useConversationStore, useMessageStore, useSocketStore } from "@/store";
 import { REQUEST_DELETE_CONVERSATION } from "@/configs/socket-events";
 import { ReqDeleteConversationType } from "@/types";
 import { MESSAGES_ROUTE } from "@/configs/routes";
@@ -29,8 +29,7 @@ const useConversationItem = (props: ConversationItemProps) => {
   const setConversations = useConversationStore((state) => state.setConversations);
   const setConversation = useConversationStore((state) => state.setConversation);
 
-  const isReceiverTyping = () =>
-    currentConversation && conversationIdsTyping.get(currentConversation?.id);
+  const isReceiverTyping = () => conversation && conversationIdsTyping.get(conversation?.id);
 
   const receiverConversation = useMemo(
     () => conversation?.participants?.filter((item) => item?.user?.id !== profile?.id)?.[0],
