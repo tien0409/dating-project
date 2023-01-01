@@ -39,8 +39,8 @@ const PremiumPackages = () => {
         </ul>
 
         <ul className={cln("packages")}>
-          {premiumPackages.map((item) => (
-            <PremiumPackageItem key={item.id} premiumPackage={item} />
+          {premiumPackages.map((item, index) => (
+            <PremiumPackageItem key={item.id} premiumPackage={item} index={index} />
           ))}
         </ul>
       </div>

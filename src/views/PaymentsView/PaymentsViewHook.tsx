@@ -43,7 +43,11 @@ const usePaymentsView = () => {
 
       const paymentMethodId = paymentMethod.id;
 
-      await mutateAsync({ paymentMethodId, amount: premiumPackageSelected.price * 50 });
+      await mutateAsync({
+        paymentMethodId,
+        amount: premiumPackageSelected.price,
+        premiumPackageId: premiumPackageSelected?.id,
+      });
       toast.success("Payment success");
     } catch (error: any) {
       toast.error(error?.message || "Payment failed");
