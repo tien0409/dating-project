@@ -36,7 +36,7 @@ const useCreateAccountView = () => {
   );
 
   const handleUploadSuccess = (res: AxiosResponseType<ImageUploadType[]>) => {
-    const imageUrls = res?.data?.map((item) => item.url);
+    const imageUrls = res?.data?.map((item: any) => item.url);
 
     const payload: CreateAccountType = {
       ...form.getFieldsValue(),

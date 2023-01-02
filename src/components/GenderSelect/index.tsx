@@ -17,7 +17,7 @@ export type GenderSelectProps = {
 };
 
 const GenderSelect = (props: GenderSelectProps) => {
-  const { interestedInGender } = props;
+  const { interestedInGender, form, field } = props;
 
   const {
     visibleModal,
@@ -37,7 +37,7 @@ const GenderSelect = (props: GenderSelectProps) => {
           key={gender.name}
           text={gender.name}
           value={gender}
-          isActive={selected === gender.name}
+          isActive={selected === gender.name || gender.id === form.getFieldValue(field)?.gender}
           onClick={handleSelectGender}
         />
       ))}
@@ -48,7 +48,7 @@ const GenderSelect = (props: GenderSelectProps) => {
             value={undefined}
             iconSuffix
             icon={<MdArrowForwardIos />}
-            isActive={selected === "More choices"}
+            isActive={selected === "More choices" || (!selected && form.getFieldValue(field))}
             onClick={handleSelectGender}
           />
         </Then>

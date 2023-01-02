@@ -5,6 +5,8 @@ import { AxiosResponseType, CreateAccountType, ResUserExploresType, RQConfigsTyp
 
 const _createProfile = async (payload: CreateAccountType) =>
   await axiosInstance.post("/users/create-profile", payload);
+const _updateProfile = async (payload: any) =>
+  await axiosInstance.patch("/users/update-profile", payload);
 const _getUsersExplore = async (page: number) =>
   (
     await axiosInstance.get<AxiosResponseType<ResUserExploresType>>("/users/explore", {
@@ -14,6 +16,10 @@ const _getUsersExplore = async (page: number) =>
 
 export const useCreateProfileData = ({ onSuccess }: RQConfigsType) => {
   return useMutation(_createProfile, { onSuccess });
+};
+
+export const useUpdateProfileData = ({ onError, onSuccess }: RQConfigsType) => {
+  return useMutation(_updateProfile, { onError, onSuccess });
 };
 
 export const useGetUsersExploreData = (page = 1, { onSuccess }: RQConfigsType) => {
