@@ -1,0 +1,27 @@
+.wrapper {
+}
+
+.title {
+  margin-bottom: 12px;
+  color: var(--subtext-color);
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.height {
+  padding: 15px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--subtext-color);
+  background-color: var(--white-color);
+}
+
+.filter__list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn__wrapper {
+  display: flex;
+  justify-content: space-between;
+}

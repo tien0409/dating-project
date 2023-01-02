@@ -6,9 +6,10 @@ const PaypalPayment = () => {
   const { scriptLoaded, premiumPackageSelected, handleSuccess } = usePaypalPayment();
 
   return (
-    scriptLoaded && (
-      <PayPalButton amount={premiumPackageSelected?.price || 0} onSuccess={handleSuccess} />
-    )
+    <>
+      scriptLoaded && (
+      <PayPalButton amount={premiumPackageSelected?.price || 0} onSuccess={handleSuccess} />)
+    </>
   );
 };
 

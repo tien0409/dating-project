@@ -1,0 +1,41 @@
+.wrapper {
+  padding: 5px 30px;
+  border: 1px solid var(--subtext-color);
+  border-radius: 18px;
+  background-color: var(--white-color);
+  cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: var(--setting-container-hover-color);
+
+    .icon {
+      color: var(--text-heading-color);
+    }
+  }
+
+  &.is-open  {
+    padding: 15px 30px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon {
+    color: var(--subtext-color);
+    transition: 0.5s;
+  }
+}
+
+.body {
+  margin-top: 10px;
+}

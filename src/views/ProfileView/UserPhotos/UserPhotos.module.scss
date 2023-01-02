@@ -1,0 +1,30 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 7px;
+  max-width: var(--setting-max-width);
+  margin: 0 auto;
+}
+
+.primary__row {
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 7px;
+
+  & > * {
+    &:first-child {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+  }
+}
+
+.secondary__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  gap: 7px;
+}
