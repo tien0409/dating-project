@@ -10,7 +10,10 @@ $px: 40px;
   width: var(--sidebar-width);
   padding: var(--pt-home-page) 0;
   background-color: var(--white-color);
-  border-right: 1px solid var(--subtext-color);
+
+  &.border {
+    border-right: 1px solid var(--subtext-color);
+  }
 }
 
 .avatar__wrapper {

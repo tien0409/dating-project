@@ -1,3 +1,8 @@
+.wrapper {
+  margin: 0 auto;
+  max-width: var(--setting-max-width);
+}
+
 .form__item {
   display: flex;
   justify-content: space-between;

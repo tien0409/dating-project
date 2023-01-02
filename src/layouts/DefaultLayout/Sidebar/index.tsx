@@ -24,7 +24,13 @@ import { getAvatar } from "@/utils/urls";
 
 const cln = classNames.bind(styles);
 
-const Sidebar = () => {
+type Props = {
+  border: boolean;
+};
+
+const Sidebar = (props: Props) => {
+  const { border } = props;
+
   const router = useRouter();
 
   const { profile, handleLogout } = useSidebar();
@@ -112,7 +118,7 @@ const Sidebar = () => {
   );
 
   return (
-    <aside className={cln("wrapper")}>
+    <aside className={cln("wrapper", { border })}>
       <div className={cln("avatar__wrapper")}>
         <Image
           src={getAvatar(profile?.avatar)}

@@ -20,7 +20,7 @@ const DefaultLayout = (props: Props) => {
   return (
     <ProtectedRoute>
       <main className={cln("wrapper")}>
-        <Sidebar />
+        <Sidebar border={fullScreen} />
 
         <main
           className={cln("main-content", {

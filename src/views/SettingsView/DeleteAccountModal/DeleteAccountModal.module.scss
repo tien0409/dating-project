@@ -1,5 +1,7 @@
-.wrapper {
+.wrapper, .modal__wrapper {
+  max-width: var(--setting-max-width);
   text-align: center;
+  margin: 0 auto;
 }
 
 .title {

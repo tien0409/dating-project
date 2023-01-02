@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 
 import styles from "./SettingsView.module.scss";
-import { DefaultLayout } from "@/layouts";
 import SettingFilters from "./SettingFilters";
 import SettingAdvanceFilters from "./SettingAdvanceFilters";
 import UserSettings from "./UserSettings";
@@ -12,19 +11,17 @@ const cln = classNames.bind(styles);
 
 const SettingsView = () => {
   return (
-    <DefaultLayout>
-      <div className={cln("custom__scroll", "custom__scroll--tiny", "wrapper")}>
-        <UserSettings />
+    <div className={cln("custom__scroll", "custom__scroll--tiny", "wrapper")}>
+      <UserSettings />
 
-        <SettingFilters />
+      <SettingFilters />
 
-        <SettingAdvanceFilters />
+      <SettingAdvanceFilters />
 
-        <SettingNotifications />
+      <SettingNotifications />
 
-        <DeleteAccountModal />
-      </div>
-    </DefaultLayout>
+      <DeleteAccountModal />
+    </div>
   );
 };
 

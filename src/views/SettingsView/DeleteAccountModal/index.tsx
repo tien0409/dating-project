@@ -10,7 +10,7 @@ const DeleteAccountModal = () => {
   const { open, setOpen } = useDeleteAccountModal();
 
   return (
-    <>
+    <div className={cln("wrapper")}>
       <Button
         block
         shape={"round"}
@@ -22,7 +22,7 @@ const DeleteAccountModal = () => {
       </Button>
 
       <Modal open={open} closable={false} footer={false} onCancel={() => setOpen(false)}>
-        <div className={cln("wrapper")}>
+        <div className={cln("modal__wrapper")}>
           <h3 className={cln("title")}>Are you sure?</h3>
           <p className={cln("description")}>
             Deleting your profile to create a new account may affect who you see on the platform,
@@ -39,7 +39,7 @@ const DeleteAccountModal = () => {
           </div>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 

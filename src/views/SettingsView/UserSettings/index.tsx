@@ -10,7 +10,7 @@ const cln = classNames.bind(styles);
 
 const UserSettings = () => {
   return (
-    <div>
+    <div className={cln("wrapper")}>
       <Form>
         <Form.Item>
           <div className={cln("form__item")}>
