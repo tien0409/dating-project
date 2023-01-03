@@ -6,3 +6,4 @@ export { default as MessagesView } from "./MessagesView";
 export { default as SettingsView } from "./SettingsView";
 export { default as PaymentsView } from "./PaymentsView";
 export { default as ProfileView } from "./ProfileView";
+export { default as NotificationsView } from "./NotificationsView";
