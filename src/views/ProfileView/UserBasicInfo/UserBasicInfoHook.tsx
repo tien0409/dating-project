@@ -34,7 +34,6 @@ const useUserBasicInfo = () => {
     onSuccess: handleSuccess,
   });
 
-  console.log("profile", profile);
   const initForm: UpdateBasicInfoType = useMemo(
     () => ({
       firstName: profile?.firstName,

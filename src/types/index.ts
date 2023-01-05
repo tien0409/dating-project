@@ -19,6 +19,9 @@ export type { default as ResUserExploresType } from "./user/ResUserExploresType"
 export type { default as ResUserMatchedType } from "./user/ResUserMatchedType";
 export type { default as UserMatchType } from "./user/UserMatchType";
 export type { default as UserType } from "./user/UserType";
+export type { default as UpdatePasswordType } from "./user/UpdatePasswordType";
+export type { default as CreateUserPhotoType } from "./user/CreateUserPhotoType";
+export type { default as UpdateUserPhotoType } from "./user/UpdateUserPhotoType";
 
 export type { default as GenderType } from "./gender/GenderType";
 

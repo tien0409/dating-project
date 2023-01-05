@@ -57,7 +57,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         </Form.Item>
 
         <Form.Item
-          name="confirmPasssword"
+          name="confirmPassword"
           label="Confirm password"
           rules={confirmPasswordRules}
           hasFeedback

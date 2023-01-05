@@ -1,49 +1,29 @@
 import { Form } from "antd";
 import { toast } from "react-toastify";
-import moment from "moment/moment";
-import { useCallback, useMemo } from "react";
-import _pick from "lodash/pick";
-import _keys from "lodash/keys";
+import { useCallback } from "react";
 
-import { useAuthStore } from "@/store";
-import { UpdateBasicInfoType } from "@/types";
-import { useUpdateProfileData } from "@/hooks/useUsersData";
+import { UpdatePasswordType } from "@/types";
+import { useUpdatePasswordData, useUpdateProfileData } from "@/hooks/useUsersData";
+import _isArray from "lodash/isArray";
 
-const useUserBasicInfo = () => {
-  const profile = useAuthStore((state) => state.profile);
-  const setProfile = useAuthStore((state) => state.setProfile);
-
-  const [form] = Form.useForm<UpdateBasicInfoType>();
+const useUserPassword = () => {
+  const [form] = Form.useForm<UpdatePasswordType>();
 
   const handleSuccess = useCallback(() => {
-    setProfile({
-      ...profile,
-      ...(_pick(form.getFieldsValue(), _keys(form.getFieldsValue())) as any),
-      fullName:
-        form.getFieldValue("firstName").trim() + " " + form.getFieldValue("lastName").trim(),
-    });
-    toast.success("Update profile successfully");
-  }, [form, profile, setProfile]);
+    form.resetFields();
+    toast.success("Password successfully updated");
+  }, [form]);
 
   const handleError = useCallback((error: any) => {
-    toast.error(error?.response?.data?.message);
+    if (_isArray(error?.message)) {
+      error.message.forEach((message: string) => toast.error(message));
+    } else toast.error(error?.message);
   }, []);
 
-  const { mutate, isLoading } = useUpdateProfileData({
+  const { mutate, isLoading } = useUpdatePasswordData({
     onError: handleError,
     onSuccess: handleSuccess,
   });
-
-  console.log("profile", profile);
-  const initForm: UpdateBasicInfoType = useMemo(
-    () => ({
-      firstName: profile?.firstName,
-      lastName: profile?.lastName,
-      birthday: moment(profile?.birthday) || undefined,
-      userGender: profile?.userGender,
-    }),
-    [profile?.birthday, profile?.firstName, profile?.lastName, profile?.userGender],
-  );
 
   const handleFinish = () => {
     mutate(form.getFieldsValue());
@@ -53,7 +33,7 @@ const useUserBasicInfo = () => {
     form.resetFields();
   };
 
-  return { form, initForm, profile, isLoading, handleFinish, handleCancel };
+  return { form, isLoading, handleFinish, handleCancel };
 };
 
-export default useUserBasicInfo;
+export default useUserPassword;

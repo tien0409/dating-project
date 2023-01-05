@@ -69,6 +69,15 @@ export const confirmPasswordValidator = ({ getFieldValue }: { getFieldValue: any
   },
 });
 
+export const confirmNewPasswordValidator = ({ getFieldValue }: { getFieldValue: any }) => ({
+  validator(_: any, value: string) {
+    if (!value || getFieldValue("newPassword") === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error("The two passwords that you entered do not match!"));
+  },
+});
+
 export const userPhotosValidator = async (_: any, value: any) => {
   if (!value || value?.fileList?.length < 3) {
     return Promise.reject(new Error("Please upload at least 3 photos!"));

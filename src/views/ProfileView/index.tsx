@@ -5,6 +5,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import UserPhotos from "./UserPhotos";
 import UserBio from "./UserBio";
 import MoreInformation from "./MoreInformation";
+import UserPassword from "./UserPassword";
 
 const cln = classNames.bind(styles);
 
@@ -16,6 +17,8 @@ const ProfileView = () => {
       <UserBio />
 
       <UserBasicInfo />
+
+      <UserPassword />
 
       <MoreInformation />
     </div>

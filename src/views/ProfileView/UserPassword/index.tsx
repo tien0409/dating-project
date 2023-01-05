@@ -1,53 +1,45 @@
 import classNames from "classnames/bind";
-import { Button, Col, DatePicker, Form, Input, Row } from "antd";
+import { Button, Form, Input } from "antd";
 
-import styles from "./UserBasicInfo.module.scss";
-import useUserBasicInfo from "./UserBasicInfoHook";
+import styles from "./UserPassword.module.scss";
+import useUserPassword from "./UserPasswordHook";
 import ProfileContainer from "../ProfileContainer";
-import { GenderSelect } from "@/components";
-import {
-  birthdayValidator,
-  firstNameValidator,
-  genderValidator,
-  lastNameValidator,
-} from "@/utils/validators";
+import { confirmNewPasswordValidator, passwordValidator } from "@/utils/validators";
 
 const cln = classNames.bind(styles);
 
-const UserBasicInfo = () => {
-  const { form, initForm, isLoading, handleFinish, handleCancel } = useUserBasicInfo();
+const UserPassword = () => {
+  const { form, isLoading, handleFinish, handleCancel } = useUserPassword();
 
   return (
-    <ProfileContainer title="My Basic">
+    <ProfileContainer title="Password">
       <div className={cln("wrapper")}>
-        <Form form={form} initialValues={initForm} onFinish={handleFinish}>
-          <Row gutter={5}>
-            <Col span={12}>
-              <Form.Item name="firstName" required rules={[{ validator: firstNameValidator }]}>
-                <Input placeholder="First name" maxLength={20} />
-              </Form.Item>
-            </Col>
-
-            <Col span={12}>
-              <Form.Item name="lastName" required rules={[{ validator: lastNameValidator }]}>
-                <Input placeholder="Last name" maxLength={15} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <h3 className={cln("title")}>Your birthday</h3>
-          <Form.Item name="birthday" required rules={[{ validator: birthdayValidator }]}>
-            <DatePicker
-              format={"DD/MM/YYYY"}
-              size="large"
-              style={{ width: "100%" }}
-              placeholder="Enter your birthday"
-            />
+        <Form form={form} onFinish={handleFinish}>
+          <Form.Item
+            name="password"
+            required
+            rules={[{ validator: passwordValidator }]}
+            hasFeedback
+          >
+            <Input.Password placeholder="Enter current password" />
           </Form.Item>
 
-          <h3 className={cln("title")}>Your gender</h3>
-          <Form.Item name="userGender" required rules={[{ validator: genderValidator }]}>
-            <GenderSelect form={form} field="userGender" />
+          <Form.Item
+            name="newPassword"
+            required
+            rules={[{ validator: passwordValidator }]}
+            hasFeedback
+          >
+            <Input.Password placeholder="Enter new password" />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            required
+            rules={[confirmNewPasswordValidator]}
+            hasFeedback
+          >
+            <Input.Password placeholder="Enter confirm password" />
           </Form.Item>
 
           <Form.Item>
@@ -66,4 +58,4 @@ const UserBasicInfo = () => {
   );
 };
 
-export default UserBasicInfo;
+export default UserPassword;
