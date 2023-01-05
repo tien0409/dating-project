@@ -70,6 +70,7 @@ const Sidebar = (props: Props) => {
               className={cln("menu-item__badge")}
               count={countNotificationsUnread}
               overflowCount={99}
+              size="small"
             >
               <Link href={NOTIFICATIONS_ROUTE}>
                 <div className={cln("menu-item")}>

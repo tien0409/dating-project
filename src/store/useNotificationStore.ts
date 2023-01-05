@@ -1,4 +1,5 @@
 import create from "zustand";
+
 import { NotificationType } from "@/types";
 
 type NotificationStoreType = {

@@ -30,7 +30,6 @@ const NotificationItemDetail = (props: NotificationItemDetailType) => {
           {formatDate(notification.createdAt, "dd/MM/yyyy, HH:mm")}
         </div>
         <p dangerouslySetInnerHTML={{ __html: notification.message }}></p>
-
         <div className={cln("actions")}>
           <Button
             className={cln("btn__mark-unread")}
