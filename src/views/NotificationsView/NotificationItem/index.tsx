@@ -30,8 +30,14 @@ const NotificationItem = (props: NotificationItemProps) => {
         onClick={handleOpenDetail}
       >
         <div className={cln("main__content")}>
-          <div className={cln("image__wrapper")}>
-            <Image src={Icon} alt={notification.type} width={50} height={50} />
+          <div
+            className={cln("icon__wrapper", {
+              system: notification.type === "SYSTEM",
+              payment: notification.type === "PAYMENT",
+              matched: notification.type === "MATCHED",
+            })}
+          >
+            <Icon size={18} />
           </div>
 
           <div className={cln("info")}>

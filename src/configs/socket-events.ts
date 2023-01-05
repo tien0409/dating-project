@@ -46,3 +46,4 @@ export const ON_USER_MATCHED = "on_user_matched";
 
 // notifications
 export const ON_CREATE_NOTIFICATION = "on_create_notification";
+export const ON_RESET_NOTIFICATIONS = "on_reset_notifications";

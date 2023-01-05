@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
+import { AiOutlineDollar, AiOutlineHeart, AiOutlineSetting } from "react-icons/ai";
 
-import SystemIcon from "@/assets/images/system-icon.svg";
-import PaymentIcon from "@/assets/images/wallet-icon.svg";
 import { NotificationItemProps } from ".";
 import useNotificationStore from "@/store/useNotificationStore";
 import { useReadNotificationData } from "@/hooks/useNotificationsData";
@@ -19,9 +18,11 @@ const useNotificationItem = (props: NotificationItemProps) => {
   const Icon = useMemo(() => {
     switch (notification.type) {
       case "SYSTEM":
-        return SystemIcon;
+        return AiOutlineSetting;
+      case "PAYMENT":
+        return AiOutlineDollar;
       case "MATCHED":
-        return PaymentIcon;
+        return AiOutlineHeart;
     }
   }, [notification.type]);
 

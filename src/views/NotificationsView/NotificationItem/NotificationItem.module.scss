@@ -26,11 +26,26 @@
   gap: 15px;
 }
 
-.image__wrapper {
+.icon__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 27px;
   height: 27px;
   border-radius: 9999px;
-  background-color: var(--orange-100);
+  color: var(--white-color);
+
+  &.matched {
+    background-color: var(--primary-color);
+  }
+
+  &.system {
+    background-color: var(--orange-100);
+  }
+
+  &.payment {
+    background-color: var(--green-70);
+  }
 }
 
 .info {

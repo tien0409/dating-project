@@ -7,8 +7,9 @@ const PaypalPayment = () => {
 
   return (
     <>
-      scriptLoaded && (
-      <PayPalButton amount={premiumPackageSelected?.price || 0} onSuccess={handleSuccess} />)
+      {scriptLoaded && (
+        <PayPalButton amount={premiumPackageSelected?.price || 0} onSuccess={handleSuccess} />
+      )}
     </>
   );
 };
