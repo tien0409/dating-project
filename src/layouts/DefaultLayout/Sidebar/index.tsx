@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import Image from "next/image";
-import { Menu } from "antd";
+import { Badge, Menu } from "antd";
 import { AiFillHeart, AiFillMessage, AiFillSetting } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
@@ -33,7 +33,7 @@ const Sidebar = (props: Props) => {
 
   const router = useRouter();
 
-  const { profile, handleLogout } = useSidebar();
+  const { profile, countNotificationsUnread, handleLogout } = useSidebar();
 
   const menuItems = useMemo<ItemType[]>(
     () => [
@@ -66,12 +66,18 @@ const Sidebar = (props: Props) => {
       {
         label: (
           <div className={cln("menu-item__wrapper")}>
-            <Link href={NOTIFICATIONS_ROUTE}>
-              <div className={cln("menu-item")}>
-                <IoMdNotifications size={17} />
-                <span>Notifications</span>
-              </div>
-            </Link>
+            <Badge
+              className={cln("menu-item__badge")}
+              count={countNotificationsUnread}
+              overflowCount={99}
+            >
+              <Link href={NOTIFICATIONS_ROUTE}>
+                <div className={cln("menu-item")}>
+                  <IoMdNotifications size={17} />
+                  <span>Notifications</span>
+                </div>
+              </Link>
+            </Badge>
           </div>
         ),
         key: NOTIFICATIONS_ROUTE,
@@ -114,7 +120,7 @@ const Sidebar = (props: Props) => {
         key: AUTH_ROUTE,
       },
     ],
-    [handleLogout],
+    [countNotificationsUnread, handleLogout],
   );
 
   return (

@@ -84,18 +84,38 @@ $px: 40px;
   height: 100%;
   border-inline-end: none !important;
 
+  & > * {
+    & > span {
+      height: 100%;
+    }
+  }
+
+  .ant-menu-title-content {
+    height: 100%;
+  }
+
   & > *:last-of-type {
     margin-top: auto;
   }
 }
 
 .menu-item__wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
   .menu-item {
     padding: 0 15px;
 
     display: flex;
     align-items: center;
     color: var(--subtext-color);
+
+    &__badge {
+      sup span {
+        color: var(--white-color);
+      }
+    }
 
     span {
       margin-left: 12px;

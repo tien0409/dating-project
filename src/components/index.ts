@@ -1,3 +1,4 @@
+export { default as WrapperHook } from "./WrapperHook";
 export { default as SwiperCustom } from "./SwiperCustom";
 export { default as ConversationItem } from "./ConversationItem";
 export { default as ConversationItemLoading } from "./ConversationItemLoading";

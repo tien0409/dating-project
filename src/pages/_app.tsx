@@ -9,9 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "../assets/scss/styles.scss";
 import { PageType } from "@/types";
-import useChatSocket from "@/hooks/useChatSocket";
-import useCallRTC from "@/hooks/useCallRTC";
-import useUserMatchesSocket from "@/hooks/useUserMatchesSocket";
+import { WrapperHook } from "@/components";
 
 type MyAppProps = AppProps & {
   Component: PageType;
@@ -21,10 +19,6 @@ const CallModal = dynamic(() => import("@/components/CallModal"), { ssr: false }
 const VideoCallMini = dynamic(() => import("@/components/VideoCallMini"), { ssr: false });
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-  useChatSocket();
-  useCallRTC();
-  useUserMatchesSocket();
-
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -37,10 +31,12 @@ function MyApp({ Component, pageProps }: MyAppProps) {
           },
         }}
       >
-        <Component {...pageProps} />
-        <ToastContainer bodyClassName="toast" />
-        <CallModal />
-        <VideoCallMini />
+        <WrapperHook>
+          <Component {...pageProps} />
+          <ToastContainer bodyClassName="toast" />
+          <CallModal />
+          <VideoCallMini />
+        </WrapperHook>
       </ConfigProvider>
     </QueryClientProvider>
   );

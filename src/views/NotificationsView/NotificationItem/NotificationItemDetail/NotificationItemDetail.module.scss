@@ -1,0 +1,22 @@
+.wrapper {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.time {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: var(--subtext-color);
+  text-align: right;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}

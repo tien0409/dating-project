@@ -52,3 +52,5 @@ export type { default as CallType } from "./call/CallType";
 export type { default as PassionType } from "./passion/PassionType";
 
 export type { default as PremiumPackageType } from "./premium-package/PremiumPackageType";
+
+export type { default as NotificationType } from "./notification/NotificationType";
