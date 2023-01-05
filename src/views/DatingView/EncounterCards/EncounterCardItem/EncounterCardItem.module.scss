@@ -1,9 +1,11 @@
 .wrapper {
   position: absolute;
   top: 0;
+  width: 100%;
   margin: 0 auto;
   border-radius: 5%;
   overflow: hidden;
+  transition: 1s;
 
   &.is-front {
     position: relative;

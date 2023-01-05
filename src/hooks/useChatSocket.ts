@@ -64,7 +64,7 @@ const useChatSocket = () => {
   );
 
   useEffect(() => {
-    if (!profile) return;
+    if (!profile?.id) return;
 
     if (socket) {
       socket.emit(REQUEST_ALL_CONVERSATIONS);
@@ -72,7 +72,7 @@ const useChatSocket = () => {
     } else {
       initSocket();
     }
-  }, [initSocket, profile, setLoadingGetConversations, socket]);
+  }, [initSocket, profile?.id, setLoadingGetConversations, socket]);
 
   useEffect(() => {
     if (socket) {

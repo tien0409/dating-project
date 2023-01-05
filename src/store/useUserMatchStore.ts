@@ -1,19 +1,29 @@
 import create from "zustand";
-import { UserMatchType } from "@/types";
+
+import { UserMatchType, UserCurrentMatchType } from "@/types";
 
 type UserMatchStoreType = {
-  usersMatched: UserMatchType[];
-  setUsersMatched: (_users: UserMatchType[]) => void;
-  type: "idle" | "matched";
-  setType: (_type: "idle" | "matched") => void;
+  resetUserMatches: boolean;
+  setResetUserMatches: (_resetUserMatches: boolean) => void;
+  loadingGetUserMatches: boolean;
+  setLoadingGetUserMatches: (_loadingGetUserMatches: boolean) => void;
+  userCurrentMatches: UserCurrentMatchType[];
+  setUserCurrentMatches: (_userCurrentMatches: UserCurrentMatchType[]) => void;
+  userMatches: UserMatchType[];
+  setUserMatches: (_userMatches: UserMatchType[]) => void;
 };
 
 const useUserMatchStore = create<UserMatchStoreType>((setState) => ({
-  usersMatched: [],
-  setUsersMatched: (usersMatched: UserMatchType[]) =>
-    setState((state) => ({ ...state, usersMatched })),
-  type: "idle",
-  setType: (type: "idle" | "matched") => setState((state) => ({ ...state, type })),
+  resetUserMatches: true,
+  setResetUserMatches: (resetUserMatches) => setState((state) => ({ ...state, resetUserMatches })),
+  loadingGetUserMatches: false,
+  setLoadingGetUserMatches: (loadingGetUserMatches) =>
+    setState((state) => ({ ...state, loadingGetUserMatches })),
+  userMatches: [],
+  setUserMatches: (userMatches) => setState((state) => ({ ...state, userMatches })),
+  userCurrentMatches: [],
+  setUserCurrentMatches: (userCurrentMatches) =>
+    setState((state) => ({ ...state, userCurrentMatches })),
 }));
 
 export default useUserMatchStore;

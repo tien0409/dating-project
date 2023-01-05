@@ -8,7 +8,6 @@ const useConversationList = () => {
   const router = useRouter();
 
   const conversations = useConversationStore((state) => state.conversations);
-  const conversation = useConversationStore((state) => state.conversation);
   const loadingGetConversations = useConversationStore((state) => state.loadingGetConversations);
 
   const isConversationActive = useCallback(

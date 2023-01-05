@@ -1,8 +1,8 @@
 import { ConversationType, UserType } from "@/types";
 
-type UserMatchType = {
+type UserCurrentMatchType = {
   userMatched: UserType;
   conversation: ConversationType;
 };
 
-export default UserMatchType;
+export default UserCurrentMatchType;

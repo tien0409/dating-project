@@ -8,36 +8,35 @@ const useEncounterMatchedModal = () => {
   const router = useRouter();
 
   const profile = useAuthStore((state) => state.profile);
-  const usersMatched = useUserMatchStore((state) => state.usersMatched);
-  const setUsersMatched = useUserMatchStore((state) => state.setUsersMatched);
+  const userCurrentMatches = useUserMatchStore((state) => state.userCurrentMatches);
+  const setUserCurrentMatches = useUserMatchStore((state) => state.setUserCurrentMatches);
 
   const [visible, setVisible] = useState(false);
 
-  const userCurrentMatched = useMemo(() => usersMatched[0], [usersMatched]);
+  const userCurrentMatched = useMemo(() => userCurrentMatches[0], [userCurrentMatches]);
 
   const handleBackToSwipe = () => {
-    const newUsersMatched = usersMatched.slice(1);
-    setUsersMatched(newUsersMatched);
+    const newUsersMatched = userCurrentMatches.slice(1);
+    setUserCurrentMatches(newUsersMatched);
     setVisible(false);
   };
 
   const handleGoToChat = async () => {
     await router.push({
-      pathname: MESSAGES_ROUTE,
-      query: { id: userCurrentMatched?.conversation?.id },
+      pathname: MESSAGES_ROUTE + "/" + userCurrentMatched?.userMatched?.id,
     });
     handleBackToSwipe();
   };
 
   useEffect(() => {
     const timerDisplay = setTimeout(() => {
-      setVisible(usersMatched.length > 0);
+      setVisible(userCurrentMatches.length > 0);
     }, 700);
 
     return () => {
       clearTimeout(timerDisplay);
     };
-  }, [usersMatched.length]);
+  }, [userCurrentMatches.length]);
 
   return {
     visible,

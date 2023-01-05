@@ -17,6 +17,7 @@ export type { default as CreateUserLikeType } from "./user/CreateUserLikeType";
 export type { default as CreateUserDiscardType } from "./user/CreateUserDiscardType";
 export type { default as ResUserExploresType } from "./user/ResUserExploresType";
 export type { default as ResUserMatchedType } from "./user/ResUserMatchedType";
+export type { default as UserCurrentMatchType } from "./user/UserCurrentMatchType";
 export type { default as UserMatchType } from "./user/UserMatchType";
 export type { default as UserType } from "./user/UserType";
 export type { default as UpdatePasswordType } from "./user/UpdatePasswordType";

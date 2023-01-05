@@ -31,7 +31,6 @@ const useNotificationsSocket = () => {
     });
 
     socket.on(ON_RESET_NOTIFICATIONS, () => {
-      console.log("reset");
       setResetNotifications(true);
     });
 

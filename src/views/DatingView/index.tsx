@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./DatingView.module.scss";
 import RecentConversations from "./RecentConversations";
 import EncounterCards from "./EncounterCards";
+import RecentMatches from "./RecentMatches";
 import { DefaultLayout } from "@/layouts";
 import { EncounterMatchedModal } from "@/components";
 
@@ -21,7 +22,7 @@ const DatingView = () => {
         <section className={cln("right__section")}>
           <RecentConversations />
 
-          <RecentConversations />
+          <RecentMatches />
         </section>
       </div>
     </DefaultLayout>
