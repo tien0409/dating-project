@@ -10,7 +10,7 @@ import SnoozeModal from "./SnoozeModal";
 const cln = classNames.bind(styles);
 
 const UserSettings = () => {
-  const { profile, open, setOpen } = useUserSettings();
+  const { profile, open, setOpen, handleChangeSnooze } = useUserSettings();
 
   return (
     <div className={cln("wrapper")}>
@@ -28,7 +28,7 @@ const UserSettings = () => {
         <Form.Item>
           <div className={cln("form__item")}>
             <span>Snooze</span>
-            <Switch size="small" />
+            <Switch size="small" checked={profile?.snooze} onChange={handleChangeSnooze} />
           </div>
           <p className={cln("snooze__description")}>
             Turning this on will hide you from all of Dating modes for as long as you choose. Your

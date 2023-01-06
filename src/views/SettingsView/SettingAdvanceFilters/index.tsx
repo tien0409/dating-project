@@ -14,7 +14,7 @@ import AdvanceFilterItem from "@/views/SettingsView/SettingAdvanceFilters/Advanc
 const cln = classNames.bind(styles);
 
 const SettingAdvanceFilters = () => {
-  const { form } = useSettingAdvanceFilters();
+  const { height, handleChangeHeight } = useSettingAdvanceFilters();
 
   return (
     <SettingContainer
@@ -25,7 +25,13 @@ const SettingAdvanceFilters = () => {
         <Form>
           <h3 className={cln("title")}>Filter by:</h3>
           <div className={cln("filter__list")}>
-            <AdvanceFilterItem icon={RiRulerLine} title={"Height"} isSwitch />
+            <AdvanceFilterItem
+              icon={RiRulerLine}
+              title={"Height"}
+              isSwitch
+              value={height}
+              onChange={handleChangeHeight}
+            />
             <AdvanceFilterItem
               icon={MdCastForEducation}
               title={"Education level"}

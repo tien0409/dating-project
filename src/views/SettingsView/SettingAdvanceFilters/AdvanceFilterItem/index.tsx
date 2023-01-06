@@ -13,13 +13,15 @@ const cln = classNames.bind(styles);
 
 type AdvanceFilterItemProps = {
   icon: IconType;
+  value?: any;
+  onChange?: any;
   title: string;
   isSwitch?: boolean;
   menuItems?: MenuItemType[];
 };
 
 const AdvanceFilterItem = (props: AdvanceFilterItemProps) => {
-  const { icon: Icon, title, isSwitch, menuItems = [] } = props;
+  const { icon: Icon, title, isSwitch, menuItems = [], value, onChange } = props;
 
   const { open, setOpen } = useAdvanceFilterItem();
 
@@ -60,8 +62,16 @@ const AdvanceFilterItem = (props: AdvanceFilterItemProps) => {
 
       <When condition={open && isSwitch}>
         <div className={cln("body")}>
-          <Slider range defaultValue={[18, 30]} max={70} min={18} />
+          <Slider
+            value={value}
+            range
+            defaultValue={[150, 170]}
+            max={220}
+            min={120}
+            onChange={onChange}
+          />
         </div>
+        <div className={cln("slider__actions")}></div>
       </When>
     </div>
   );

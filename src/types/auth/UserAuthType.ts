@@ -10,6 +10,7 @@ type UserAuthType = Partial<{
   gender: GenderType;
   userGender: UserGenderType;
   age: number;
+  snooze: boolean;
   birthday: string;
   avatar: string;
   photos: UserPhotoType[];

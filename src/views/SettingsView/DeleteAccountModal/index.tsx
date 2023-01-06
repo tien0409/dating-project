@@ -7,7 +7,7 @@ import useDeleteAccountModal from "./DeleteAccountModalHook";
 const cln = classNames.bind(styles);
 
 const DeleteAccountModal = () => {
-  const { open, setOpen } = useDeleteAccountModal();
+  const { open, setOpen, handleDelete } = useDeleteAccountModal();
 
   return (
     <div className={cln("wrapper")}>
@@ -30,7 +30,7 @@ const DeleteAccountModal = () => {
           </p>
 
           <div className={cln("actions")}>
-            <Button type="primary" shape="round" size="large">
+            <Button type="primary" shape="round" size="large" onClick={handleDelete}>
               Delete account
             </Button>
             <Button shape="round" size="large">

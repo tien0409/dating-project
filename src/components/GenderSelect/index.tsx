@@ -41,7 +41,7 @@ const GenderSelect = (props: GenderSelectProps) => {
           onClick={handleSelectGender}
         />
       ))}
-      <If condition={!!gendersSpecial?.length}>
+      <If condition={!!gendersSpecial?.length && !interestedInGender}>
         <Then>
           <SingleSelect
             text="More choices"

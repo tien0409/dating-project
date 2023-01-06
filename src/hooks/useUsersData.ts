@@ -30,6 +30,8 @@ const _getUsersExplore = async (page: number) =>
       params: { page },
     })
   ).data;
+const _deleteAccount = async () => await axiosInstance.delete("/users/delete-account");
+
 export const useCreateProfileData = ({ onSuccess }: RQConfigsType) => {
   return useMutation(_createProfile, { onSuccess });
 };
@@ -60,4 +62,8 @@ export const useGetUsersExploreData = (page = 1, { onSuccess }: RQConfigsType) =
     staleTime: Infinity,
     onSuccess,
   });
+};
+
+export const useDeleteAccountData = () => {
+  return useMutation(_deleteAccount);
 };
