@@ -58,3 +58,5 @@ export type { default as PassionType } from "./passion/PassionType";
 export type { default as PremiumPackageType } from "./premium-package/PremiumPackageType";
 
 export type { default as NotificationType } from "./notification/NotificationType";
+
+export type { default as RelationshipType } from "./relationship-type/RelationshipType";

@@ -30,12 +30,12 @@ const _getUsersExplore = async (page: number) =>
       params: { page },
     })
   ).data;
-
 export const useCreateProfileData = ({ onSuccess }: RQConfigsType) => {
   return useMutation(_createProfile, { onSuccess });
 };
 
-export const useUpdateProfileData = ({ onError, onSuccess }: RQConfigsType) => {
+export const useUpdateProfileData = (props?: RQConfigsType) => {
+  const { onSuccess, onError } = props || {};
   return useMutation(_updateProfile, { onError, onSuccess });
 };
 

@@ -3,20 +3,23 @@ import { Form, Switch } from "antd";
 import { MdArrowForwardIos } from "react-icons/md";
 
 import styles from "./UserSettings.module.scss";
-import DateStatusModal from "@/views/SettingsView/UserSettings/DateStatusModal";
+import useUserSettings from "./UserSettingsHook";
+import DateStatusModal from "./DateStatusModal";
 import SnoozeModal from "./SnoozeModal";
 
 const cln = classNames.bind(styles);
 
 const UserSettings = () => {
+  const { profile, open, setOpen } = useUserSettings();
+
   return (
     <div className={cln("wrapper")}>
       <Form>
         <Form.Item>
-          <div className={cln("form__item")}>
+          <div className={cln("form__item")} onClick={() => setOpen(true)}>
             <span>I'm here to</span>
             <div className={cln("value__choose")}>
-              <span>Date</span>
+              <span>{profile?.relationshipType?.name}</span>
               <MdArrowForwardIos className={cln("icon")} />
             </div>
           </div>
@@ -34,7 +37,7 @@ const UserSettings = () => {
         </Form.Item>
       </Form>
 
-      <DateStatusModal />
+      <DateStatusModal open={open} setOpen={setOpen} />
       <SnoozeModal />
     </div>
   );
