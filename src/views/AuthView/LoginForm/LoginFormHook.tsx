@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { Form } from "antd";
 import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
 
 import { LoginFormProps } from ".";
 import { useLoginData } from "@/hooks/useAuthData";
@@ -17,6 +18,8 @@ const useLoginForm = (props: LoginFormProps) => {
   const router = useRouter();
 
   const handleSuccess = async (res: AxiosResponseType<AuthType>) => {
+    setCookie("Authentication", res.data.accessToken.split("=")[1]);
+    setCookie("Refresh", res.data.refreshToken.split("=")[1]);
     toast.success(res.message);
     const nextRoute = res?.data?.accountCreated ? DATING_ROUTE : CREATE_ACCOUNT_ROUTE;
     await router.push(nextRoute);

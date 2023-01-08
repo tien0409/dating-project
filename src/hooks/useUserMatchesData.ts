@@ -8,5 +8,5 @@ const _getMatches = async () => {
 };
 
 export const useUserMatchesData = ({ onSuccess, enabled }: RQConfigsType) => {
-  return useQuery(["user-matches"], _getMatches, { onSuccess, enabled });
+  return useQuery(["user-matches"], _getMatches, { staleTime: Infinity, onSuccess, enabled });
 };

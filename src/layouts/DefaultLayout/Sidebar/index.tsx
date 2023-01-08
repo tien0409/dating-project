@@ -140,7 +140,7 @@ const Sidebar = (props: Props) => {
         <div className={cln("basic__info")}>
           <h3 className={cln("text-truncate", "fullName")}>{profile?.fullName}</h3>
         </div>
-        <p className={cln("address")}>HaNoi, Viet Nam</p>
+        {/*<p className={cln("address")}>HaNoi, Viet Nam</p>*/}
       </div>
 
       <div className={cln("special__info")}>

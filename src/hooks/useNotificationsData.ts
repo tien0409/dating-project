@@ -37,7 +37,11 @@ const _deleteAllNotifications = async () =>
   )?.data;
 
 export const useNotificationsData = ({ onSuccess, enabled }: RQConfigsType) => {
-  return useQuery(["notifications"], _getNotifications, { onSuccess, enabled });
+  return useQuery(["notifications"], _getNotifications, {
+    onSuccess,
+    enabled,
+    staleTime: Infinity,
+  });
 };
 
 export const useReadNotificationData = () => {

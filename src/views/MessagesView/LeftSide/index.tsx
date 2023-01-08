@@ -4,7 +4,6 @@ import { CiSearch } from "react-icons/ci";
 
 import styles from "./LeftSide.module.scss";
 import ConversationList from "./ConversationList";
-import UserActiveList from "./UserActiveList";
 
 const cln = classNames.bind(styles);
 
@@ -15,9 +14,9 @@ const LeftSide = () => {
         <Input suffix={<CiSearch />} placeholder="Search..." />
       </div>
 
-      <div className={cln("users__active")}>
-        <UserActiveList />
-      </div>
+      {/*<div className={cln("users__active")}>*/}
+      {/*  <UserActiveList />*/}
+      {/*</div>*/}
 
       <div className={cln("custom__scroll", "custom__scroll--tiny", "conversation__list")}>
         <ConversationList />

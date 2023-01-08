@@ -1,10 +1,16 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 import { AUTH_ROUTE } from "./routes";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  withCredentials: true,
+  // withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+    Authentication: getCookie("Authentication"),
+    Refresh: getCookie("Refresh"),
+  },
 });
 
 axiosInstance.interceptors.response.use(
